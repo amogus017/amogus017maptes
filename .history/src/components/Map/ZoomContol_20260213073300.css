@@ -1,0 +1,193 @@
+/* Victorian Zoom Control Container */
+.victorian-zoom-control {
+  position: absolute;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+/* Zoom Button Base Styles */
+.zoom-button {
+  width: 42px;
+  height: 42px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+  
+  /* Parchment background */
+  background: linear-gradient(135deg, 
+    #f4e8d0 0%, 
+    #e8dcc4 25%,
+    #f0e4cc 50%,
+    #e8dcc4 75%,
+    #f4e8d0 100%
+  );
+  
+  /* Ornate border */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.15);
+  
+  /* Icon color */
+  color: #6B5A4C;
+}
+
+/* First button (zoom in) - rounded top */
+.zoom-in {
+  border-radius: 8px 8px 0 0;
+  border: 2px solid #a89068;
+  border-bottom: 1px solid #a89068;
+}
+
+/* Last button (zoom out) - rounded bottom */
+.zoom-out {
+  border-radius: 0 0 8px 8px;
+  border: 2px solid #a89068;
+  border-top: 1px solid #a89068;
+}
+
+/* Decorative divider between buttons */
+.zoom-divider {
+  height: 2px;
+  background: linear-gradient(to right, 
+    transparent,
+    #a89068 20%,
+    #8B7355 50%,
+    #a89068 80%,
+    transparent
+  );
+  margin: 0;
+}
+
+/* Hover effect */
+.zoom-button:hover {
+  background: linear-gradient(135deg, 
+    #fff5e1 0%, 
+    #f4e8d0 50%,
+    #fff5e1 100%
+  );
+  color: #4A3F36;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Active (pressed) effect */
+.zoom-button:active {
+  background: linear-gradient(135deg, 
+    #e8dcc4 0%, 
+    #d4c4a8 50%,
+    #e8dcc4 100%
+  );
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+}
+
+/* Disabled state (if needed) */
+.zoom-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #d8cdb8;
+}
+
+.zoom-button:disabled:hover {
+  transform: none;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon styling */
+.zoom-button svg {
+  pointer-events: none;
+}
+
+/* Optional: Add subtle parchment texture */
+.zoom-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 115, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(139, 115, 85, 0.03) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(139, 115, 85, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(139, 115, 85, 0.03) 3px
+    );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Ornate corner decorations (optional enhancement) */
+.zoom-in::after,
+.zoom-out::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #8B7355 30%, transparent 70%);
+  pointer-events: none;
+}
+
+.zoom-in::after {
+  top: 6px;
+  left: 6px;
+}
+
+.zoom-out::after {
+  bottom: 6px;
+  left: 6px;
+}
+
+/* Responsive sizing for smaller screens */
+@media (max-width: 768px) {
+  .zoom-button {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .zoom-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Animation on mount */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.victorian-zoom-control {
+  animation: slideInFromRight 0.3s ease-out;
+}
