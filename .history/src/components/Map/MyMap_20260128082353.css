@@ -1,0 +1,27 @@
+/* Wax seal effect for important markers */
+.wax-seal {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #8B0000, #5D0000);
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 0 10px rgba(0,0,0,0.5),
+    0 4px 8px rgba(139,0,0,0.4);
+}
+
+/* Ink stain effect */
+.ink-stain {
+  background: radial-gradient(ellipse, 
+    rgba(0,0,0,0.1), 
+    transparent 70%
+  );
+  filter: blur(2px);
+}
+
+/* Vintage map compass rose */
+.compass-rose {
+  border: 2px solid #8B4513;
+  background: #F4E8D0;
+  position: relative;
+  /* Add star/compass SVG here */
+}

@@ -1,0 +1,192 @@
+/* src/components/Map/MyMap.css */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.leaflet-container {
+  background-color: #1a1a2e;
+}
+
+/* Territory Labels (HOI4/Victoria 3 style) */
+.territory-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  z-index: 650 !important; /* Above territories but below UI */
+}
+
+.territory-label-content {
+  animation: fadeInLabel 0.5s ease-in;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes fadeInLabel {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Zoom-based label visibility (optional enhancement) */
+.leaflet-zoom-animated .territory-label {
+  transition: opacity 0.3s ease;
+}
+
+/* Empire Legend */
+.empire-legend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
+  padding: 20px;
+  border-radius: 0; /* Victorian = sharp corners */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(139, 69, 19, 0.3),
+    inset 0 0 20px rgba(139, 69, 19, 0.05);
+  z-index: 1000;
+  min-width: 240px;
+  border: 3px solid #8B4513;
+  border-image: linear-gradient(135deg, #CD853F, #8B4513, #654321) 1;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.empire-legend h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #3E2723;
+  border-bottom: 3px double #8B4513;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  text-shadow: 
+    1px 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 10px rgba(139, 69, 19, 0.3);
+}
+
+/* Victorian decorative element */
+.empire-legend h4::before {
+  content: '◆';
+  margin-right: 8px;
+  color: #8B4513;
+  font-size: 12px;
+}
+
+.empire-legend h4::after {
+  content: '◆';
+  margin-left: 8px;
+  color: #8B4513;
+  font-size: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  margin-right: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.legend-name {
+  font-weight: 500;
+}
+
+/* Leaflet popup customization */
+.leaflet-popup-content-wrapper {
+  border-radius: 10%;
+  padding: 0;
+  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
+  border: 3px solid #8B4513;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(139, 69, 19, 0.05);
+}
+
+.leaflet-popup-content {
+  margin: 15px;
+  font-family: 'Georgia', serif;
+}
+
+.leaflet-popup-content h3 {
+  margin: 0 0 10px 0;
+  color: #3E2723;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.leaflet-popup-content p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #5D4037;
+  line-height: 1.6;
+}
+
+.leaflet-popup-content strong {
+  color: #3E2723;
+  font-weight: 700;
+}
+
+/* Popup tip (arrow) styling */
+.leaflet-popup-tip {
+  background: #E8DCC8;
+  border: 2px solid #8B4513;
+  border-top: none;
+  border-left: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .empire-legend {
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    min-width: 150px;
+  }
+
+  .empire-legend h4 {
+    font-size: 12px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+  }
+
+  .legend-color {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Smaller labels on mobile */
+  .territory-label-content {
+    font-size: 13px !important;
+  }
+}
+
+.watercolor-base {
+  filter: sepia(0.3) saturate(0.8);
+  mix-blend-mode: multiply;
+}

@@ -1,0 +1,547 @@
+/* src/components/TerritoryInfo/WikiPanel.css */
+
+/* ==========================================
+   WIKI BUTTON — add these rules into TerritoryInfoPanel.css
+   ========================================== */
+/*
+.v3-wiki-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #2C4A1E, #1A3010);
+  border: 2px solid #D4AF37;
+  border-radius: 50%;
+  color: #D4AF37;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.v3-wiki-btn:hover {
+  background: linear-gradient(135deg, #3A6128, #2C4A1E);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+.v3-wiki-btn.active {
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  border-color: #FFF8E7;
+  color: #2C1810;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.6);
+}
+
+.wiki-btn-w {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  line-height: 1;
+}
+*/
+
+/* ==========================================
+   WIKI PANEL — sits right of TerritoryInfoPanel
+   left offset = 480px (width of territory panel)
+   ========================================== */
+.wiki-panel {
+  position: fixed;
+  top: 0;
+  left: 480px;
+  width: 480px;
+  max-width: calc(100vw - 480px);
+  height: 100vh;
+  z-index: 1999; /* just below territory panel's 2000 but above backdrop 1500 */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Match parchment background of territory panel */
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, #F2E8D4 0%, #E6D6BA 50%, #DACA9E 100%);
+  background-blend-mode: overlay, normal;
+
+  border-right: 4px solid #8B6914;
+  border-left: 2px solid rgba(139, 105, 20, 0.3);
+  box-shadow:
+    8px 0 32px rgba(0, 0, 0, 0.35),
+    inset -4px 0 8px rgba(139, 105, 20, 0.15),
+    inset 4px 0 8px rgba(139, 105, 20, 0.08);
+}
+
+.wiki-panel::-webkit-scrollbar {
+  width: 12px;
+}
+.wiki-panel::-webkit-scrollbar-track {
+  background: #D4C4A8;
+  border-right: 1px solid #8B6914;
+}
+.wiki-panel::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #B8860B, #8B6914);
+  border: 2px solid #D4C4A8;
+  border-radius: 6px;
+}
+.wiki-panel::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #D4AF37, #B8860B);
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+.wiki-panel-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background:
+    linear-gradient(180deg, rgba(139, 105, 20, 0.12) 0%, transparent 100%),
+    linear-gradient(135deg, #E8D8BC 0%, #D9C9A8 100%);
+  backdrop-filter: blur(4px);
+}
+
+.wiki-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wiki-logo {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #2C1810, #4A2C1A);
+  border: 2px solid #D4AF37;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.wiki-logo-w {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #D4AF37;
+}
+
+.wiki-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wiki-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65em;
+  color: #8B6914;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.wiki-territory-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #2C1810;
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wiki-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wiki-open-btn {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #B8860B, #8B6914);
+  border: 1px solid #D4AF37;
+  border-radius: 6px;
+  color: #FFF8E7;
+  font-size: 1em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.wiki-open-btn:hover {
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.wiki-close-btn {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #8B4513, #654321);
+  border: 1px solid #D4AF37;
+  border-radius: 6px;
+  color: #F4E8D0;
+  font-size: 0.9em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.wiki-close-btn:hover {
+  background: linear-gradient(135deg, #A0522D, #8B4513);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.wiki-header-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8B6914, #D4AF37, #8B6914, transparent);
+  margin: 0;
+}
+
+/* ==========================================
+   LOADING STATE
+   ========================================== */
+.wiki-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 20px;
+  color: #8B6914;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.wiki-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(139, 105, 20, 0.2);
+  border-top-color: #D4AF37;
+  border-radius: 50%;
+  animation: wiki-spin 1s linear infinite;
+}
+
+@keyframes wiki-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   ERROR STATE
+   ========================================== */
+.wiki-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 50px 30px;
+  text-align: center;
+}
+
+.wiki-error-icon {
+  font-size: 2em;
+  color: #8B4513;
+}
+
+.wiki-error-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1em;
+  font-weight: 600;
+  color: #2C1810;
+}
+
+.wiki-error-msg {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.9em;
+  color: #5A4A3A;
+  font-style: italic;
+}
+
+.wiki-fallback-link {
+  margin-top: 10px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #B8860B, #8B6914);
+  color: #FFF8E7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75em;
+  text-decoration: none;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+}
+
+.wiki-fallback-link:hover {
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+/* ==========================================
+   CONTENT AREA
+   ========================================== */
+.wiki-content-area {
+  padding: 0 0 20px 0;
+}
+
+/* ==========================================
+   SECTIONS — collapsible
+   ========================================== */
+.wiki-section {
+  border-bottom: 1px solid rgba(139, 105, 20, 0.2);
+}
+
+.wiki-section:last-child {
+  border-bottom: none;
+}
+
+.wiki-section-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, rgba(139, 105, 20, 0.08), transparent);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: left;
+}
+
+.wiki-section-toggle:hover {
+  background: linear-gradient(90deg, rgba(139, 105, 20, 0.16), transparent);
+}
+
+.wiki-section-toggle.collapsed {
+  background: transparent;
+}
+
+.wiki-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #2C1810;
+  letter-spacing: 1px;
+}
+
+.wiki-section-arrow {
+  font-size: 0.85em;
+  color: #8B6914;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.wiki-section-content {
+  overflow: hidden;
+  padding: 0 20px 16px 20px;
+}
+
+/* ==========================================
+   WIKIPEDIA CONTENT STYLING
+   Light theming — keep wiki structure, 
+   just apply our fonts + warm background
+   ========================================== */
+.wiki-section-content p {
+  font-family: 'EB Garamond', serif;
+  font-size: 1em;
+  line-height: 1.75;
+  color: #2C1810;
+  margin: 0 0 12px 0;
+}
+
+.wiki-section-content h1,
+.wiki-section-content h2,
+.wiki-section-content h3,
+.wiki-section-content h4 {
+  font-family: 'Cinzel', serif;
+  color: #2C1810;
+  margin: 16px 0 8px 0;
+}
+
+.wiki-section-content a {
+  color: #8B4513;
+  text-decoration: underline;
+  text-decoration-color: rgba(139, 69, 19, 0.4);
+  transition: color 0.2s;
+}
+
+.wiki-section-content a:hover {
+  color: #D4AF37;
+}
+
+/* Wikipedia infobox */
+.wiki-section-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid #C9B896;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.wiki-section-content table th {
+  background: linear-gradient(135deg, #D4C4A0, #C4B48A);
+  color: #2C1810;
+  padding: 8px 12px;
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85em;
+  border-bottom: 1px solid #C9B896;
+}
+
+.wiki-section-content table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid rgba(139, 105, 20, 0.15);
+  color: #3A2A1A;
+  vertical-align: top;
+}
+
+.wiki-section-content table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Wikipedia images */
+.wiki-section-content .wiki-image,
+.wiki-section-content img {
+  max-width: 100%;
+  height: auto;
+  border: 3px solid #C9B896;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  margin: 8px 0;
+  display: block;
+}
+
+/* Wikipedia figure/caption */
+.wiki-section-content figure {
+  margin: 12px 0;
+  text-align: center;
+}
+
+.wiki-section-content figcaption {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.85em;
+  color: #6A5A4A;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* Wikipedia lists */
+.wiki-section-content ul,
+.wiki-section-content ol {
+  font-family: 'EB Garamond', serif;
+  font-size: 1em;
+  color: #2C1810;
+  padding-left: 24px;
+  margin: 8px 0 12px 0;
+  line-height: 1.7;
+}
+
+/* Wikipedia blockquotes */
+.wiki-section-content blockquote {
+  margin: 12px 0;
+  padding: 10px 15px;
+  border-left: 4px solid #D4AF37;
+  background: rgba(255, 255, 255, 0.35);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: #3A2A1A;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Intro section (no toggle button, always visible) */
+.wiki-section:first-child .wiki-section-content {
+  padding: 16px 20px;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+.wiki-panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(180deg, transparent, rgba(139, 105, 20, 0.1));
+  border-top: 2px solid;
+  border-image: linear-gradient(90deg, transparent, #8B6914, #D4AF37, #8B6914, transparent) 1;
+  margin-top: 10px;
+}
+
+.wiki-footer-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7em;
+  color: #8B6914;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+/* Language Toggle */
+.wiki-lang-toggle {
+  display: flex;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid #8B6914;
+  border-radius: 6px;
+  padding: 3px;
+}
+
+.wiki-lang-btn {
+  padding: 4px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: #C9B896;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.wiki-lang-btn:hover {
+  color: #F4E8D0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wiki-lang-btn.active {
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  color: #2C1810;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+/* ==========================================
+   RESPONSIVE — mobile: wiki panel full width,
+   stacks over territory panel
+   ========================================== */
+@media (max-width: 960px) {
+  .wiki-panel {
+    left: 0;
+    width: 100%;
+    max-width: 100vw;
+    z-index: 2100; /* above territory panel on mobile */
+  }
+}
+
+@media (max-width: 600px) {
+  .wiki-territory-name {
+    max-width: 160px;
+  }
+}
