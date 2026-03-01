@@ -1,7 +1,6 @@
 // src/components/TerritoryInfo/WikiPanel.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
 import './WikiPanel.css';
 
 const LANGUAGES = {
@@ -234,7 +233,7 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
           initial={{ x: '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: '-100%', opacity: 0 }}
-          transition={{ type: 'tween', duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.04 }}
+          transition={{ type: 'spring', damping: 28, stiffness: 200, delay: 0.05 }}
         >
           {/* Header */}
           <div className="wiki-panel-header">

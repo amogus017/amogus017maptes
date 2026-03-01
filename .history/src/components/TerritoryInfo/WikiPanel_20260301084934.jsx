@@ -1,7 +1,7 @@
 // src/components/TerritoryInfo/WikiPanel.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './WikiPanel.css';
 
 const LANGUAGES = {

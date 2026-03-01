@@ -57,7 +57,6 @@
   z-index: 1999; /* just below territory panel's 2000 but above backdrop 1500 */
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #EDD9A3;
   will-change: transform;
   transform: translateZ(0);
 

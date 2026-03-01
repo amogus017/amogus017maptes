@@ -129,7 +129,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
               initial={{ x: '-100%', opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '-100%', opacity: 0 }}
-              transition={{ type: 'tween', duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             >
               {/* Ornate Header */}
               <div className="v3-panel-header">
