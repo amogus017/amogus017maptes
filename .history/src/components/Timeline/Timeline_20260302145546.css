@@ -97,49 +97,30 @@
   position: relative;
   margin: 0px 0;
 }
+
+/* FIX #1: Add depth with layered shadows and subtle gradient */
 .slider-frame {
   padding: 20px;
   border-radius: 8px;
   position: relative;
-
-  /* Scrollable */
-  overflow-x: auto;
   overflow-y: hidden;
-
-  /* Allow touch scrolling on the scrollbar area — don't block all touch */
-  touch-action: pan-x;
-
-  /* Styled scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: #9C7D5E #D9CDBB;
-
-  /* Parchment background */
-  background: linear-gradient(to bottom, #E8DCC8, #D9CDBB);
+ -webkit-overflow-scrolling: touch;
+  
+  /* Cooler, more neutral parchment tone */
+  background: linear-gradient(to bottom,
+    #E8DCC8,  /* Slightly cooler cream */
+    #D9CDBB   /* Cooler light tan */
+  );
+  
+  /* Subtle border for definition */
   border: 1px solid rgba(139, 115, 85, 0.2);
+  
+  /* Layered shadows for depth - like embossed paper */
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
-    0 2px 4px rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-.slider-frame::-webkit-scrollbar {
-  display: block;
-  height: 6px;
-}
-
-.slider-frame::-webkit-scrollbar-track {
-  background: rgba(139, 115, 85, 0.15);
-  border-radius: 3px;
-}
-
-.slider-frame::-webkit-scrollbar-thumb {
-  background: linear-gradient(to right, #9C7D5E, #8B6D50);
-  border-radius: 3px;
-}
-
-.slider-frame::-webkit-scrollbar-thumb:hover {
-  background: #7A5D45;
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),      /* Top highlight */
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),          /* Bottom shadow */
+    0 2px 4px rgba(0, 0, 0, 0.1),                /* Outer shadow */
+    0 4px 8px rgba(0, 0, 0, 0.05);               /* Soft depth */
 }
 
 /* Ruler background container */
