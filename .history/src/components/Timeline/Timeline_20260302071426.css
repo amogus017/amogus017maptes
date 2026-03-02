@@ -103,8 +103,6 @@
   padding: 20px;
   border-radius: 8px;
   position: relative;
-  overflow-y: hidden;
- 
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -456,12 +454,9 @@
 
 /* FIX #4: Year bubble connected to timeline */
 .year-tooltip {
-  position: relative;
-  display: block;
-  width: fit-content;
-  margin: 0 auto 4px auto; /* centers it, adds gap above ruler */
-  text-align: center;
-
+  position: absolute;
+  top: -50px;  /* Closer to bar */
+  transform: translateX(-50%);
   font-family: 'Cinzel', serif;
   font-size: 1.3em;
   font-weight: 600;
@@ -497,7 +492,10 @@
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 8px solid #8B6D50; /* match your tooltip background */
+  border-top: 8px solid #8B6D50;
+  
+  /* Shadow on arrow too */
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.15));
 }
 
 .slider-wrapper {
@@ -508,3 +506,16 @@
   z-index: 2;
 }
 
+/* Add to Timeline.css */
+.ruler-background {
+  position: absolute;
+  margin-top: 10px;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 60px;
+  transform: translateY(-50%);
+  pointer-events: auto;  /* ✨ CHANGED from none */
+  z-index: 1;
+  user-select: none;  /* ✨ NEW - prevent text selection while dragging */
+}

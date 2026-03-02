@@ -209,7 +209,8 @@
 /* Add to MyMap.css */
 
 .leaflet-control-attribution {
-  
+  right: auto !important;
+  left: 10px !important;
    background: rgba(232, 220, 200, 0.85) !important;
   border: 1px solid rgba(139, 115, 85, 0.3) !important;
   border-radius: 4px !important;
@@ -218,8 +219,7 @@
   font-size: 0.7em !important;
   color: #6B5A4C !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-  right: auto !important;
-  opacity: 0.5;
+  
 }
 
 .leaflet-control-attribution a {

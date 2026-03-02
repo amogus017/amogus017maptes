@@ -172,7 +172,6 @@ const Victoria3Timeline = ({ onYearChange }) => {
               setYear(snapped);
               onYearChange(snapped);
             }}
-            
           >
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 

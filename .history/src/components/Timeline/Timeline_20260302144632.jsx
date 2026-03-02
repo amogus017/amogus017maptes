@@ -172,7 +172,23 @@ const Victoria3Timeline = ({ onYearChange }) => {
               setYear(snapped);
               onYearChange(snapped);
             }}
-            
+             // ADD THESE:
+  onTouchStart={(e) => {
+    isDragging.current = true;
+    scrollRef.current._touchStartX = e.touches[0].clientX;
+    scrollRef.current._touchStartScroll = scrollRef.current.scrollLeft;
+  }}
+  onTouchMove={(e) => {
+    const dx = scrollRef.current._touchStartX - e.touches[0].clientX;
+    scrollRef.current.scrollLeft = scrollRef.current._touchStartScroll + dx;
+    const viewportCenter = scrollRef.current.scrollLeft + scrollRef.current.clientWidth / 2;
+    const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
+    setYear(snapped);
+    onYearChange(snapped);
+  }}
+  onTouchEnd={() => {
+    isDragging.current = false;
+  }}
           >
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 

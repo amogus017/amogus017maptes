@@ -3,7 +3,7 @@
 
 .victoria3-timeline {
   position: fixed;
-  bottom: 5px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -12,7 +12,6 @@
   padding: 10px;
   font-family: 'EB Garamond', serif;
   z-index: 1000;
-  
 }
 
 .ornate-border-top,
@@ -103,8 +102,6 @@
   padding: 20px;
   border-radius: 8px;
   position: relative;
-  overflow-y: hidden;
- 
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -132,8 +129,18 @@
   right: 20px;
   height: 60px;
   transform: translateY(-50%);
-  pointer-events: none;
+  pointer-events: auto;  /* Enables dragging */
   z-index: 1;
+  user-select: none;  /* Prevent text selection while dragging */
+  overflow: hidden;  /* ✨ NEW: Hide ticks outside viewport */
+}
+
+/* ✨ NEW: Panning container for smooth scroll */
+.ruler-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform;  /* Performance optimization */
 }
 
 .ruler-baseline {
@@ -141,11 +148,10 @@
   top: 50%;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(to bottom, #8B4513, #6B3410);
   box-shadow: 0 1px 2px rgba(0,0,0,0.3);
   transform: translateY(-50%);
-  
 }
 
 /* FIX #3: Softer, engraved-style tick marks */
@@ -225,7 +231,7 @@
   position: absolute;
   top: 50%;
   transform: translateX(-50%);
-  margin-top: 4px;
+  margin-top: 8px;
   font-family: 'Cinzel', serif;
   font-size: 0.75em;
   font-weight: 600;
@@ -263,7 +269,6 @@
 
 .v3-slider {
   width: 100%;
-  margin-left: 0.5px;
   height: 15px;
   -webkit-appearance: none;
   appearance: none;
@@ -278,7 +283,7 @@
 .v3-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 1px;
+  width: 3px;
   height: 40px;
   background: radial-gradient(circle at 30% 30%, #D4AF37, #B8860B);
   border: 1px solid #9C7D4A;
@@ -456,12 +461,9 @@
 
 /* FIX #4: Year bubble connected to timeline */
 .year-tooltip {
-  position: relative;
-  display: block;
-  width: fit-content;
-  margin: 0 auto 4px auto; /* centers it, adds gap above ruler */
-  text-align: center;
-
+  position: absolute;
+  top: -50px;  /* Closer to bar */
+  transform: translateX(-50%);
   font-family: 'Cinzel', serif;
   font-size: 1.3em;
   font-weight: 600;
@@ -497,7 +499,10 @@
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 8px solid #8B6D50; /* match your tooltip background */
+  border-top: 8px solid #8B6D50;
+  
+  /* Shadow on arrow too */
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.15));
 }
 
 .slider-wrapper {
@@ -507,4 +512,3 @@
   padding: 0;
   z-index: 2;
 }
-

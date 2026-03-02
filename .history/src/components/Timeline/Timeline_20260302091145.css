@@ -104,7 +104,6 @@
   border-radius: 8px;
   position: relative;
   overflow-y: hidden;
- 
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -459,7 +458,7 @@
   position: relative;
   display: block;
   width: fit-content;
-  margin: 0 auto 4px auto; /* centers it, adds gap above ruler */
+  margin: 0 auto 8px auto; /* centers it, adds gap above ruler */
   text-align: center;
 
   font-family: 'Cinzel', serif;
@@ -507,4 +506,3 @@
   padding: 0;
   z-index: 2;
 }
-

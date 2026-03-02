@@ -104,7 +104,6 @@
   border-radius: 8px;
   position: relative;
   overflow-y: hidden;
- 
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -508,3 +507,25 @@
   z-index: 2;
 }
 
+/* Allow horizontal scroll on the wrapper */
+.timeline-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+  scrollbar-width: none;             /* hide scrollbar on Firefox */
+  cursor: grab;
+}
+
+.timeline-scroll-wrapper::-webkit-scrollbar {
+  display: none;                     /* hide scrollbar on Chrome/Safari */
+}
+
+.timeline-scroll-wrapper:active {
+  cursor: grabbing;
+}
+
+/* Fix slider-frame — must not clip horizontal overflow */
+.slider-frame {
+  overflow: visible; /* remove overflow-y: hidden, let wrapper handle it */
+  /* keep all your other existing slider-frame styles */
+}

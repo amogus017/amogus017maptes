@@ -1,5 +1,5 @@
 // components/Timeline/Victoria3Timeline.jsx
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Timeline.css';
 
@@ -7,19 +7,18 @@ const Victoria3Timeline = ({ onYearChange }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showEventPanel, setShowEventPanel] = useState(false);
-  const scrollRef = useRef(null);
-  const isDragging = useRef(false);
   
-  // Define min and max years as constants to avoid calculation errors
-  const MIN_YEAR = 400;
-  const MAX_YEAR = 1600;
+  // ✨ NEW: Scrollable timeline state
+  const [viewportStart, setViewportStart] = useState(1200); // What year is at left edge
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragStartYear, setDragStartYear] = useState(1200);
+  
+  // NEW: Extended range
+  const MIN_YEAR = 400;   // Changed from 1200
+  const MAX_YEAR = 1600;  // Same
+  const VIEWPORT_YEARS = 400; // How many years visible at once
 
-  // Scalable year → pixel mapping
-  const PIXELS_PER_YEAR = 2;
-  const TOTAL_WIDTH = (MAX_YEAR - MIN_YEAR) * PIXELS_PER_YEAR;
-  const yearToPixel = useCallback((y) => (y - MIN_YEAR) * PIXELS_PER_YEAR, []);
-  const pixelToYear = useCallback((px) => Math.round(px / PIXELS_PER_YEAR) + MIN_YEAR, []);
-  const THUMB_OFFSET = 20;
   // Historical events with Victoria 3 flavor
   const getHistoricalContext = () => {
     const contexts = {
@@ -56,39 +55,55 @@ const Victoria3Timeline = ({ onYearChange }) => {
 
   const context = getHistoricalContext();
 
-  const handleYearChange = (newYear) => {
-    setYear(newYear);
-    onYearChange(newYear);
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setDragStartX(e.clientX);
+    setDragStartYear(viewportStart);
   };
 
-  useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setYear(current => {
-          const next = current + 1;
-          if (next > MAX_YEAR) {
-            setIsPlaying(false);
-            return MIN_YEAR;
-          }
-          onYearChange(next);
-          return next;
-        });
-      }, 150);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, onYearChange]);
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    const deltaX = e.clientX - dragStartX;
+    const containerWidth = e.currentTarget.offsetWidth;
+    const yearsDelta = -Math.round((deltaX / containerWidth) * VIEWPORT_YEARS);
+    
+    const newStart = Math.max(
+      MIN_YEAR,
+      Math.min(MAX_YEAR - VIEWPORT_YEARS, dragStartYear + yearsDelta)
+    );
 
-  // Generate ruler ticks and labels using pixel positions
+    setViewportStart(newStart);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+    useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, dragStartX, dragStartYear]);
+
   const generateRulerMarks = () => {
     const marks = [];
+    const viewportEnd = viewportStart + VIEWPORT_YEARS;
     
-    for (let tickYear = MIN_YEAR; tickYear <= MAX_YEAR; tickYear += 5) {
-      const px = yearToPixel(tickYear);
+    // ✨ CHANGED: Loop through visible range only
+    for (let tickYear = viewportStart; tickYear <= viewportEnd; tickYear += 5) {
+      // ✨ CHANGED: Position relative to viewport, not absolute range
+      const position = ((tickYear - viewportStart) / VIEWPORT_YEARS) * 100;
       
       const isMajor = tickYear % 100 === 0;
       const isMedium = tickYear % 50 === 0 && !isMajor;
       const isMinor = tickYear % 25 === 0 && !isMedium && !isMajor;
+      const isMicro = !isMajor && !isMedium && !isMinor;
       
       let tickClass = 'micro';
       if (isMajor) tickClass = 'major';
@@ -99,7 +114,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
         <div
           key={`tick-${tickYear}`}
           className={`ruler-tick ${tickClass}`}
-          style={{ left: `${px}px` }}
+          style={{ left: `${position}%` }}
         />
       );
       
@@ -108,7 +123,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
           <div
             key={`label-${tickYear}`}
             className={`ruler-label ${isMajor ? 'major-label' : 'medium-label'}`}
-            style={{ left: `${px}px` }}
+            style={{ left: `${position}%` }}
           >
             {tickYear}
           </div>
@@ -153,70 +168,37 @@ const Victoria3Timeline = ({ onYearChange }) => {
 
       {/* Victorian Slider with Ruler Background */}
       <div className="v3-slider-container">
-        <div
+        <div className="slider-frame">
+          
+          {/* Ruler background layer */}
+          <div className="ruler-background">
+            <div className="ruler-baseline" />
+            {generateRulerMarks()}
+          </div>
+
+          {/* Slider on top */}
+          <div className="slider-track">
+            {/* Year that follows slider position */}
+            <div className="slider-wrapper">
+              <div
                 className="year-tooltip"
-                // style={{ left: `${yearToPixel(year)+ THUMB_OFFSET}px` }}
+                style={{
+                  left: `${((year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100}%`,
+                }}
               >
                 {year}
               </div>
-        <div className="slider-frame">
 
-          {/* Scrollable ruler + slider track */}
-          <div
-            className="timeline-scroll-wrapper"
-            ref={scrollRef}
-            onScroll={(e) => {
-              if (isDragging.current) return;
-              const viewportCenter = e.target.scrollLeft + e.target.clientWidth / 2;
-              const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
-              setYear(snapped);
-              onYearChange(snapped);
-            }}
-            
-          >
-            <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
-
-              {/* Year tooltip follows the thumb position inside scroll */}
-              
-
-              {/* Ruler background layer */}
-              <div className="ruler-background">
-                <div className="ruler-baseline" />
-                {generateRulerMarks()}
-              </div>
-
-              {/* Slider on top */}
-              <div className="slider-track">
-                <div className="slider-wrapper">
-                  <input
-                    type="range"
-                    className="v3-slider"
-                    min={MIN_YEAR}
-                    max={MAX_YEAR}
-                    value={year}
-                    onChange={(e) => {
-  isDragging.current = true;
-  const newYear = parseInt(e.target.value);
-  handleYearChange(newYear);
-
-  if (scrollRef.current) {
-    const targetScroll = yearToPixel(newYear) - scrollRef.current.clientWidth / 2;
-    scrollRef.current.scrollTo({
-      left: Math.max(0, targetScroll),
-      behavior: 'smooth'
-    });
-  }
-
-  setTimeout(() => { isDragging.current = false; }, 50);
-}}
-                    style={{ width: `${TOTAL_WIDTH}px` }}
-                  />
-                </div>
-              </div>
-
+              <input
+                type="range"
+                className="v3-slider"
+                min={viewportStart}  // ✨ CHANGED: Dynamic range
+                max={viewportStart + VIEWPORT_YEARS}  // ✨ CHANGED
+                value={year}
+                onChange={(e) => handleYearChange(parseInt(e.target.value))}
+              />
             </div>
           </div>
-
         </div>
       </div>
 

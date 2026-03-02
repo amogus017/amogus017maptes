@@ -104,7 +104,6 @@
   border-radius: 8px;
   position: relative;
   overflow-y: hidden;
- 
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -507,4 +506,3 @@
   padding: 0;
   z-index: 2;
 }
-

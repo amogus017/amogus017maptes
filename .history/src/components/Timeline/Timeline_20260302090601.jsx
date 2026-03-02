@@ -172,7 +172,6 @@ const Victoria3Timeline = ({ onYearChange }) => {
               setYear(snapped);
               onYearChange(snapped);
             }}
-            
           >
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 
@@ -195,20 +194,15 @@ const Victoria3Timeline = ({ onYearChange }) => {
                     max={MAX_YEAR}
                     value={year}
                     onChange={(e) => {
-  isDragging.current = true;
-  const newYear = parseInt(e.target.value);
-  handleYearChange(newYear);
-
-  if (scrollRef.current) {
-    const targetScroll = yearToPixel(newYear) - scrollRef.current.clientWidth / 2;
-    scrollRef.current.scrollTo({
-      left: Math.max(0, targetScroll),
-      behavior: 'smooth'
-    });
-  }
-
-  setTimeout(() => { isDragging.current = false; }, 50);
-}}
+                      isDragging.current = true;
+                      const newYear = parseInt(e.target.value);
+                      handleYearChange(newYear);
+                      if (scrollRef.current) {
+                        const targetScroll = yearToPixel(newYear) - scrollRef.current.clientWidth / 2;
+                        scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+                      }
+                      setTimeout(() => { isDragging.current = false; }, 50);
+                    }}
                     style={{ width: `${TOTAL_WIDTH}px` }}
                   />
                 </div>

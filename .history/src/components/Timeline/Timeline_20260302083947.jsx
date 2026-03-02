@@ -19,7 +19,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
   const TOTAL_WIDTH = (MAX_YEAR - MIN_YEAR) * PIXELS_PER_YEAR;
   const yearToPixel = useCallback((y) => (y - MIN_YEAR) * PIXELS_PER_YEAR, []);
   const pixelToYear = useCallback((px) => Math.round(px / PIXELS_PER_YEAR) + MIN_YEAR, []);
-  const THUMB_OFFSET = 20;
+  const THUMB_OFFSET = 10;
   // Historical events with Victoria 3 flavor
   const getHistoricalContext = () => {
     const contexts = {
@@ -153,12 +153,6 @@ const Victoria3Timeline = ({ onYearChange }) => {
 
       {/* Victorian Slider with Ruler Background */}
       <div className="v3-slider-container">
-        <div
-                className="year-tooltip"
-                // style={{ left: `${yearToPixel(year)+ THUMB_OFFSET}px` }}
-              >
-                {year}
-              </div>
         <div className="slider-frame">
 
           {/* Scrollable ruler + slider track */}
@@ -172,12 +166,16 @@ const Victoria3Timeline = ({ onYearChange }) => {
               setYear(snapped);
               onYearChange(snapped);
             }}
-            
           >
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 
               {/* Year tooltip follows the thumb position inside scroll */}
-              
+              <div
+                className="year-tooltip"
+                style={{ left: `${yearToPixel(year)+ THUMB_OFFSET}px` }}
+              >
+                {year}
+              </div>
 
               {/* Ruler background layer */}
               <div className="ruler-background">
@@ -195,20 +193,15 @@ const Victoria3Timeline = ({ onYearChange }) => {
                     max={MAX_YEAR}
                     value={year}
                     onChange={(e) => {
-  isDragging.current = true;
-  const newYear = parseInt(e.target.value);
-  handleYearChange(newYear);
-
-  if (scrollRef.current) {
-    const targetScroll = yearToPixel(newYear) - scrollRef.current.clientWidth / 2;
-    scrollRef.current.scrollTo({
-      left: Math.max(0, targetScroll),
-      behavior: 'smooth'
-    });
-  }
-
-  setTimeout(() => { isDragging.current = false; }, 50);
-}}
+                      isDragging.current = true;
+                      const newYear = parseInt(e.target.value);
+                      handleYearChange(newYear);
+                      if (scrollRef.current) {
+                        const targetScroll = yearToPixel(newYear) - scrollRef.current.clientWidth / 2;
+                        scrollRef.current.scrollLeft = Math.max(0, targetScroll);
+                      }
+                      setTimeout(() => { isDragging.current = false; }, 50);
+                    }}
                     style={{ width: `${TOTAL_WIDTH}px` }}
                   />
                 </div>

@@ -104,7 +104,8 @@
   border-radius: 8px;
   position: relative;
   overflow-y: hidden;
- 
+  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+  touch-action: pan-x;
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -508,3 +509,27 @@
   z-index: 2;
 }
 
+.timeline-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  /* ADD THIS — tells browser this element handles horizontal touch */
+  touch-action: pan-x;
+}
+
+.timeline-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Prevent slider from stealing touch events */
+.v3-slider {
+  touch-action: none;
+  pointer-events: none; /* touch users scroll the wrapper instead */
+}
+
+/* Re-enable pointer events for mouse users only */
+@media (hover: hover) and (pointer: fine) {
+  .v3-slider {
+    pointer-events: auto;
+  }
+}

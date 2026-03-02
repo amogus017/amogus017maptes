@@ -97,7 +97,16 @@
   position: relative;
   margin: 0px 0;
 }
-
+.timeline-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+  touch-action: pan-x;              /* tells browser: horizontal scroll only */
+  scrollbar-width: none;
+}
+.timeline-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
 /* FIX #1: Add depth with layered shadows and subtle gradient */
 .slider-frame {
   padding: 20px;

@@ -165,6 +165,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
           <div
             className="timeline-scroll-wrapper"
             ref={scrollRef}
+            style={{ touchAction: 'pan-x' }}
             onScroll={(e) => {
               if (isDragging.current) return;
               const viewportCenter = e.target.scrollLeft + e.target.clientWidth / 2;
@@ -172,7 +173,6 @@ const Victoria3Timeline = ({ onYearChange }) => {
               setYear(snapped);
               onYearChange(snapped);
             }}
-            
           >
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 

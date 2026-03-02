@@ -104,7 +104,8 @@
   border-radius: 8px;
   position: relative;
   overflow-y: hidden;
- 
+  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+  scrollbar-width: none;
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,

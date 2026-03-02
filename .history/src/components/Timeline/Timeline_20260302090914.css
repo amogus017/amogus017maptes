@@ -104,7 +104,6 @@
   border-radius: 8px;
   position: relative;
   overflow-y: hidden;
- 
   
   /* Cooler, more neutral parchment tone */
   background: linear-gradient(to bottom,
@@ -456,10 +455,9 @@
 
 /* FIX #4: Year bubble connected to timeline */
 .year-tooltip {
-  position: relative;
   display: block;
   width: fit-content;
-  margin: 0 auto 4px auto; /* centers it, adds gap above ruler */
+  margin: 0 auto 3px auto; /* centers it, adds gap above ruler */
   text-align: center;
 
   font-family: 'Cinzel', serif;
@@ -486,20 +484,6 @@
   border: 1px solid rgba(74, 63, 54, 0.3);
 }
 
-/* Arrow connects bubble to bar */
-.year-tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #8B6D50; /* match your tooltip background */
-}
-
 .slider-wrapper {
   position: relative;
   width: 100%;
@@ -507,4 +491,3 @@
   padding: 0;
   z-index: 2;
 }
-

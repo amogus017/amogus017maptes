@@ -218,8 +218,7 @@
   font-size: 0.7em !important;
   color: #6B5A4C !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-  right: auto !important;
-  opacity: 0.5;
+  
 }
 
 .leaflet-control-attribution a {
