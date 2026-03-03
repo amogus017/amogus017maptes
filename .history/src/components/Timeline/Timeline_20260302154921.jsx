@@ -7,52 +7,67 @@ const Victoria3Timeline = ({ onYearChange }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showEventPanel, setShowEventPanel] = useState(false);
-  const [isEditingYear, setIsEditingYear] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef(null);
   const isDragging = useRef(false);
-  const isProgrammaticScroll = useRef(false);
 
+  // Define min and max years
   const MIN_YEAR = 400;
   const MAX_YEAR = 1600;
 
+  // Scalable year → pixel mapping
   const PIXELS_PER_YEAR = 2;
   const TOTAL_WIDTH = (MAX_YEAR - MIN_YEAR) * PIXELS_PER_YEAR;
   const yearToPixel = useCallback((y) => (y - MIN_YEAR) * PIXELS_PER_YEAR, []);
   const pixelToYear = useCallback((px) => Math.round(px / PIXELS_PER_YEAR) + MIN_YEAR, []);
+
+  // Historical events context
+  const getHistoricalContext = () => {
+    const contexts = {
+      1300: {
+        title: "Foundation of Majapahit",
+        description: "Raden Wijaya establishes the empire",
+        color: "#FFD700"
+      },
+      1350: {
+        title: "Golden Age Begins",
+        description: "Majapahit expands across the archipelago",
+        color: "#FFA500"
+      },
+      1400: {
+        title: "Height of Power",
+        description: "Empire reaches its territorial peak under Hayam Wuruk",
+        color: "#FF8C00"
+      },
+      1850: {
+        title: "Colonial Era",
+        description: "European powers divide Southeast Asia",
+        color: "#8B4513"
+      },
+    };
+    const years = Object.keys(contexts).map(Number);
+    const closest = years.reduce((prev, curr) =>
+      Math.abs(curr - year) < Math.abs(prev - year) ? curr : prev
+    );
+    return contexts[closest];
+  };
+
+  const context = getHistoricalContext();
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
     onYearChange(newYear);
   };
 
+  // Scroll the frame to keep the thumb centered
   const scrollToYear = useCallback((newYear, smooth = false) => {
     if (!scrollRef.current) return;
     const frame = scrollRef.current;
     const targetScroll = yearToPixel(newYear) - frame.clientWidth / 2;
-
-    isProgrammaticScroll.current = true;
     frame.scrollTo({
       left: Math.max(0, targetScroll),
       behavior: smooth ? 'smooth' : 'auto',
     });
-
-    clearTimeout(isProgrammaticScroll.timeout);
-    isProgrammaticScroll.timeout = setTimeout(() => {
-      isProgrammaticScroll.current = false;
-    }, smooth ? 600 : 50);
   }, [yearToPixel]);
-
-  // Confirm typed year — clamp silently to MIN/MAX
-  const confirmYear = useCallback(() => {
-    const parsed = parseInt(inputValue);
-    const clamped = isNaN(parsed)
-      ? year
-      : Math.max(MIN_YEAR, Math.min(MAX_YEAR, parsed));
-    handleYearChange(clamped);
-    scrollToYear(clamped, true);
-    setIsEditingYear(false);
-  }, [inputValue, year, scrollToYear]);
 
   // Auto-play effect
   useEffect(() => {
@@ -74,6 +89,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
     return () => clearInterval(interval);
   }, [isPlaying, onYearChange, scrollToYear]);
 
+  // Generate ruler ticks and labels using pixel positions
   const generateRulerMarks = () => {
     const marks = [];
     for (let tickYear = MIN_YEAR; tickYear <= MAX_YEAR; tickYear += 5) {
@@ -113,55 +129,38 @@ const Victoria3Timeline = ({ onYearChange }) => {
   return (
     <div className="victoria3-timeline">
 
+      {/* Victorian Slider with Ruler Background */}
       <div className="v3-slider-container">
 
-        {/* Year tooltip — click to edit */}
-        {isEditingYear ? (
-          <input
-            className="year-tooltip year-tooltip-input"
-            type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onBlur={confirmYear}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') confirmYear();
-              if (e.key === 'Escape') setIsEditingYear(false);
-            }}
-            autoFocus
-          />
-        ) : (
-          <div
-            className="year-tooltip"
-            onClick={() => {
-              setInputValue(String(year));
-              setIsEditingYear(true);
-            }}
-            title="Click to type a year"
-          >
-            {year}
-          </div>
-        )}
+        {/* Year tooltip — centered, outside scroll frame */}
+        <div className="year-tooltip">
+          {year}
+        </div>
 
-        <div
-          className="slider-frame"
+        <div className="slider-frame">
           ref={scrollRef}
-          onScroll={(e) => {
-            if (isDragging.current || isProgrammaticScroll.current) return;
-            const target = e.target;
-            const viewportCenter = target.scrollLeft + target.clientWidth / 2;
-            const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
-            setYear(snapped);
-            onYearChange(snapped);
-          }}
-        >
-          <div className="timeline-scroll-wrapper">
+            onScroll={(e) => {
+              // Only sync year from scroll when user is scrolling manually (not dragging thumb)
+              if (isDragging.current) return;
+              const viewportCenter = e.target.scrollLeft + e.target.clientWidth / 2;
+              const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
+              setYear(snapped);
+              onYearChange(snapped);
+            }}
+          {/* Scrollable ruler + slider track */}
+          <div
+            className="timeline-scroll-wrapper"
+            
+          >
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 
+              {/* Ruler background layer */}
               <div className="ruler-background">
-                <div className="ruler-baseline" style={{ width: `${TOTAL_WIDTH}px` }} />
+                <div className="ruler-baseline" />
                 {generateRulerMarks()}
               </div>
 
+              {/* Slider on top */}
               <div className="slider-track">
                 <div className="slider-wrapper">
                   <input
@@ -170,46 +169,42 @@ const Victoria3Timeline = ({ onYearChange }) => {
                     min={MIN_YEAR}
                     max={MAX_YEAR}
                     value={year}
-                    onChange={(e) => {
-                      const newYear = parseInt(e.target.value);
-                      handleYearChange(newYear);
+                   onChange={(e) => {
+  isDragging.current = true;
+  const newYear = parseInt(e.target.value);
+  handleYearChange(newYear);
 
-                      if (scrollRef.current) {
-                        const frame = scrollRef.current;
-                        const thumbPx = yearToPixel(newYear);
-                        const scrollLeft = frame.scrollLeft;
-                        const viewportWidth = frame.clientWidth;
-                        const EDGE_THRESHOLD = viewportWidth * 0.1;
+  if (scrollRef.current) {
+    const frame = scrollRef.current;
+    const thumbPx = yearToPixel(newYear);
+    const scrollLeft = frame.scrollLeft;
+    const viewportWidth = frame.clientWidth;
 
-                        const distFromLeft = thumbPx - scrollLeft;
-                        const distFromRight = scrollLeft + viewportWidth - thumbPx;
+    // Define edge threshold — how close to the edge before auto-scroll kicks in
+    const EDGE_THRESHOLD = viewportWidth * 0.25; // 25% from either edge
 
-                        if (distFromLeft < EDGE_THRESHOLD || distFromRight < EDGE_THRESHOLD) {
-                          frame.scrollLeft = Math.max(0, thumbPx - viewportWidth / 2);
-                        }
-                      }
+    const distFromLeft = thumbPx - scrollLeft;
+    const distFromRight = scrollLeft + viewportWidth - thumbPx;
 
-                      clearTimeout(isDragging.timeout);
-                      isDragging.timeout = setTimeout(() => {
-                        isDragging.current = false;
-                      }, 150);
-                    }}
-                    onPointerDown={() => {
-                      if (scrollRef.current) scrollRef.current.style.touchAction = 'none';
-                    }}
-                    onPointerUp={() => {
-                      if (scrollRef.current) scrollRef.current.style.touchAction = 'pan-x';
-                    }}
-                    onPointerCancel={() => {
-                      if (scrollRef.current) scrollRef.current.style.touchAction = 'pan-x';
-                    }}
-                    style={{ width: `${TOTAL_WIDTH}px` }}
+    if (distFromLeft < EDGE_THRESHOLD || distFromRight < EDGE_THRESHOLD) {
+      // Thumb is near an edge — scroll to re-center it
+      frame.scrollTo({
+        left: Math.max(0, thumbPx - viewportWidth / 2),
+        behavior: 'smooth',
+      });
+    }
+    // Otherwise do nothing — frame stays still
+  }
+
+  setTimeout(() => { isDragging.current = false; }, 50);
+}}
                   />
                 </div>
               </div>
 
             </div>
           </div>
+
         </div>
       </div>
 
@@ -252,6 +247,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
   );
 };
 
+// Helper function for Roman numerals
 function toRoman(num) {
   const romanNumerals = {
     M: 1000, CM: 900, D: 500, CD: 400,

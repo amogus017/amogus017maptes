@@ -7,29 +7,51 @@ const Victoria3Timeline = ({ onYearChange }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showEventPanel, setShowEventPanel] = useState(false);
-  const [isEditingYear, setIsEditingYear] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const scrollRef = useRef(null);
   const isDragging = useRef(false);
   const isProgrammaticScroll = useRef(false);
 
+  // Define min and max years
   const MIN_YEAR = 400;
   const MAX_YEAR = 1600;
 
+  // Scalable year → pixel mapping
   const PIXELS_PER_YEAR = 2;
   const TOTAL_WIDTH = (MAX_YEAR - MIN_YEAR) * PIXELS_PER_YEAR;
   const yearToPixel = useCallback((y) => (y - MIN_YEAR) * PIXELS_PER_YEAR, []);
   const pixelToYear = useCallback((px) => Math.round(px / PIXELS_PER_YEAR) + MIN_YEAR, []);
+
+  // Detect mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
     onYearChange(newYear);
   };
 
+  // Scroll the frame to a given year.
+  // On mobile: the track has padding-left = clientWidth/2 so year 400 can reach center.
+  // That means pixel 0 of the content is already offset by clientWidth/2 from scroll 0.
+  // So: scrollLeft = yearToPixel(year) (the padding handles the centering automatically).
+  // On desktop: scrollLeft = yearToPixel(year) - clientWidth/2 (center in viewport).
   const scrollToYear = useCallback((newYear, smooth = false) => {
     if (!scrollRef.current) return;
     const frame = scrollRef.current;
-    const targetScroll = yearToPixel(newYear) - frame.clientWidth / 2;
+
+    let targetScroll;
+    if (isMobile) {
+      // padding-left: 50vw already added in CSS — year pixel 0 starts at center,
+      // so scrolling to yearToPixel(year) puts that year at center
+      targetScroll = yearToPixel(newYear);
+    } else {
+      targetScroll = yearToPixel(newYear) - frame.clientWidth / 2;
+    }
 
     isProgrammaticScroll.current = true;
     frame.scrollTo({
@@ -41,23 +63,19 @@ const Victoria3Timeline = ({ onYearChange }) => {
     isProgrammaticScroll.timeout = setTimeout(() => {
       isProgrammaticScroll.current = false;
     }, smooth ? 600 : 50);
-  }, [yearToPixel]);
+  }, [yearToPixel, isMobile]);
 
-  // Confirm typed year — clamp silently to MIN/MAX
-  const confirmYear = useCallback(() => {
-    const parsed = parseInt(inputValue);
-    const clamped = isNaN(parsed)
-      ? year
-      : Math.max(MIN_YEAR, Math.min(MAX_YEAR, parsed));
-    handleYearChange(clamped);
-    scrollToYear(clamped, true);
-    setIsEditingYear(false);
-  }, [inputValue, year, scrollToYear]);
+  // On mobile mount/switch: scroll track to current year so needle aligns correctly
+  useEffect(() => {
+    if (isMobile) {
+      scrollToYear(year, false);
+    }
+  }, [isMobile]);
 
-  // Auto-play effect
+  // Auto-play effect — disabled on mobile
   useEffect(() => {
     let interval;
-    if (isPlaying) {
+    if (isPlaying && !isMobile) {
       interval = setInterval(() => {
         setYear(current => {
           const next = current + 1;
@@ -72,8 +90,9 @@ const Victoria3Timeline = ({ onYearChange }) => {
       }, 150);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, onYearChange, scrollToYear]);
+  }, [isPlaying, isMobile, onYearChange, scrollToYear]);
 
+  // Generate ruler ticks and labels using pixel positions
   const generateRulerMarks = () => {
     const marks = [];
     for (let tickYear = MIN_YEAR; tickYear <= MAX_YEAR; tickYear += 5) {
@@ -113,55 +132,57 @@ const Victoria3Timeline = ({ onYearChange }) => {
   return (
     <div className="victoria3-timeline">
 
+      {/* Victorian Slider with Ruler Background */}
       <div className="v3-slider-container">
 
-        {/* Year tooltip — click to edit */}
-        {isEditingYear ? (
-          <input
-            className="year-tooltip year-tooltip-input"
-            type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onBlur={confirmYear}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') confirmYear();
-              if (e.key === 'Escape') setIsEditingYear(false);
-            }}
-            autoFocus
-          />
-        ) : (
-          <div
-            className="year-tooltip"
-            onClick={() => {
-              setInputValue(String(year));
-              setIsEditingYear(true);
-            }}
-            title="Click to type a year"
-          >
-            {year}
-          </div>
-        )}
+        {/* Year tooltip — always centered above the frame */}
+        <div className="year-tooltip">
+          {year}
+        </div>
 
         <div
           className="slider-frame"
           ref={scrollRef}
           onScroll={(e) => {
-            if (isDragging.current || isProgrammaticScroll.current) return;
-            const target = e.target;
-            const viewportCenter = target.scrollLeft + target.clientWidth / 2;
-            const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
-            setYear(snapped);
-            onYearChange(snapped);
+            if (isMobile) {
+              // Mobile: track scrolls freely under a fixed needle at center.
+              // padding-left: 50vw is added in CSS, so we subtract it to get
+              // the real pixel offset into the timeline content.
+              const frame = e.target;
+              const contentOffset = frame.scrollLeft - frame.clientWidth / 2;
+              const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(contentOffset)));
+              setYear(snapped);
+              onYearChange(snapped);
+            } else {
+              // Desktop: ignore programmatic scrolls and thumb drags
+              if (isDragging.current || isProgrammaticScroll.current) return;
+              const frame = e.target;
+              const viewportCenter = frame.scrollLeft + frame.clientWidth / 2;
+              const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
+              setYear(snapped);
+              onYearChange(snapped);
+            }
           }}
         >
+
+          {/* Mobile needle — absolutely centered, track scrolls underneath */}
+          {isMobile && (
+            <div className="mobile-needle-wrapper">
+              <div className="mobile-needle" />
+            </div>
+          )}
+
+          {/* Inner track — full timeline width */}
           <div className="timeline-scroll-wrapper">
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 
+              {/* Ruler background layer */}
               <div className="ruler-background">
-                <div className="ruler-baseline" style={{ width: `${TOTAL_WIDTH}px` }} />
+                <div className="ruler-baseline" />
                 {generateRulerMarks()}
               </div>
 
+              {/* Slider — hidden on mobile, used only on desktop */}
               <div className="slider-track">
                 <div className="slider-wrapper">
                   <input
@@ -171,6 +192,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
                     max={MAX_YEAR}
                     value={year}
                     onChange={(e) => {
+                      if (isMobile) return;
                       const newYear = parseInt(e.target.value);
                       handleYearChange(newYear);
 
@@ -179,7 +201,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
                         const thumbPx = yearToPixel(newYear);
                         const scrollLeft = frame.scrollLeft;
                         const viewportWidth = frame.clientWidth;
-                        const EDGE_THRESHOLD = viewportWidth * 0.1;
+                        const EDGE_THRESHOLD = viewportWidth * 0.25;
 
                         const distFromLeft = thumbPx - scrollLeft;
                         const distFromRight = scrollLeft + viewportWidth - thumbPx;
@@ -195,6 +217,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
                       }, 150);
                     }}
                     onPointerDown={() => {
+                      if (isMobile) return;
                       if (scrollRef.current) scrollRef.current.style.touchAction = 'none';
                     }}
                     onPointerUp={() => {
@@ -210,6 +233,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
 
             </div>
           </div>
+
         </div>
       </div>
 
@@ -252,6 +276,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
   );
 };
 
+// Helper function for Roman numerals
 function toRoman(num) {
   const romanNumerals = {
     M: 1000, CM: 900, D: 500, CD: 400,

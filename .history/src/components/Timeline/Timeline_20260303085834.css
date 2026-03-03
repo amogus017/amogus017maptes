@@ -299,7 +299,6 @@
   -webkit-appearance: none;
   appearance: none;
   width: 1px;
-  margin-left: -1px;
   height: 40px;
   background: radial-gradient(circle at 30% 30%, #D4AF37, #B8860B);
   border: 1px solid #9C7D4A;
@@ -520,27 +519,6 @@
   border-right: 8px solid transparent;
   border-top: 8px solid #8B6D50; /* match your tooltip background */
 }
-.year-tooltip-input {
-  width: 90px;
-  text-align: center;
-  border: none;
-  outline: 2px solid #D4AF37;
-  cursor: text;
-}
-
-.year-tooltip-input::-webkit-outer-spin-button,
-.year-tooltip-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Subtle cursor hint on hover */
-.year-tooltip {
-  cursor: pointer;
-}
-.year-tooltip:hover {
-  outline: 1px solid rgba(212, 175, 55, 0.4);
-}
 
 .slider-wrapper {
   position: relative;
@@ -550,17 +528,13 @@
   z-index: 2;
 }
 
-
-
   
 @media (max-width: 768px) {
   .slider-frame {
     /* Force scrollbar to always show and take up space */
-    overflow-x: scroll;
-    
-    height: 45px;
-    scrollbar-width: none; /* Firefox + kills it on some mobile browsers */
-    -ms-overflow-style: none; /* IE/Edge */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    height: 50px;
   }
 
   .slider-frame::-webkit-scrollbar {
@@ -572,12 +546,9 @@
     background: linear-gradient(to right, #9C7D5E, #8B6D50);
     border-radius: 3px;
     min-width: 40px; /* prevent thumb from getting too tiny */
-    display: none;
   }
  
-.ruler-background {
-    transform: translateY(-55%); /* increase % to lift higher */
-  }
+
  
  
 

@@ -7,15 +7,15 @@ const Victoria3Timeline = ({ onYearChange }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showEventPanel, setShowEventPanel] = useState(false);
-  const [isEditingYear, setIsEditingYear] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef(null);
   const isDragging = useRef(false);
-  const isProgrammaticScroll = useRef(false);
+  const isProgrammaticScroll = useRef(false); // tracks whether scroll was triggered by code
 
+  // Define min and max years
   const MIN_YEAR = 400;
   const MAX_YEAR = 1600;
 
+  // Scalable year → pixel mapping
   const PIXELS_PER_YEAR = 2;
   const TOTAL_WIDTH = (MAX_YEAR - MIN_YEAR) * PIXELS_PER_YEAR;
   const yearToPixel = useCallback((y) => (y - MIN_YEAR) * PIXELS_PER_YEAR, []);
@@ -26,6 +26,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
     onYearChange(newYear);
   };
 
+  // Scroll the frame — marks scroll as programmatic so onScroll ignores it
   const scrollToYear = useCallback((newYear, smooth = false) => {
     if (!scrollRef.current) return;
     const frame = scrollRef.current;
@@ -37,22 +38,12 @@ const Victoria3Timeline = ({ onYearChange }) => {
       behavior: smooth ? 'smooth' : 'auto',
     });
 
+    // Clear the flag after scroll animation finishes
     clearTimeout(isProgrammaticScroll.timeout);
     isProgrammaticScroll.timeout = setTimeout(() => {
       isProgrammaticScroll.current = false;
     }, smooth ? 600 : 50);
   }, [yearToPixel]);
-
-  // Confirm typed year — clamp silently to MIN/MAX
-  const confirmYear = useCallback(() => {
-    const parsed = parseInt(inputValue);
-    const clamped = isNaN(parsed)
-      ? year
-      : Math.max(MIN_YEAR, Math.min(MAX_YEAR, parsed));
-    handleYearChange(clamped);
-    scrollToYear(clamped, true);
-    setIsEditingYear(false);
-  }, [inputValue, year, scrollToYear]);
 
   // Auto-play effect
   useEffect(() => {
@@ -74,6 +65,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
     return () => clearInterval(interval);
   }, [isPlaying, onYearChange, scrollToYear]);
 
+  // Generate ruler ticks and labels using pixel positions
   const generateRulerMarks = () => {
     const marks = [];
     for (let tickYear = MIN_YEAR; tickYear <= MAX_YEAR; tickYear += 5) {
@@ -113,55 +105,38 @@ const Victoria3Timeline = ({ onYearChange }) => {
   return (
     <div className="victoria3-timeline">
 
+      {/* Victorian Slider with Ruler Background */}
       <div className="v3-slider-container">
 
-        {/* Year tooltip — click to edit */}
-        {isEditingYear ? (
-          <input
-            className="year-tooltip year-tooltip-input"
-            type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onBlur={confirmYear}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') confirmYear();
-              if (e.key === 'Escape') setIsEditingYear(false);
-            }}
-            autoFocus
-          />
-        ) : (
-          <div
-            className="year-tooltip"
-            onClick={() => {
-              setInputValue(String(year));
-              setIsEditingYear(true);
-            }}
-            title="Click to type a year"
-          >
-            {year}
-          </div>
-        )}
+        {/* Year tooltip — centered, outside scroll frame */}
+        <div className="year-tooltip">
+          {year}
+        </div>
 
         <div
           className="slider-frame"
           ref={scrollRef}
           onScroll={(e) => {
+            // Ignore scroll events triggered by code — only react to user-initiated scrolls
             if (isDragging.current || isProgrammaticScroll.current) return;
-            const target = e.target;
-            const viewportCenter = target.scrollLeft + target.clientWidth / 2;
+            const viewportCenter = e.target.scrollLeft + e.target.clientWidth / 2;
             const snapped = Math.max(MIN_YEAR, Math.min(MAX_YEAR, pixelToYear(viewportCenter)));
             setYear(snapped);
             onYearChange(snapped);
           }}
         >
+
+          {/* Inner track — full timeline width */}
           <div className="timeline-scroll-wrapper">
             <div className="timeline-inner" style={{ width: `${TOTAL_WIDTH}px` }}>
 
+              {/* Ruler background layer */}
               <div className="ruler-background">
-                <div className="ruler-baseline" style={{ width: `${TOTAL_WIDTH}px` }} />
+                <div className="ruler-baseline" />
                 {generateRulerMarks()}
               </div>
 
+              {/* Slider on top */}
               <div className="slider-track">
                 <div className="slider-wrapper">
                   <input
@@ -171,6 +146,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
                     max={MAX_YEAR}
                     value={year}
                     onChange={(e) => {
+                      
                       const newYear = parseInt(e.target.value);
                       handleYearChange(newYear);
 
@@ -179,13 +155,14 @@ const Victoria3Timeline = ({ onYearChange }) => {
                         const thumbPx = yearToPixel(newYear);
                         const scrollLeft = frame.scrollLeft;
                         const viewportWidth = frame.clientWidth;
-                        const EDGE_THRESHOLD = viewportWidth * 0.1;
+                        const EDGE_THRESHOLD = viewportWidth * 0;
 
                         const distFromLeft = thumbPx - scrollLeft;
                         const distFromRight = scrollLeft + viewportWidth - thumbPx;
 
                         if (distFromLeft < EDGE_THRESHOLD || distFromRight < EDGE_THRESHOLD) {
-                          frame.scrollLeft = Math.max(0, thumbPx - viewportWidth / 2);
+                          // scrollToYear handles isProgrammaticScroll internally
+                          frame.scrollLeft = Math.max(0, thumbPx - viewportWidth / 2);;
                         }
                       }
 
@@ -210,6 +187,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
 
             </div>
           </div>
+
         </div>
       </div>
 
@@ -252,6 +230,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
   );
 };
 
+// Helper function for Roman numerals
 function toRoman(num) {
   const romanNumerals = {
     M: 1000, CM: 900, D: 500, CD: 400,
