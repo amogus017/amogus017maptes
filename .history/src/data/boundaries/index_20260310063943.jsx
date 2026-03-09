@@ -4,15 +4,13 @@ import mocofahit1 from './geojson/mocofahit1.json';
 import mocofahit2 from './geojson/mocofahit2.json';
 
 // Srivijaya Empire
-import sriwijaya1 from './geojson/sriwijaya1.json';
-import sriwijaya2 from './geojson/sriwijaya2.json';
-import sriwijaya3 from './geojson/sriwijaya3.json';
+import sriwijaya_650_800 from './geojson/sriwijaya_650-800.json';
 
 // Empire configuration with metadata
 export const EMPIRES = {
   majapahit: {
     id: 'majapahit',
-    name: 'Majapahit Empire',
+    name: 'Majapahit',
     color: '#D4AF37', // Gold
     borderColor: '#8B4513', // Brown
     startYear: 1293,
@@ -26,14 +24,14 @@ export const EMPIRES = {
   srivijaya: {
     id: 'srivijaya',
     name: 'Srivijaya',
-    color: '#CD7F32', // Bronze
-    borderColor: '#654321', // Dark brown
+    color: '#329ccd', // Bronze
+    borderColor: '#84242c', // Dark brown
     startYear: 650,
-    endYear: 1377,
+    endYear: 800,
     boundaries: {
-      1350: sriwijaya1,
-      1400: sriwijaya2,
-      1450: sriwijaya3,
+      650: sriwijaya_650_800,
+      700: sriwijaya_650_800,
+      800: sriwijaya_650_800,
     }
   },
   // Add more empires here as you create them:
@@ -127,7 +125,7 @@ export function getTerritoryInfo(empireId, year) {
     if (year >= 1350 && year <= 1389) {
       return {
         id: 'majapahit',
-        name: 'Majapahit Empire',
+        name: 'Majapahit',
         ruler: 'Hayam Wuruk',
         color: '#D4AF37',
         era: 'Golden Age'
@@ -135,7 +133,7 @@ export function getTerritoryInfo(empireId, year) {
     } else if (year >= 1390 && year <= 1450) {
       return {
         id: 'majapahit',
-        name: 'Majapahit Empire',
+        name: 'Majapahit',
         ruler: 'Wikramawardhana',
         color: '#DAA520',
         era: 'Decline'
@@ -153,21 +151,21 @@ export function getTerritoryInfo(empireId, year) {
 
   // Srivijaya-specific eras
   if (empireId === 'srivijaya') {
-    if (year >= 650 && year <= 1000) {
+    if (year >= 650 && year <= 700) {
+      return {
+        id: 'srivijaya',
+        name: 'Srivijaya',
+        ruler: 'Dapunta Hyang Sri Jayanasa',
+        color: '#329ccd',
+        era: 'Founding Era'
+      };
+    } else if (year >= 701 && year <= 800) {
       return {
         id: 'srivijaya',
         name: 'Srivijaya',
         ruler: 'Various Maharajas',
-        color: '#CD7F32',
-        era: 'Golden Age'
-      };
-    } else if (year >= 1001 && year <= 1377) {
-      return {
-        id: 'srivijaya',
-        name: 'Srivijaya',
-        ruler: 'Unknown',
-        color: '#A0522D',
-        era: 'Decline'
+        color: '#329ccd',
+        era: 'Early Expansion'
       };
     }
   }

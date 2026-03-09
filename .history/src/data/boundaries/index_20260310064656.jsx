@@ -4,15 +4,13 @@ import mocofahit1 from './geojson/mocofahit1.json';
 import mocofahit2 from './geojson/mocofahit2.json';
 
 // Srivijaya Empire
-import sriwijaya1 from './geojson/sriwijaya1.json';
-import sriwijaya2 from './geojson/sriwijaya2.json';
-import sriwijaya3 from './geojson/sriwijaya3.json';
+import sriwijaya_650_800 from './geojson/sriwijaya_650-800.json';
 
 // Empire configuration with metadata
 export const EMPIRES = {
   majapahit: {
     id: 'majapahit',
-    name: 'Majapahit Empire',
+    name: 'Majapahit',
     color: '#D4AF37', // Gold
     borderColor: '#8B4513', // Brown
     startYear: 1293,
@@ -28,13 +26,10 @@ export const EMPIRES = {
     name: 'Srivijaya',
     color: '#329ccd', // Bronze
     borderColor: '#84242c', // Dark brown
-    startYear: 1200,
-    endYear: 1450,
-    boundaries: {
-      1200: sriwijaya1,
-      1300: sriwijaya2,
-      1450: sriwijaya3,
-    }
+    startYear: 650,
+    endYear: 800,
+    // Single GeoJSON — features are filtered by their start/end properties at render time
+    geojson: sriwijaya_650_800,
   },
   // Add more empires here as you create them:
   // khmer: { ... },
@@ -50,26 +45,40 @@ export function getEmpiresForYear(year) {
   const activeEmpires = [];
 
   Object.values(EMPIRES).forEach(empire => {
-    // Check if empire existed in this year
-    if (year >= empire.startYear && year <= empire.endYear) {
-      // Find the closest boundary year <= requested year
-      const boundaryYears = Object.keys(empire.boundaries).map(Number).sort((a, b) => a - b);
-      let selectedYear = boundaryYears[0]; // Default to earliest
-      
-      for (const boundaryYear of boundaryYears) {
-        if (boundaryYear <= year) {
-          selectedYear = boundaryYear;
-        } else {
-          break;
-        }
-      }
+    if (year < empire.startYear || year > empire.endYear) return;
 
-      activeEmpires.push({
-        ...empire,
-        boundary: empire.boundaries[selectedYear],
-        boundaryYear: selectedYear
+    let boundary;
+
+    if (empire.geojson) {
+      // Filter individual features by their start/end properties
+      const filteredFeatures = empire.geojson.features.filter(f => {
+        const s = f.properties.start;
+        const e = f.properties.end;
+        return year >= s && year < e;
       });
+
+      if (filteredFeatures.length === 0) return;
+
+      boundary = {
+        ...empire.geojson,
+        features: filteredFeatures,
+      };
+    } else {
+      // Legacy: pick closest boundary year from the boundaries map
+      const boundaryYears = Object.keys(empire.boundaries).map(Number).sort((a, b) => a - b);
+      let selectedYear = boundaryYears[0];
+      for (const by of boundaryYears) {
+        if (by <= year) selectedYear = by;
+        else break;
+      }
+      boundary = empire.boundaries[selectedYear];
     }
+
+    activeEmpires.push({
+      ...empire,
+      boundary,
+      boundaryYear: year,
+    });
   });
 
   return activeEmpires;
@@ -84,24 +93,23 @@ export function getEmpiresForYear(year) {
 export function getEmpireBoundary(empireId, year) {
   const empire = EMPIRES[empireId];
   if (!empire) return null;
+  if (year < empire.startYear || year > empire.endYear) return null;
 
-  // Check if empire existed in this year
-  if (year < empire.startYear || year > empire.endYear) {
-    return null;
+  if (empire.geojson) {
+    const filteredFeatures = empire.geojson.features.filter(f => {
+      return year >= f.properties.start && year < f.properties.end;
+    });
+    if (filteredFeatures.length === 0) return null;
+    return { ...empire.geojson, features: filteredFeatures };
   }
 
-  // Find closest boundary year
+  // Legacy boundaries map
   const boundaryYears = Object.keys(empire.boundaries).map(Number).sort((a, b) => a - b);
   let selectedYear = boundaryYears[0];
-  
-  for (const boundaryYear of boundaryYears) {
-    if (boundaryYear <= year) {
-      selectedYear = boundaryYear;
-    } else {
-      break;
-    }
+  for (const by of boundaryYears) {
+    if (by <= year) selectedYear = by;
+    else break;
   }
-
   return empire.boundaries[selectedYear];
 }
 
@@ -153,21 +161,21 @@ export function getTerritoryInfo(empireId, year) {
 
   // Srivijaya-specific eras
   if (empireId === 'srivijaya') {
-    if (year >= 1200 && year <= 1300) {
+    if (year >= 650 && year <= 700) {
+      return {
+        id: 'srivijaya',
+        name: 'Srivijaya',
+        ruler: 'Dapunta Hyang Sri Jayanasa',
+        color: '#329ccd',
+        era: 'Founding Era'
+      };
+    } else if (year >= 701 && year <= 800) {
       return {
         id: 'srivijaya',
         name: 'Srivijaya',
         ruler: 'Various Maharajas',
         color: '#329ccd',
-        era: 'Golden Age'
-      };
-    } else if (year >= 1301 && year <= 1400) {
-      return {
-        id: 'srivijaya',
-        name: 'Srivijaya',
-        ruler: 'Unknown',
-        color: '#329ccd',
-        era: 'Decline'
+        era: 'Early Expansion'
       };
     }
   }

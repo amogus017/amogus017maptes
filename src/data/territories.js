@@ -217,80 +217,81 @@ export const territoriesData = {
           'Javanese States': 'Competition'
         }
       },
-      1200: {
-        era: 'Decline',
+      650: {
+        era: 'Founding Era',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
-          name: 'Unknown',
-          reignStart: 1150,
-          reignEnd: 1250
-        },
-        capital: 'Palembang',
-        population: '~1-2 million',
-        religion: 'Mahayana Buddhism',
-        government: 'Weakened Thalassocracy',
-        summary: 'Maritime dominance challenged by rising Javanese and Thai kingdoms',
-        keyEvents: [
-          { year: 1025, event: 'Chola raid devastates capital', type: 'military' },
-          { year: 1183, event: 'Java gains independence', type: 'political' }
-        ],
-        historicalContext: 'After the devastating Chola raids of 1025, Srivijaya never fully recovers.\n\nRising powers in Java and the Malay Peninsula erode its control.',
-        economy: {
-          primary: ['Reduced Trade', 'Local Agriculture'],
-          exports: ['Spices', 'Forest Products'],
-          tradingPartners: ['Song China', 'Regional States']
-        },
-        culture: {
-          language: 'Old Malay',
-          script: 'Pallava Script',
-          architecture: 'Temple Maintenance',
-          literature: 'Declining Scholarship'
-        },
-        territories: ['Southern Sumatra', 'Parts of Malay Peninsula'],
-        vassals: ['Jambi'],
-        rivals: ['Singhasari', 'Sukhothai', 'Tambralinga'],
-        relations: {
-          'Song China': 'Diminished Tributary',
-          'Javanese Kingdoms': 'Losing Ground'
-        }
-      },
-      1350: {
-        era: 'Final Period',
-        ruler: {
-          portrait: '👑',
-          title: 'Maharaja',
-          name: 'Unknown',
-          reignStart: 1300,
-          reignEnd: 1377
+          name: 'Dapunta Hyang Sri Jayanasa',
+          reignStart: 650,
+          reignEnd: 683
         },
         capital: 'Palembang',
         population: '~500,000',
-        religion: 'Buddhism and Islam',
-        government: 'Regional Power',
-        summary: 'Remnant state, soon to be absorbed by Majapahit',
+        religion: 'Mahayana Buddhism',
+        government: 'Thalassocracy',
+        summary: 'Srivijaya founded on the Musi River, beginning its rise as a maritime power controlling Sumatra',
         keyEvents: [
-          { year: 1347, event: 'Majapahit expansion begins', type: 'military' },
-          { year: 1377, event: 'Fall to Majapahit', type: 'political' }
+          { year: 650, event: 'Srivijaya founded by Dapunta Hyang', type: 'political' },
+          { year: 671, event: 'I Tsing visits — finds 1,000 Buddhist monks', type: 'cultural' }
         ],
-        historicalContext: 'The once-great maritime empire is now a shadow of its former glory.\n\nMajapahit\'s expansion will soon end Srivijaya\'s independence.',
+        historicalContext: 'Srivijaya emerges as a coastal polity controlling the Strait of Malacca.\n\nEarly Chinese records and the Kedukan Bukit inscription document its rapid rise.',
         economy: {
-          primary: ['Local Trade', 'Subsistence'],
-          exports: ['Limited Spices'],
-          tradingPartners: ['Regional Only']
+          primary: ['River Trade', 'Port Tolls', 'Tribute'],
+          exports: ['Forest Products', 'Resins', 'Gold'],
+          tradingPartners: ['Tang China', 'India', 'Champa']
         },
         culture: {
-          language: 'Old Malay',
-          script: 'Mixed Scripts',
-          architecture: 'Decay',
-          literature: 'Oral Traditions'
+          language: 'Old Malay, Sanskrit',
+          script: 'Pallava Script',
+          architecture: 'Early Buddhist Shrines',
+          literature: 'Kedukan Bukit Inscription'
         },
-        territories: ['Palembang Region'],
+        territories: ['Southern Sumatra', 'Musi River Delta'],
         vassals: [],
-        rivals: ['Majapahit'],
+        rivals: ['Melayu Kingdom', 'Javanese Polities'],
         relations: {
-          'Majapahit': 'Facing Conquest',
-          'Ming China': 'Minimal Contact'
+          'Tang China': 'Early Tributary Contact',
+          'India': 'Buddhist Exchange'
+        }
+      },
+      800: {
+        era: 'Early Expansion',
+        ruler: {
+          portrait: '👑',
+          title: 'Maharaja',
+          name: 'Dharmasetu',
+          reignStart: 775,
+          reignEnd: 825
+        },
+        capital: 'Palembang',
+        population: '~1.5 million',
+        religion: 'Mahayana Buddhism',
+        government: 'Thalassocracy',
+        summary: 'Srivijaya expands control over the Malay Peninsula and Sunda Strait, dominating regional trade',
+        keyEvents: [
+          { year: 775, event: 'Ligor inscription — Srivijaya asserts Malay Peninsula control', type: 'political' },
+          { year: 800, event: 'Extensive Buddhist temple construction', type: 'cultural' }
+        ],
+        historicalContext: 'Srivijaya consolidates its grip on the Strait of Malacca and Sunda Strait.\n\nIt becomes the dominant entrepôt for trade between China and the Indian Ocean world.',
+        economy: {
+          primary: ['Maritime Trade', 'Port Revenues', 'Tribute'],
+          exports: ['Spices', 'Gold', 'Camphor', 'Resins'],
+          tradingPartners: ['Tang China', 'Abbasid Caliphate', 'India', 'Champa']
+        },
+        culture: {
+          language: 'Old Malay, Sanskrit',
+          script: 'Pallava Script',
+          architecture: 'Buddhist Temples and Stupas',
+          literature: 'Buddhist Sutras, Diplomatic Records'
+        },
+        territories: ['Sumatra', 'Malay Peninsula', 'Western Java', 'Southern Thailand'],
+        vassals: ['Jambi', 'Kedah', 'Chaiya'],
+        rivals: ['Javanese Kingdoms', 'Sailendra'],
+        relations: {
+          'Tang China': 'Active Tributary Partner',
+          'India': 'Buddhist Scholarly Exchange',
+          'Abbasid Caliphate': 'Emerging Trade Contact'
         }
       }
     }

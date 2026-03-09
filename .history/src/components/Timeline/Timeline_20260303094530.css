@@ -115,14 +115,19 @@
 
   /* Parchment background */
   background: linear-gradient(to bottom, #E8DCC8, #D9CDBB);
-  border: 1px solid #B8860B;
+  border: 1px solid rgba(139, 115, 85, 0.2);
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     inset 0 -1px 0 rgba(0, 0, 0, 0.08),
     0 2px 4px rgba(0, 0, 0, 0.1),
     0 4px 8px rgba(0, 0, 0, 0.05);
 
-    
+     border: 1px solid #9C7D5E;          /* outer warm brown */
+  outline: 2px solid #D4AF37;         /* gold ring just outside */
+  outline-offset: 2px;                /* gap between border and gold */
+  box-shadow: 
+    0 2px 8px rgba(0,0,0,0.25),       /* drop shadow */
+    inset 0 1px 0 rgba(255,255,255,0.4); /* inner top highlight */
 }
 
 .slider-frame::-webkit-scrollbar {

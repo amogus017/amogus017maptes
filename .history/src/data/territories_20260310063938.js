@@ -1,11 +1,13 @@
 // src/data/territories.js
-// Historical data for Southeast Asian territories - FIXED to match TerritoryInfoPanel requirements
+// Historical data for Southeast Asian territories - UPDATED with Srivijaya
 
 export const territoriesData = {
   majapahit: {
     id: 'majapahit',
     name: 'Majapahit',
     englishName: 'Majapahit Empire',
+    wikiSlug: 'Majapahit',
+    idWikiSlug: 'Majapahit',
     color: '#D4AF37',
     
     timeline: {
@@ -164,14 +166,146 @@ export const territoriesData = {
         }
       }
     }
+  },
+
+  // NEW: Srivijaya Empire
+  srivijaya: {
+    id: 'srivijaya',
+    name: 'Srivijaya',
+    englishName: 'Srivijaya Empire',
+    wikiSlug: 'Srivijaya',
+    idWikiSlug: 'Sriwijaya',
+    color: '#CD7F32',
+    
+    timeline: {
+      900: {
+        era: 'Maritime Dominance',
+        ruler: {
+          portrait: '👑',
+          title: 'Maharaja',
+          name: 'Unknown',
+          reignStart: 850,
+          reignEnd: 950
+        },
+        capital: 'Palembang',
+        population: '~2-3 million',
+        religion: 'Mahayana Buddhism',
+        government: 'Thalassocracy',
+        summary: 'Dominant maritime power controlling the Strait of Malacca trade routes',
+        keyEvents: [
+          { year: 900, event: 'Peak naval supremacy', type: 'military' },
+          { year: 925, event: 'Trade monopoly established', type: 'economic' }
+        ],
+        historicalContext: 'Srivijaya controls the vital maritime trade routes between India and China.\n\nA major center of Buddhist learning attracting scholars from across Asia.',
+        economy: {
+          primary: ['Maritime Trade', 'Port Revenues', 'Tribute'],
+          exports: ['Spices', 'Gold', 'Camphor', 'Resins'],
+          tradingPartners: ['Tang/Song China', 'Chola India', 'Arab Merchants', 'Java']
+        },
+        culture: {
+          language: 'Old Malay, Sanskrit',
+          script: 'Pallava Script',
+          architecture: 'Buddhist Temples and Stupas',
+          literature: 'Buddhist Sutras, Maritime Records'
+        },
+        territories: ['Sumatra', 'Malay Peninsula', 'Western Java', 'Southern Thailand'],
+        vassals: ['Jambi', 'Kedah', 'Chaiya'],
+        rivals: ['Javanese Kingdoms', 'Chola Dynasty'],
+        relations: {
+          'Song China': 'Tributary Trade Partner',
+          'Chola India': 'Trade Rivalry',
+          'Javanese States': 'Competition'
+        }
+      },
+      650: {
+        era: 'Founding Era',
+        ruler: {
+          portrait: '👑',
+          title: 'Maharaja',
+          name: 'Dapunta Hyang Sri Jayanasa',
+          reignStart: 650,
+          reignEnd: 683
+        },
+        capital: 'Palembang',
+        population: '~500,000',
+        religion: 'Mahayana Buddhism',
+        government: 'Thalassocracy',
+        summary: 'Srivijaya founded on the Musi River, beginning its rise as a maritime power controlling Sumatra',
+        keyEvents: [
+          { year: 650, event: 'Srivijaya founded by Dapunta Hyang', type: 'political' },
+          { year: 671, event: 'I Tsing visits — finds 1,000 Buddhist monks', type: 'cultural' }
+        ],
+        historicalContext: 'Srivijaya emerges as a coastal polity controlling the Strait of Malacca.\n\nEarly Chinese records and the Kedukan Bukit inscription document its rapid rise.',
+        economy: {
+          primary: ['River Trade', 'Port Tolls', 'Tribute'],
+          exports: ['Forest Products', 'Resins', 'Gold'],
+          tradingPartners: ['Tang China', 'India', 'Champa']
+        },
+        culture: {
+          language: 'Old Malay, Sanskrit',
+          script: 'Pallava Script',
+          architecture: 'Early Buddhist Shrines',
+          literature: 'Kedukan Bukit Inscription'
+        },
+        territories: ['Southern Sumatra', 'Musi River Delta'],
+        vassals: [],
+        rivals: ['Melayu Kingdom', 'Javanese Polities'],
+        relations: {
+          'Tang China': 'Early Tributary Contact',
+          'India': 'Buddhist Exchange'
+        }
+      },
+      800: {
+        era: 'Early Expansion',
+        ruler: {
+          portrait: '👑',
+          title: 'Maharaja',
+          name: 'Dharmasetu',
+          reignStart: 775,
+          reignEnd: 825
+        },
+        capital: 'Palembang',
+        population: '~1.5 million',
+        religion: 'Mahayana Buddhism',
+        government: 'Thalassocracy',
+        summary: 'Srivijaya expands control over the Malay Peninsula and Sunda Strait, dominating regional trade',
+        keyEvents: [
+          { year: 775, event: 'Ligor inscription — Srivijaya asserts Malay Peninsula control', type: 'political' },
+          { year: 800, event: 'Extensive Buddhist temple construction', type: 'cultural' }
+        ],
+        historicalContext: 'Srivijaya consolidates its grip on the Strait of Malacca and Sunda Strait.\n\nIt becomes the dominant entrepôt for trade between China and the Indian Ocean world.',
+        economy: {
+          primary: ['Maritime Trade', 'Port Revenues', 'Tribute'],
+          exports: ['Spices', 'Gold', 'Camphor', 'Resins'],
+          tradingPartners: ['Tang China', 'Abbasid Caliphate', 'India', 'Champa']
+        },
+        culture: {
+          language: 'Old Malay, Sanskrit',
+          script: 'Pallava Script',
+          architecture: 'Buddhist Temples and Stupas',
+          literature: 'Buddhist Sutras, Diplomatic Records'
+        },
+        territories: ['Sumatra', 'Malay Peninsula', 'Western Java', 'Southern Thailand'],
+        vassals: ['Jambi', 'Kedah', 'Chaiya'],
+        rivals: ['Javanese Kingdoms', 'Sailendra'],
+        relations: {
+          'Tang China': 'Active Tributary Partner',
+          'India': 'Buddhist Scholarly Exchange',
+          'Abbasid Caliphate': 'Emerging Trade Contact'
+        }
+      }
+    }
   }
 };
 
 export const regionalEvents = [
+  { year: 650, title: 'Srivijaya Founded', impact: 'Formation' },
+  { year: 1025, title: 'Chola raids Srivijaya', impact: 'Major Decline' },
   { year: 1293, title: 'Founding of Majapahit', impact: 'Formation' },
-  { year: 1350, title: 'Golden Age begins', impact: 'Peak' },
+  { year: 1350, title: 'Majapahit Golden Age begins', impact: 'Peak' },
+  { year: 1377, title: 'Srivijaya falls to Majapahit', impact: 'End' },
   { year: 1389, title: 'Hayam Wuruk dies', impact: 'Decline' },
-  { year: 1527, title: 'Fall to Demak', impact: 'End' }
+  { year: 1527, title: 'Majapahit falls to Demak', impact: 'End' }
 ];
 
 export function getTerritoryData(territoryId, year) {
