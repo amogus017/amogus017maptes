@@ -1,5 +1,5 @@
 // src/components/TerritoryInfo/TerritoryInfoPanel.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTerritoryData, regionalEvents } from '../../data/territories';
 import WikiPanel from './WikiPanel';
@@ -10,7 +10,7 @@ const DUMMY_SOURCES = [
   {
     type: 'primary',
     title: 'Nagarakretagama',
-    author: 'Mpu Prapanca',
+    author: 'Mpu Kontolodon',
     year: '1365',
     note: 'Primary Javanese court poem describing Majapahit territories',
   },
@@ -28,6 +28,8 @@ const DUMMY_SOURCES = [
     year: '1993',
     note: 'Journal of Southeast Asian Studies, Vol. 24',
   },
+
+
   {
     type: 'web',
     title: 'JSTOR — Southeast Asian Empires Collection',
@@ -41,6 +43,14 @@ const DUMMY_SOURCES = [
     year: '1968',
     note: 'Foundational work on Indianization in the region',
   },
+];
+
+const TABS = [
+  { id: 'overview', label: 'Overview', icon: '📜' },
+  { id: 'history', label: 'History', icon: '📖' },
+  { id: 'economy', label: 'Economy', icon: '💰' },
+  { id: 'culture', label: 'Culture', icon: '🏛️' },
+  { id: 'relations', label: 'Relations', icon: '⚖️' },
 ];
 
 const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
@@ -59,6 +69,11 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
       setSourcesOpen(false);
     }
   }, [territoryId, currentYear]);
+
+  // Reset to overview tab when switching territories
+  useEffect(() => {
+    setActiveTab('overview');
+  }, [territoryId]);
 
   // Close wiki panel when territory panel closes
   useEffect(() => {
@@ -79,19 +94,14 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [sourcesOpen]);
 
+  const relevantEvents = useMemo(
+    () => regionalEvents
+      .filter(e => Math.abs(e.year - currentYear) <= 50)
+      .sort((a, b) => a.year - b.year),
+    [currentYear]
+  );
+
   if (!territoryData) return null;
-
-  const tabs = [
-    { id: 'overview', label: 'Overview', icon: '📜' },
-    { id: 'history', label: 'History', icon: '📖' },
-    { id: 'economy', label: 'Economy', icon: '💰' },
-    { id: 'culture', label: 'Culture', icon: '🏛️' },
-    { id: 'relations', label: 'Relations', icon: '⚖️' }
-  ];
-
-  const relevantEvents = regionalEvents.filter(
-    e => Math.abs(e.year - currentYear) <= 50
-  ).sort((a, b) => a.year - b.year);
 
   return (
     <>
@@ -271,7 +281,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
 
               {/* Tab Navigation */}
               <div className="v3-tab-nav">
-                {tabs.map(tab => (
+                {TABS.map(tab => (
                   <button
                     key={tab.id}
                     className={`v3-tab ${activeTab === tab.id ? 'active' : ''}`}
@@ -369,8 +379,8 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                                   <span className="marker-year">{event.year}</span>
                                 </div>
                                 <div className="event-content">
-                                  <span className="event-title">{event.event}</span>
-                                  <span className="event-region">{event.region}</span>
+                                  <span className="event-title">{event.title}</span>
+                                  <span className="event-region">{event.impact}</span>
                                 </div>
                               </div>
                             ))}
@@ -522,7 +532,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                             {Object.entries(territoryData.relations).map(([nation, status], idx) => (
                               <div key={idx} className="relation-card">
                                 <span className="relation-nation">{nation.charAt(0).toUpperCase() + nation.slice(1)}</span>
-                                <span className={`relation-status ${status.toLowerCase().replace(' ', '-')}`}>
+                                <span className={`relation-status ${status.toLowerCase().replaceAll(' ', '-')}`}>
                                   {status}
                                 </span>
                               </div>
@@ -550,6 +560,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
           so it can animate independently */}
       <WikiPanel
         wikiSlug={territoryData?.wikiSlug}
+        idWikiSlug={territoryData?.idWikiSlug}
         territoryName={territoryData?.name}
         isOpen={isOpen && wikiOpen}
         onClose={() => setWikiOpen(false)}

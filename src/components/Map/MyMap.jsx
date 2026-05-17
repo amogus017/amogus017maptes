@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { MapContainer, GeoJSON, TileLayer, useMap } from 'react-leaflet';
 import { getEmpiresForYear, getTerritoryInfo } from '../../data/boundaries';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MyMap.css';
 import { calculateLabelPlacement } from './labelUtils';
@@ -145,6 +144,24 @@ class MyMap extends Component {
         activeEmpires: [],
     }
 
+    // Stable per-empire ref callbacks — keyed by empire.id so the same
+    // function reference is returned across renders, preventing React from
+    // detaching and reattaching the ref on every render cycle.
+    tooltipRefs = {};
+
+    // Stable per-empire style functions — built once per year change in
+    // loadEmpiresForYear so render() always passes the same reference.
+    // react-leaflet only resets sub-layer styles when the reference changes,
+    // so keeping it stable preserves hover highlights between year changes.
+    styleFns = {};
+
+    getTooltipRef = (empire) => {
+        if (!this.tooltipRefs[empire.id]) {
+            this.tooltipRefs[empire.id] = (r) => this.bindGroupTooltip(r, empire);
+        }
+        return this.tooltipRefs[empire.id];
+    }
+
     componentDidMount() {
         this.loadEmpiresForYear(this.props.currentYear || this.state.currentYear);
     }
@@ -157,17 +174,16 @@ class MyMap extends Component {
 
     loadEmpiresForYear = (year) => {
         const empires = getEmpiresForYear(year);
+        empires.forEach(empire => {
+            const info = getTerritoryInfo(empire.id, year);
+            this.styleFns[empire.id] = () => ({
+                fillColor:   info.color,
+                fillOpacity: 0.6,
+                color:       info.color,
+                weight:      2,
+            });
+        });
         this.setState({ currentYear: year, activeEmpires: empires });
-    }
-
-    getTerritoryStyle = (empireId) => () => {
-        const info = getTerritoryInfo(empireId, this.state.currentYear);
-        return {
-            fillColor:   info.color,
-            fillOpacity: 0.6,
-            color:       info.color,
-            weight:      2,
-        };
     }
 
     onTerritoryMouseover = (event) => {
@@ -181,21 +197,25 @@ class MyMap extends Component {
 
     onEachTerritory = (empire) => (territory, layer) => {
         const info = getTerritoryInfo(empire.id, this.state.currentYear);
+        layer.on({
+            click:     ()  => { if (this.props.onTerritoryClick) this.props.onTerritoryClick(info); },
+            mouseover: (e) => { this.onTerritoryMouseover(e); },
+            mouseout:  (e) => { this.onTerritoryMouseout(empire)(e); },
+        });
+    }
 
-        layer.bindPopup(`
-            <div style="text-align:center;">
+    bindGroupTooltip = (groupLayer, empire) => {
+        if (!groupLayer) return;
+        const info = getTerritoryInfo(empire.id, this.state.currentYear);
+        groupLayer.bindTooltip(
+            `<div style="text-align:center;">
                 <h3>${info.name}</h3>
                 <p><strong>Year:</strong> ${this.state.currentYear}</p>
                 <p><strong>Ruler:</strong> ${info.ruler}</p>
                 <p><strong>Era:</strong> ${info.era}</p>
-            </div>
-        `, { closeButton: false });
-
-        layer.on({
-            click:     ()  => { if (this.props.onTerritoryClick) this.props.onTerritoryClick(info); },
-            mouseover: (e) => { e.target.openPopup();  this.onTerritoryMouseover(e); },
-            mouseout:  (e) => { e.target.closePopup(); this.onTerritoryMouseout(empire)(e); },
-        });
+            </div>`,
+            { sticky: true, direction: 'top', opacity: 1 }
+        );
     }
 
     render() {
@@ -235,8 +255,9 @@ class MyMap extends Component {
                         <GeoJSON
                             key={`${empire.id}-${currentYear}-${index}`}
                             data={empire.boundary}
-                            style={this.getTerritoryStyle(empire.id)}
+                            style={this.styleFns[empire.id]}
                             onEachFeature={this.onEachTerritory(empire)}
+                            ref={this.getTooltipRef(empire)}
                         />
                     ))}
 

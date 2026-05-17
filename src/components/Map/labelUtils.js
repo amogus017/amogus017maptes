@@ -7,7 +7,7 @@
  * Cy = Σ(yi + yi+1)(xi * yi+1 - xi+1 * yi) / 6A
  * where A is the signed area of the polygon
  */
-export function calculatePolygonCentroid(coordinates) {
+function calculatePolygonCentroid(coordinates) {
     let area = 0;
     let cx = 0;
     let cy = 0;
@@ -52,7 +52,7 @@ function calculateSimpleCenter(coordinates) {
 /**
  * Calculate oriented bounding box to determine best rotation angle
  */
-export function calculateOrientedBoundingBox(coordinates) {
+function calculateOrientedBoundingBox(coordinates) {
     const n = coordinates.length - 1;
     
     // Calculate covariance matrix
@@ -107,7 +107,7 @@ export function calculateOrientedBoundingBox(coordinates) {
 /**
  * Calculate bounding box dimensions
  */
-export function calculateBounds(geojson) {
+function calculateBounds(geojson) {
     let minLat = Infinity, maxLat = -Infinity;
     let minLng = Infinity, maxLng = -Infinity;
     let allCoordinates = [];

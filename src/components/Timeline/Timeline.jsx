@@ -1,17 +1,17 @@
-// components/Timeline/Victoria3Timeline.jsx
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+// components/Timeline/Timeline.jsx
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import './Timeline.css';
 
 const Victoria3Timeline = ({ onYearChange }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showEventPanel, setShowEventPanel] = useState(false);
   const [isEditingYear, setIsEditingYear] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef(null);
   const isDragging = useRef(false);
+  const isDraggingTimeout = useRef(null);
   const isProgrammaticScroll = useRef(false);
+  const isProgrammaticScrollTimeout = useRef(null);
 
   const MIN_YEAR = 400;
   const MAX_YEAR = 1600;
@@ -37,8 +37,8 @@ const Victoria3Timeline = ({ onYearChange }) => {
       behavior: smooth ? 'smooth' : 'auto',
     });
 
-    clearTimeout(isProgrammaticScroll.timeout);
-    isProgrammaticScroll.timeout = setTimeout(() => {
+    clearTimeout(isProgrammaticScrollTimeout.current);
+    isProgrammaticScrollTimeout.current = setTimeout(() => {
       isProgrammaticScroll.current = false;
     }, smooth ? 600 : 50);
   }, [yearToPixel]);
@@ -52,7 +52,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
     handleYearChange(clamped);
     scrollToYear(clamped, true);
     setIsEditingYear(false);
-  }, [inputValue, year, scrollToYear]);
+  }, [inputValue, year, scrollToYear, handleYearChange]);
 
   // Auto-play effect
   useEffect(() => {
@@ -74,7 +74,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
     return () => clearInterval(interval);
   }, [isPlaying, onYearChange, scrollToYear]);
 
-  const generateRulerMarks = () => {
+  const rulerMarks = useMemo(() => {
     const marks = [];
     for (let tickYear = MIN_YEAR; tickYear <= MAX_YEAR; tickYear += 5) {
       const px = yearToPixel(tickYear);
@@ -108,7 +108,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
       }
     }
     return marks;
-  };
+  }, [yearToPixel]);
 
   return (
     <div className="victoria3-timeline">
@@ -159,7 +159,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
 
               <div className="ruler-background">
                 <div className="ruler-baseline" style={{ width: `${TOTAL_WIDTH}px` }} />
-                {generateRulerMarks()}
+                {rulerMarks}
               </div>
 
               <div className="slider-track">
@@ -189,8 +189,8 @@ const Victoria3Timeline = ({ onYearChange }) => {
                         }
                       }
 
-                      clearTimeout(isDragging.timeout);
-                      isDragging.timeout = setTimeout(() => {
+                      clearTimeout(isDraggingTimeout.current);
+                      isDraggingTimeout.current = setTimeout(() => {
                         isDragging.current = false;
                       }, 150);
                     }}
@@ -213,59 +213,8 @@ const Victoria3Timeline = ({ onYearChange }) => {
         </div>
       </div>
 
-      {/* Events Panel */}
-      <AnimatePresence>
-        {showEventPanel && (
-          <motion.div
-            className="events-panel"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-          >
-            <h4>Historical Events</h4>
-            <div className="events-list">
-              {[
-                { year: 1887, event: "French Indochina Formed" },
-                { year: 1942, event: "Japanese Invasion" },
-                { year: 1945, event: "End of World War II" },
-                { year: 1957, event: "Malayan Independence" },
-                { year: 1975, event: "Vietnam Reunification" },
-              ].map((event) => (
-                <button
-                  key={event.year}
-                  className={`event-item ${year === event.year ? "active" : ""}`}
-                  onClick={() => {
-                    handleYearChange(event.year);
-                    scrollToYear(event.year, true);
-                  }}
-                >
-                  <span className="event-year">{event.year}</span>
-                  <span className="event-name">{event.event}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
     </div>
   );
 };
-
-function toRoman(num) {
-  const romanNumerals = {
-    M: 1000, CM: 900, D: 500, CD: 400,
-    C: 100, XC: 90, L: 50, XL: 40,
-    X: 10, IX: 9, V: 5, IV: 4, I: 1
-  };
-  let roman = '';
-  for (let key in romanNumerals) {
-    while (num >= romanNumerals[key]) {
-      roman += key;
-      num -= romanNumerals[key];
-    }
-  }
-  return roman;
-}
 
 export default Victoria3Timeline;

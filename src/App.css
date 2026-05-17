@@ -1,3 +1,74 @@
+/* ── Floating Ask AI button ─────────────────────────────────────────────── */
+.v3-ask-ai-btn {
+  position: fixed;
+  bottom: 75px;
+  right: 24px;
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+
+  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
+  border: 2px solid #8B4513;
+  border-image: linear-gradient(135deg, #CD853F, #8B4513, #654321) 1;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 0 12px rgba(139, 69, 19, 0.06);
+
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #3E2723;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.v3-ask-ai-btn:hover {
+  box-shadow:
+    0 6px 22px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 0 16px rgba(139, 69, 19, 0.1);
+  transform: translateY(-1px);
+}
+
+.v3-ask-ai-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    inset 0 0 8px rgba(139, 69, 19, 0.08);
+}
+
+.v3-ask-ai-icon {
+  font-size: 15px;
+  color: #8B4513;
+  flex-shrink: 0;
+}
+
+.v3-ask-ai-label {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .v3-ask-ai-btn {
+    bottom: 80px;
+    right: 12px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .v3-ask-ai-label {
+    max-width: 140px;
+  }
+}
 
 .App {
   text-align: center;

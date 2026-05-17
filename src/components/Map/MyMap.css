@@ -109,6 +109,52 @@
   font-weight: 500;
 }
 
+/* Leaflet tooltip — matches popup style */
+.leaflet-tooltip {
+  padding: 0;
+  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
+  border: 3px solid #8B4513;
+  border-radius: 10%;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(139, 69, 19, 0.05);
+  font-family: 'Georgia', serif;
+}
+
+.leaflet-tooltip::before {
+  border-top-color: #8B4513;
+}
+
+.leaflet-tooltip h3 {
+  margin: 0 0 10px 0;
+  color: #3E2723;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.leaflet-tooltip p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #5D4037;
+  line-height: 1.6;
+}
+
+.leaflet-tooltip strong {
+  color: #3E2723;
+  font-weight: 700;
+}
+
+/* Remove browser focus ring on clicked polygons */
+.leaflet-interactive:focus {
+    outline: none;
+}
+
 /* Leaflet popup customization */
 .leaflet-popup-content-wrapper {
   border-radius: 10%;

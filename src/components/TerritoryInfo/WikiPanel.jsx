@@ -1,5 +1,5 @@
 // src/components/TerritoryInfo/WikiPanel.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import './WikiPanel.css';
@@ -180,19 +180,20 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
     return doc.body.innerHTML;
   };
 
-  // Parse HTML into collapsible sections
-  const renderSections = () => {
+  // Parse HTML into collapsible sections — memoised so DOMParser only runs
+  // when wikiContent changes, not on every render.
+  const sections = useMemo(() => {
     if (!wikiContent) return [];
     const parser = new DOMParser();
     const doc = parser.parseFromString(wikiContent, 'text/html');
-    const sections = [];
+    const result = [];
     let currentSection = { title: null, id: 'intro', content: [] };
 
     Array.from(doc.body.childNodes).forEach((node, idx) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const tag = node.tagName?.toLowerCase();
         if (tag === 'h2' || tag === 'h3') {
-          if (currentSection.content.length > 0) sections.push({ ...currentSection });
+          if (currentSection.content.length > 0) result.push({ ...currentSection });
           currentSection = {
             title: node.textContent.trim(),
             id: `section-${idx}`,
@@ -204,9 +205,9 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
       }
     });
 
-    if (currentSection.content.length > 0) sections.push(currentSection);
-    return sections;
-  };
+    if (currentSection.content.length > 0) result.push(currentSection);
+    return result;
+  }, [wikiContent]);
 
   const toggleSection = (sectionId) => {
     setCollapsedSections(prev => ({
@@ -221,7 +222,6 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
     if (contentRef.current) contentRef.current.scrollTop = 0;
   };
 
-  const sections = wikiContent ? renderSections() : [];
   const wikiPageUrl = resolvedSlug
     ? `https://${lang.domain}/wiki/${resolvedSlug}`
     : `https://${lang.domain}/wiki/${language === 'en' ? wikiSlug : (idWikiSlug || wikiSlug)}`;
