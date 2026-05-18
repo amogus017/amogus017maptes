@@ -23,12 +23,12 @@ const LANGUAGES = {
   },
 };
 
-const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => {
+const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defaultLanguage = 'en' }) => {
   const [wikiContent, setWikiContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [collapsedSections, setCollapsedSections] = useState({});
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState(defaultLanguage);
   const [resolvedSlug, setResolvedSlug] = useState(null);
   const contentRef = useRef(null);
 
@@ -250,13 +250,15 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
 
             <div className="wiki-header-actions">
               {/* Language Toggle */}
-              <div className="wiki-lang-toggle">
+              <div className="wiki-lang-toggle" role="group" aria-label="Language selection">
                 {Object.values(LANGUAGES).map(l => (
                   <button
                     key={l.code}
                     className={`wiki-lang-btn ${language === l.code ? 'active' : ''}`}
                     onClick={() => switchLanguage(l.code)}
                     title={l.fullLabel}
+                    aria-label={`Switch to ${l.fullLabel}`}
+                    aria-pressed={language === l.code}
                   >
                     {l.label}
                   </button>
@@ -270,13 +272,14 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
                 rel="noopener noreferrer"
                 className="wiki-open-btn"
                 title="Open in Wikipedia"
+                aria-label={`Open ${territoryName} article on Wikipedia`}
               >
-                ↗
+                <span aria-hidden="true">↗</span>
               </a>
 
               {/* Close */}
-              <button className="wiki-close-btn" onClick={onClose} title="Close">
-                ✕
+              <button className="wiki-close-btn" onClick={onClose} title="Close" aria-label="Close Wikipedia panel">
+                <span aria-hidden="true">✕</span>
               </button>
             </div>
           </div>
@@ -286,9 +289,9 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
           {/* Content */}
           <div className="wiki-content-area" ref={contentRef}>
             {loading && (
-              <div className="wiki-loading">
-                <div className="wiki-loading-spinner" />
-                <span>{lang.loadingText}</span>
+              <div className="wiki-loading" role="status" aria-live="polite">
+                <div className="wiki-loading-spinner" aria-hidden="true" />
+                <span>{lang.loadingText} {territoryName}...</span>
               </div>
             )}
 
@@ -314,9 +317,11 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose }) => 
                   <button
                     className={`wiki-section-toggle ${collapsedSections[section.id] ? 'collapsed' : ''}`}
                     onClick={() => toggleSection(section.id)}
+                    aria-expanded={!collapsedSections[section.id]}
+                    aria-label={`${collapsedSections[section.id] ? 'Expand' : 'Collapse'} section: ${section.title}`}
                   >
                     <span className="wiki-section-title">{section.title}</span>
-                    <span className="wiki-section-arrow">
+                    <span className="wiki-section-arrow" aria-hidden="true">
                       {collapsedSections[section.id] ? '▸' : '▾'}
                     </span>
                   </button>

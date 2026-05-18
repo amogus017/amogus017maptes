@@ -199,7 +199,7 @@ export function calculateLabelPlacement(geojson, zoom = 5) {
     // Calculate font size based on territory area
     const area = bounds.width * bounds.height;
     let fontSize = Math.sqrt(area) * 50; // Adjust multiplier
-    fontSize = Math.max(4, Math.min(10, fontSize));
+    fontSize = Math.max(9, Math.min(14, fontSize));
 
     return {
         position,

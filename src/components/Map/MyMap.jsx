@@ -224,15 +224,15 @@ class MyMap extends Component {
         return (
             <div className="map-wrapper">
                 <MapContainer
-                    style={{ height: '100vh', width: '100%' }}
+                    style={{ height: '100%', width: '100%' }}
                     zoom={5}
                     center={[-2.5, 118]}
                     scrollWheelZoom={true}
                     zoomControl={false}
                     minZoom={5}
-                    maxZoom={10}
-                     maxBounds={[[-11, 92], [8, 141]]}
-                     maxBoundsViscosity={0.8}
+                    maxZoom={7}
+                     maxBounds={[[-11, 60], [8, 155]]}
+                     maxBoundsViscosity={0.7}
                     worldCopyJump={false}
                     zoomSnap={0.25}
                     zoomDelta={0.25}
@@ -266,18 +266,22 @@ class MyMap extends Component {
                         currentYear={currentYear}
                     />
 
-                    {activeEmpires.length > 0 && (
-                        <div className="empire-legend">
+                    {activeEmpires.length > 0 ? (
+                        <div className="empire-legend" role="region" aria-label="Active kingdoms">
                             <h4>Active Empires ({currentYear})</h4>
                             {activeEmpires.map((empire) => {
                                 const info = getTerritoryInfo(empire.id, currentYear);
                                 return (
                                     <div key={empire.id} className="legend-item">
-                                        <span className="legend-color" style={{ backgroundColor: info.color }} />
+                                        <span className="legend-color" style={{ backgroundColor: info.color }} aria-hidden="true" />
                                         <span className="legend-name">{empire.name}</span>
                                     </div>
                                 );
                             })}
+                        </div>
+                    ) : (
+                        <div className="map-empty-state" role="status" aria-live="polite">
+                            No recorded kingdoms for this period
                         </div>
                     )}
                     <ZoomControl position="topleft" />

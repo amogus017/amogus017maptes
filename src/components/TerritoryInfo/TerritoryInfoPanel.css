@@ -11,6 +11,12 @@
   z-index: 1500;
 }
 
+@media (min-width: 601px) {
+  .v3-panel-backdrop {
+    display: none;
+  }
+}
+
 /* ==========================================
    MAIN PANEL
    ========================================== */
@@ -599,7 +605,7 @@ background: linear-gradient(135deg, #F5EBD7 0%, #EAD9BE 50%, #DFC9A8 100%);
 
 .tab-label {
   font-family: 'Cinzel', serif;
-  font-size: 0.65em;
+  font-size: 0.8em;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;

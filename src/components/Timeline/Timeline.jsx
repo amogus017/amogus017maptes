@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import './Timeline.css';
 
-const Victoria3Timeline = ({ onYearChange }) => {
+const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpen }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isEditingYear, setIsEditingYear] = useState(false);
@@ -42,6 +42,13 @@ const Victoria3Timeline = ({ onYearChange }) => {
       isProgrammaticScroll.current = false;
     }, smooth ? 600 : 50);
   }, [yearToPixel]);
+
+  // Sync to externally-driven year changes (e.g. kingdom search select)
+  useEffect(() => {
+    if (externalYear == null || externalYear === year) return;
+    setYear(externalYear);
+    scrollToYear(externalYear, true);
+  }, [externalYear]); // scrollToYear is stable; year excluded to avoid loop
 
   // Confirm typed year — clamp silently to MIN/MAX
   const confirmYear = useCallback(() => {
@@ -111,7 +118,7 @@ const Victoria3Timeline = ({ onYearChange }) => {
   }, [yearToPixel]);
 
   return (
-    <div className="victoria3-timeline">
+    <div className={`victoria3-timeline${isPanelOpen ? ' panel-open' : ''}`}>
 
       <div className="v3-slider-container">
 
@@ -131,12 +138,22 @@ const Victoria3Timeline = ({ onYearChange }) => {
           />
         ) : (
           <div
-            className="year-tooltip"
+            className="year-tooltip year-tooltip-editable"
+            role="button"
+            tabIndex={0}
             onClick={() => {
               setInputValue(String(year));
               setIsEditingYear(true);
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setInputValue(String(year));
+                setIsEditingYear(true);
+              }
+            }}
             title="Click to type a year"
+            aria-label={`Current year: ${year}. Click to edit.`}
           >
             {year}
           </div>
@@ -167,6 +184,11 @@ const Victoria3Timeline = ({ onYearChange }) => {
                   <input
                     type="range"
                     className="v3-slider"
+                    aria-label="Select year"
+                    aria-valuemin={MIN_YEAR}
+                    aria-valuemax={MAX_YEAR}
+                    aria-valuenow={year}
+                    aria-valuetext={`Year ${year} CE`}
                     min={MIN_YEAR}
                     max={MAX_YEAR}
                     value={year}

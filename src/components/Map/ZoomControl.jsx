@@ -16,7 +16,7 @@ const ZoomControl = ({ position = 'topright' }) => {
   // Position styling based on prop
   const positionStyles = {
     topright: { top: '20px', right: '20px' },
-    topleft: { top: '20px', left: '20px' },
+    topleft: { top: '10px', left: '20px' },
     bottomright: { bottom: '20px', right: '20px' },
     bottomleft: { bottom: '20px', left: '20px' },
   };

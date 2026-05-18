@@ -53,7 +53,7 @@ const TABS = [
   { id: 'relations', label: 'Relations', icon: '⚖️' },
 ];
 
-const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
+const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, language = 'en' }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [territoryData, setTerritoryData] = useState(null);
   const [wikiOpen, setWikiOpen] = useState(false);
@@ -147,8 +147,8 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                 <div className="header-decoration top-right" />
 
                 {/* Close button — top left */}
-                <button className="v3-close-btn" onClick={onClose}>
-                  <span>✕</span>
+                <button className="v3-close-btn" onClick={onClose} aria-label="Close panel">
+                  <span aria-hidden="true">✕</span>
                 </button>
 
                 {/* Wiki button — top right */}
@@ -156,8 +156,10 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                   className={`v3-wiki-btn ${wikiOpen ? 'active' : ''}`}
                   onClick={() => setWikiOpen(prev => !prev)}
                   title={wikiOpen ? 'Close Wikipedia' : 'Open Wikipedia'}
+                  aria-label={wikiOpen ? 'Close Wikipedia panel' : 'Open Wikipedia panel'}
+                  aria-expanded={wikiOpen}
                 >
-                  <span className="wiki-btn-w">W</span>
+                  <span className="wiki-btn-w" aria-hidden="true">W</span>
                 </button>
 
                 {/* Sources button — below wiki button */}
@@ -166,8 +168,10 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                     className={`v3-sources-btn ${sourcesOpen ? 'active' : ''}`}
                     onClick={() => setSourcesOpen(prev => !prev)}
                     title="Sources & References"
+                    aria-label="Sources & References"
+                    aria-expanded={sourcesOpen}
                   >
-                    <span className="sources-btn-icon">📚</span>
+                    <span className="sources-btn-icon" aria-hidden="true">📚</span>
                   </button>
 
                   <AnimatePresence>
@@ -185,7 +189,8 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                           <button
                             className="sources-popup-close"
                             onClick={() => setSourcesOpen(false)}
-                          >✕</button>
+                            aria-label="Close sources"
+                          ><span aria-hidden="true">✕</span></button>
                         </div>
 
                         <div className="sources-popup-divider" />
@@ -280,14 +285,17 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
               </div>
 
               {/* Tab Navigation */}
-              <div className="v3-tab-nav">
+              <div className="v3-tab-nav" role="tablist" aria-label="Kingdom information tabs">
                 {TABS.map(tab => (
                   <button
                     key={tab.id}
+                    role="tab"
+                    aria-selected={activeTab === tab.id}
+                    aria-controls={`tabpanel-${tab.id}`}
                     className={`v3-tab ${activeTab === tab.id ? 'active' : ''}`}
                     onClick={() => setActiveTab(tab.id)}
                   >
-                    <span className="tab-icon">{tab.icon}</span>
+                    <span className="tab-icon" aria-hidden="true">{tab.icon}</span>
                     <span className="tab-label">{tab.label}</span>
                   </button>
                 ))}
@@ -310,26 +318,34 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                         </div>
 
                         <div className="v3-stats-grid">
-                          <div className="stat-card">
-                            <span className="stat-icon">🏛️</span>
-                            <span className="stat-label">Capital</span>
-                            <span className="stat-value">{territoryData.capital}</span>
-                          </div>
-                          <div className="stat-card">
-                            <span className="stat-icon">👥</span>
-                            <span className="stat-label">Population</span>
-                            <span className="stat-value">{territoryData.population}</span>
-                          </div>
-                          <div className="stat-card">
-                            <span className="stat-icon">⛪</span>
-                            <span className="stat-label">Religion</span>
-                            <span className="stat-value">{territoryData.religion}</span>
-                          </div>
-                          <div className="stat-card">
-                            <span className="stat-icon">👑</span>
-                            <span className="stat-label">Government</span>
-                            <span className="stat-value">{territoryData.government}</span>
-                          </div>
+                          {territoryData.capital && (
+                            <div className="stat-card">
+                              <span className="stat-icon" aria-hidden="true">🏛️</span>
+                              <span className="stat-label">Capital</span>
+                              <span className="stat-value">{territoryData.capital}</span>
+                            </div>
+                          )}
+                          {territoryData.population && (
+                            <div className="stat-card">
+                              <span className="stat-icon" aria-hidden="true">👥</span>
+                              <span className="stat-label">Population</span>
+                              <span className="stat-value">{territoryData.population}</span>
+                            </div>
+                          )}
+                          {territoryData.religion && (
+                            <div className="stat-card">
+                              <span className="stat-icon" aria-hidden="true">⛪</span>
+                              <span className="stat-label">Religion</span>
+                              <span className="stat-value">{territoryData.religion}</span>
+                            </div>
+                          )}
+                          {territoryData.government && (
+                            <div className="stat-card">
+                              <span className="stat-icon" aria-hidden="true">👑</span>
+                              <span className="stat-label">Government</span>
+                              <span className="stat-value">{territoryData.government}</span>
+                            </div>
+                          )}
                         </div>
 
                         <div className="v3-section">
@@ -564,6 +580,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
         territoryName={territoryData?.name}
         isOpen={isOpen && wikiOpen}
         onClose={() => setWikiOpen(false)}
+        defaultLanguage={language}
       />
     </>
   );
