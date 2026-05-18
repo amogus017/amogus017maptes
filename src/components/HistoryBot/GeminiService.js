@@ -1,7 +1,7 @@
 import { academicSources } from "../../data/academicSources.js";
 import { getRelevantChunks } from "../../utils/semanticMatch.js";
 
-const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
+const PROXY_URL = "/api/chat";
 
 function buildAcademicSection(userMessage, kingdomId, year) {
   if (!academicSources[kingdomId]) return { section: "", sources: [] };
@@ -20,13 +20,6 @@ function buildAcademicSection(userMessage, kingdomId, year) {
 }
 
 export async function askGemini(userMessage, kingdomContext = null, currentYear = null) {
-  const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
-
-  if (!apiKey) {
-    throw new Error("VITE_OPENROUTER_API_KEY is not set in your .env file.");
-  }
-
-  // Issue 4: use explicit fallback so null is never silently swapped mid-prompt
   const year = currentYear ?? 1350;
 
   const rulerName = kingdomContext?.ruler?.name ?? kingdomContext?.ruler ?? 'Unknown';
@@ -63,14 +56,9 @@ Answer in an educational tone suitable for Indonesian high school students (SMA 
 Keep answers concise — 2 to 4 paragraphs. Write in plain paragraphs, no markdown formatting.
 If asked about unrelated topics, politely redirect to Nusantara history.`;
 
-  const response = await fetch(OPENROUTER_API_URL, {
+  const response = await fetch(PROXY_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
-      "HTTP-Referer": "https://amogus017.github.io/amogus017maptes/",
-      "X-Title": "Nusantara Historical Atlas",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       model: "deepseek/deepseek-v4-flash",
       messages: [
