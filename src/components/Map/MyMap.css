@@ -39,21 +39,91 @@
   transition: opacity 0.3s ease;
 }
 
-/* Empire Legend */
-.empire-legend {
+/* Legend + Events stack wrapper */
+.legend-events-stack {
   position: absolute;
   top: 10px;
   right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 140px;
+  max-width: 220px;
+}
+
+/* Empire Legend */
+.empire-legend {
   background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
   padding: 10px 12px;
   border-radius: 0;
   box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.35),
     inset 0 0 0 1px rgba(139, 69, 19, 0.12);
-  z-index: 1000;
-  min-width: 140px;
   border: 1.5px solid #8B4513;
   font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* Events Panel */
+.events-panel {
+  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
+  padding: 10px 12px;
+  border-radius: 0;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(139, 69, 19, 0.12);
+  border: 1.5px solid #8B4513;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.events-panel h4 {
+  margin: 0 0 8px 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3E2723;
+  border-bottom: 1px solid rgba(139, 69, 19, 0.5);
+  padding-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+  font-family: 'Georgia', serif;
+}
+
+.events-panel h4::before {
+  content: '◆';
+  margin-right: 6px;
+  color: #8B4513;
+  font-size: 9px;
+}
+
+.events-panel h4::after {
+  content: '◆';
+  margin-left: 6px;
+  color: #8B4513;
+  font-size: 9px;
+}
+
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 3px 0;
+  font-size: 10px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.event-year {
+  font-weight: 700;
+  color: #3E2723;
+  flex-shrink: 0;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.event-text {
+  color: #5D4037;
+  font-size: 10px;
 }
 
 .empire-legend h4 {
@@ -296,12 +366,15 @@
 }
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .empire-legend {
+  .legend-events-stack {
     top: 10px;
     right: 10px;
-    padding: 8px 10px;
     min-width: 100px;
     max-width: 45vw;
+  }
+
+  .empire-legend {
+    padding: 8px 10px;
   }
 
   .empire-legend h4 {

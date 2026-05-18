@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MapContainer, GeoJSON, TileLayer, useMap } from 'react-leaflet';
 import { getEmpiresForYear, getTerritoryInfo } from '../../data/boundaries';
+import { getTerritoryData } from '../../data/territories';
 import 'leaflet/dist/leaflet.css';
 import './MyMap.css';
 import { calculateLabelPlacement } from './labelUtils';
@@ -267,17 +268,43 @@ class MyMap extends Component {
                     />
 
                     {activeEmpires.length > 0 ? (
-                        <div className="empire-legend" role="region" aria-label="Active kingdoms">
-                            <h4>Active Empires ({currentYear})</h4>
-                            {activeEmpires.map((empire) => {
-                                const info = getTerritoryInfo(empire.id, currentYear);
+                        <div className="legend-events-stack">
+                            <div className="empire-legend" role="region" aria-label="Active kingdoms">
+                                <h4>Active Empires ({currentYear})</h4>
+                                {activeEmpires.map((empire) => {
+                                    const info = getTerritoryInfo(empire.id, currentYear);
+                                    return (
+                                        <div key={empire.id} className="legend-item">
+                                            <span className="legend-color" style={{ backgroundColor: info.color }} aria-hidden="true" />
+                                            <span className="legend-name">{empire.name}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
+                            {(() => {
+                                const events = activeEmpires.flatMap((empire) => {
+                                    const data = getTerritoryData(empire.id, currentYear);
+                                    const info = getTerritoryInfo(empire.id, currentYear);
+                                    if (!data?.keyEvents) return [];
+                                    return data.keyEvents
+                                        .filter(e => e.event && e.year <= currentYear && e.year >= currentYear - 200)
+                                        .map(e => ({ ...e }));
+                                }).sort((a, b) => b.year - a.year).slice(0, 5);
+
+                                if (events.length === 0) return null;
                                 return (
-                                    <div key={empire.id} className="legend-item">
-                                        <span className="legend-color" style={{ backgroundColor: info.color }} aria-hidden="true" />
-                                        <span className="legend-name">{empire.name}</span>
+                                    <div className="events-panel" role="region" aria-label="Recent events">
+                                        <h4>Peristiwa</h4>
+                                        {events.map((e, i) => (
+                                            <div key={i} className="event-item">
+                                                <span className="event-year">{e.year}</span>
+                                                <span className="event-text">{e.event}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 );
-                            })}
+                            })()}
                         </div>
                     ) : (
                         <div className="map-empty-state" role="status" aria-live="polite">

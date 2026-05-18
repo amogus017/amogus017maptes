@@ -1,14 +1,15 @@
 /* ── Floating Ask AI button ─────────────────────────────────────────────── */
 .v3-ask-ai-btn {
   position: fixed;
-  bottom: 75px;
-  right: 24px;
+  bottom: 87px;
+  right: 20px;
   z-index: 1500;
+  width: 220px;
 
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 9px 16px;
+  padding: 7px 14px;
 
   background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
   border: 2px solid #8B4513;
@@ -52,7 +53,7 @@
 }
 
 .v3-ask-ai-label {
-  max-width: 200px;
+  max-width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -61,6 +62,7 @@
   .v3-ask-ai-btn {
     bottom: 80px;
     right: 12px;
+    width: auto;
     padding: 8px 12px;
     font-size: 12px;
   }
