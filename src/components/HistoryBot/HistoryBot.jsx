@@ -2,14 +2,23 @@ import { useState, useRef, useEffect } from "react";
 import { askGemini } from "./GeminiService";
 import "./HistoryBot.css";
 
-export default function HistoryBot({ selectedTerritory, isOpen, onClose }) {
-  const getGreeting = (territory) =>
+function renderWithCitations(text) {
+  const parts = text.split(/(\[\d+\])/g);
+  return parts.map((part, i) =>
+    /^\[\d+\]$/.test(part)
+      ? <sup key={i} className="hbot-cite-marker">{part}</sup>
+      : part
+  );
+}
+
+export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onClose }) {
+  const getGreeting = (territory, year) =>
     territory
-      ? `You are exploring the ${territory.name}. What would you like to know about this kingdom?`
-      : "Welcome, scholar. Ask me anything about the pre-colonial kingdoms of Nusantara (1200–1600 CE).";
+      ? `You are exploring the ${territory.name} in ${year} CE, during the ${territory.era} period. What would you like to know about this kingdom?`
+      : "Welcome, scholar. Ask me anything about the pre-colonial kingdoms of Nusantara (400–1600 CE).";
 
   const [messages, setMessages] = useState([
-    { role: "bot", text: getGreeting(selectedTerritory) },
+    { role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,7 +38,7 @@ export default function HistoryBot({ selectedTerritory, isOpen, onClose }) {
   useEffect(() => {
     if (selectedTerritory?.name && selectedTerritory.name !== prevTerritoryName.current) {
       prevTerritoryName.current = selectedTerritory.name;
-      setMessages([{ role: "bot", text: getGreeting(selectedTerritory) }]);
+      setMessages([{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
     }
   }, [selectedTerritory?.name]);
 
@@ -42,15 +51,12 @@ export default function HistoryBot({ selectedTerritory, isOpen, onClose }) {
     setLoading(true);
 
     try {
-      const reply = await askGemini(userMsg, selectedTerritory);
-      setMessages((prev) => [...prev, { role: "bot", text: reply }]);
+      const reply = await askGemini(userMsg, selectedTerritory, currentYear);
+      setMessages((prev) => [...prev, { role: "bot", text: reply.text, sources: reply.sources }]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        {
-          role: "bot",
-          text: `⚠️ Error: ${err.message}`,
-        },
+        { role: "bot", text: `⚠️ Error: ${err.message}`, sources: [] },
       ]);
     } finally {
       setLoading(false);
@@ -65,7 +71,7 @@ export default function HistoryBot({ selectedTerritory, isOpen, onClose }) {
   }
 
   function clearChat() {
-    setMessages([{ role: "bot", text: getGreeting(selectedTerritory) }]);
+    setMessages([{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
   }
 
   if (!isOpen) return null;
@@ -98,7 +104,22 @@ export default function HistoryBot({ selectedTerritory, isOpen, onClose }) {
         {messages.map((msg, i) => (
           <div key={i} className={`hbot-msg hbot-msg--${msg.role}`}>
             {msg.role === "bot" && <span className="hbot-msg-avatar">⚜</span>}
-            <div className="hbot-msg-bubble">{msg.text}</div>
+            <div className="hbot-msg-content">
+              <div className="hbot-msg-bubble">{renderWithCitations(msg.text)}</div>
+              {msg.sources?.length > 0 && (
+                <div className="hbot-sources">
+                  {msg.sources.map((s, j) => (
+                    <div key={j} className="hbot-source-item">
+                      <span className="hbot-source-num">[{j + 1}]</span>
+                      {s.url
+                        ? <a href={s.url} target="_blank" rel="noopener noreferrer" className="hbot-source-citation hbot-source-link">{s.citation}</a>
+                        : <span className="hbot-source-citation">{s.citation}</span>
+                      }
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         ))}
         {loading && (

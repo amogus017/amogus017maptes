@@ -1,5 +1,5 @@
 // At the very top of App.jsx
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import MyMap from "./components/Map/MyMap";
 import Timeline from "./components/Timeline/Timeline";
 import TerritoryInfoPanel from "./components/TerritoryInfo/TerritoryInfoPanel";
@@ -18,21 +18,21 @@ function App() {
     setCurrentYear(newYear);
   };
 
-   const handleTerritoryClick = (territoryInfo) => {
-    console.log("Territory clicked:", territoryInfo);
+  const handleTerritoryClick = (territoryInfo) => {
     setSelectedTerritory(territoryInfo);
     setIsPanelOpen(true);
   };
 
   const handleClosePanel = () => {
     setIsPanelOpen(false);
-    // Optional: Clear selected territory after animation completes
-    setTimeout(() => setSelectedTerritory(null), 300);
+    // selectedTerritory kept in state so the bot retains context after panel closes
   };
-  // Merge lightweight map info with full historical data for richer AI context
-  const enrichedTerritory = selectedTerritory
+
+  // Memoised — only recomputes when territory or year actually changes
+  const enrichedTerritory = useMemo(() => selectedTerritory
     ? { ...selectedTerritory, ...(getTerritoryData(selectedTerritory.id, currentYear) ?? {}) }
-    : null;
+    : null,
+  [selectedTerritory, currentYear]);
 
   return (
     <div>
@@ -54,6 +54,7 @@ function App() {
       {/* AI Chatbot Panel */}
       <HistoryBot
         selectedTerritory={enrichedTerritory}
+        currentYear={currentYear}
         isOpen={isBotOpen}
         onClose={() => setIsBotOpen(false)}
       />

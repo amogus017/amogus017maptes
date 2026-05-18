@@ -6,7 +6,7 @@
   max-height: 520px;
   display: flex;
   flex-direction: column;
-  z-index: 1200;
+  z-index: 1600;
 
   background: linear-gradient(160deg, #2a1f0e 0%, #1e1508 100%);
   border: 1px solid #8b6914;
@@ -125,7 +125,6 @@
 }
 
 .hbot-msg-bubble {
-  max-width: 82%;
   padding: 9px 12px;
   border-radius: 3px;
   font-size: 13px;
@@ -171,6 +170,66 @@
 @keyframes hbot-bounce {
   0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
   40% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Citation markers inline in bot text */
+.hbot-cite-marker {
+  color: #c8982a;
+  font-size: 10px;
+  font-weight: bold;
+  vertical-align: super;
+  cursor: default;
+  line-height: 0;
+}
+
+/* Wrapper so bubble + sources stack vertically */
+.hbot-msg-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 82%;
+}
+
+/* Source list below bot bubble */
+.hbot-sources {
+  margin-top: 6px;
+  padding: 7px 10px;
+  background: rgba(200, 152, 42, 0.06);
+  border: 1px solid rgba(139, 105, 20, 0.25);
+  border-radius: 0 3px 3px 3px;
+}
+
+.hbot-source-item {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  color: #8a6e3a;
+  line-height: 1.5;
+  margin-bottom: 3px;
+}
+
+.hbot-source-item:last-child {
+  margin-bottom: 0;
+}
+
+.hbot-source-num {
+  color: #c8982a;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.hbot-source-citation {
+  font-style: italic;
+}
+
+.hbot-source-link {
+  color: #c8982a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.hbot-source-link:hover {
+  color: #e8b840;
 }
 
 /* Input row */
