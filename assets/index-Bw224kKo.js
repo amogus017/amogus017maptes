@@ -96,7 +96,7 @@ The fall of the capital in 1579 marks the end of Hindu political power in Java, 
 ACADEMIC SOURCES (cite inline as [1], [2], [3] when using them — do not list them again at the end):
 `+m.map((S,_)=>`[${_+1}] ${S.text}${S.citation?`
     Source: ${S.citation}`:""}`).join(`
-`),sources:m}}async function Tg(a,o=null,l=null){const h="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",m=l??1350,v=o?.ruler?.name??o?.ruler??"Unknown",p=o?.ruler?.title??"",S=o?.englishName||o?.name||"",{section:_,sources:b}=o?xg(a,o.id,m):{section:"",sources:[]},M=o?`You are a knowledgeable historical guide for pre-colonial Nusantara and Southeast Asian history.
+`),sources:m}}async function Tg(a,o=null,l=null){const h="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",m=l??1350,v=o?.ruler?.name??o?.ruler??"Unknown",p=o?.ruler?.title??"",S=o?.englishName||o?.name||"",{section:_,sources:b}=o?xg(a,o.id,m):{section:"",sources:[]},M=o?`You are a knowledgeable historical guide for pre-colonial Nusantara and Southeast Asian history.
 The user is viewing an interactive historical atlas and has navigated to the year ${m} CE.
 They are currently exploring the ${o.name}${S&&S!==o.name?` (${S})`:""} during the ${o.era} period.
 
