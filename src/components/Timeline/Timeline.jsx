@@ -5,6 +5,8 @@ import './Timeline.css';
 const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpen }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playDirection, setPlayDirection] = useState('forward'); // 'forward' | 'reverse'
+  const [playSpeed, setPlaySpeed] = useState(1);
   const [isEditingYear, setIsEditingYear] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef(null);
@@ -97,23 +99,26 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
 
   // Auto-play effect
   useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setYear(current => {
-          const next = current + 1;
-          if (next > MAX_YEAR) {
-            setIsPlaying(false);
-            return MIN_YEAR;
-          }
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      setYear(current => {
+        if (playDirection === 'forward') {
+          const next = Math.min(current + playSpeed, MAX_YEAR);
+          if (next >= MAX_YEAR) { setIsPlaying(false); return MAX_YEAR; }
           onYearChange(next);
           scrollToYear(next, true);
           return next;
-        });
-      }, 150);
-    }
+        } else {
+          const next = Math.max(current - playSpeed, MIN_YEAR);
+          if (next <= MIN_YEAR) { setIsPlaying(false); return MIN_YEAR; }
+          onYearChange(next);
+          scrollToYear(next, true);
+          return next;
+        }
+      });
+    }, 150);
     return () => clearInterval(interval);
-  }, [isPlaying, onYearChange, scrollToYear]);
+  }, [isPlaying, playDirection, playSpeed, onYearChange, scrollToYear]);
 
   const rulerMarks = useMemo(() => {
     const marks = [];
@@ -155,6 +160,46 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
     <div className={`victoria3-timeline${isPanelOpen ? ' panel-open' : ''}`}>
 
       <div className="v3-slider-container">
+
+        {/* Play controls — pinned left, same level as year tooltip */}
+        <div className="v3-play-controls">
+          <button
+            className={`v3-play-btn${isPlaying && playDirection === 'reverse' ? ' playing' : ''}`}
+            onClick={() => {
+              if (isPlaying && playDirection === 'reverse') {
+                setIsPlaying(false);
+              } else {
+                setPlayDirection('reverse');
+                setIsPlaying(true);
+              }
+            }}
+            aria-label="Play reverse"
+            title="Play in reverse"
+          >◀</button>
+          <button
+            className={`v3-play-btn${isPlaying && playDirection === 'forward' ? ' playing' : ''}`}
+            onClick={() => {
+              if (isPlaying && playDirection === 'forward') {
+                setIsPlaying(false);
+              } else {
+                setPlayDirection('forward');
+                setIsPlaying(true);
+              }
+            }}
+            aria-label="Play forward"
+            title="Play forward"
+          >▶</button>
+          <div className={`v3-speed-chips${isPlaying ? ' visible' : ''}`}>
+            {[1, 2, 3, 5, 10].map(s => (
+              <button
+                key={s}
+                className={`v3-speed-chip${playSpeed === s ? ' active' : ''}`}
+                onClick={() => setPlaySpeed(s)}
+                aria-label={`Speed ×${s}`}
+              >×{s}</button>
+            ))}
+          </div>
+        </div>
 
         {/* Year tooltip — click to edit */}
         {isEditingYear ? (
