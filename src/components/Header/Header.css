@@ -9,7 +9,7 @@
   z-index: 1050;
 
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto auto 1fr auto;
   align-items: center;
   padding: 0 20px;
   gap: 12px;
@@ -52,6 +52,18 @@
   white-space: nowrap;
 }
 
+.app-header-title-sub {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  font-weight: 400;
+  color: #8B4513;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+
 .app-header-period {
   display: block;
   font-family: 'EB Garamond', serif;
@@ -62,12 +74,11 @@
   margin-top: 3px;
 }
 
-/* Search — center zone */
+/* Search — adjacent to title (left zone) */
 .app-header-search {
   position: relative;
   display: flex;
   align-items: center;
-  justify-self: center;
 }
 
 .app-header-search-input {
@@ -146,11 +157,93 @@
   flex-shrink: 0;
 }
 
-/* Language toggle — right zone */
+/* Nav center zone (column 3) */
+.app-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-btn {
+  height: 26px;
+  padding: 0 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #6B4C35;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+  background: rgba(139, 69, 19, 0.1);
+  border-color: rgba(139, 69, 19, 0.3);
+  color: #3E2723;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 260px;
+  max-width: 340px;
+  background: linear-gradient(135deg, #F4E8D0 0%, #EDD9A3 100%);
+  border: 1.5px solid #8B4513;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  padding: 12px 14px;
+  z-index: 1200;
+  font-family: 'EB Garamond', serif;
+}
+
+.nav-dropdown-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3E2723;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(139, 69, 19, 0.4);
+}
+
+.nav-dropdown-list {
+  margin: 0;
+  padding-left: 14px;
+  list-style: disc;
+}
+
+.nav-dropdown-list li {
+  font-size: 11px;
+  color: #5D4037;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.src-author { font-weight: 600; color: #3E2723; }
+.src-title  { font-style: italic; }
+.src-year   { color: #8B4513; font-size: 10px; }
+
+/* Language toggle — far right (column 4) */
 .app-header-lang {
   display: flex;
   gap: 3px;
   justify-self: end;
+  grid-column: 4;
 }
 
 .app-header-lang-btn {
@@ -178,6 +271,38 @@
   background: #8B4513;
   color: #F4E8D0;
   border-color: #8B4513;
+}
+
+/* Nav desktop/mobile visibility */
+.nav-item-desktop { display: block; }
+.nav-item-mobile  { display: none;  }
+
+/* Mobile collapsed menu button */
+.nav-mobile-btn {
+  font-size: 16px;
+  letter-spacing: 0;
+  padding: 0 8px;
+}
+
+/* Mobile combined dropdown */
+.nav-mobile-dropdown {
+  min-width: 280px;
+  max-height: 60vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 69, 19, 0.3) transparent;
+}
+.nav-mobile-dropdown::-webkit-scrollbar { width: 4px; }
+.nav-mobile-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(139, 69, 19, 0.3);
+  border-radius: 2px;
+}
+
+.mobile-nav-section {
+  margin-bottom: 14px;
+}
+.mobile-nav-section:last-child {
+  margin-bottom: 0;
 }
 
 /* Responsive */
@@ -219,6 +344,30 @@
   .app-header-search {
     width: 100%;
     justify-self: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Nav sits inline after the search bar */
+  .app-header-nav {
+    position: static;
+    transform: none;
+    justify-self: start;
+    gap: 0;
+  }
+  .nav-item-desktop { display: block; }
+  .nav-item-mobile  { display: none;  }
+
+  /* Smaller search to leave room for nav */
+  .app-header-search-input {
+    width: 80px;
+  }
+
+  /* Compact nav buttons on mobile */
+  .nav-btn {
+    font-size: 9px;
+    padding: 0 6px;
+    letter-spacing: 0.03em;
   }
 }
 

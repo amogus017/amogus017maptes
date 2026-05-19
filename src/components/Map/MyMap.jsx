@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import './MyMap.css';
 import { calculateLabelPlacement } from './labelUtils';
 import ZoomControl from './ZoomControl';
+import EventMarkers from './EventMarkers';
 
 // ─── Label Layer ────────────────────────────────────────────────────────────
 // Class component with direct DOM manipulation — no useState, no useEffect,
@@ -64,7 +65,7 @@ class TerritoryLabelsLayer extends Component {
                 const pixelW = Math.abs(nePt.x - swPt.x);
                 const pixelH = Math.abs(nePt.y - swPt.y);
                 const pixelExtent = Math.sqrt(pixelW * pixelH);
-                const fontSize = Math.max(9, Math.min(34, pixelExtent * 0.14));
+                const fontSize = Math.max(7, Math.min(17, pixelExtent * 0.14));
                 const letterSpacing = Math.max(1, fontSize * 0.15);
                 el.style.fontSize      = fontSize + 'px';
                 el.style.letterSpacing = letterSpacing + 'px';
@@ -290,6 +291,8 @@ class MyMap extends Component {
                         currentYear={currentYear}
                     />
 
+                    <EventMarkers currentYear={currentYear} />
+
                     {activeEmpires.length > 0 ? (
                         <div className="legend-events-stack">
                             <div className="empire-legend" role="region" aria-label={t?.legendAriaLabel ?? 'Active kingdoms'}>
@@ -329,11 +332,7 @@ class MyMap extends Component {
                                 );
                             })()}
                         </div>
-                    ) : (
-                        <div className="map-empty-state" role="status" aria-live="polite">
-                            {t?.emptyState ?? 'No recorded kingdoms for this period'}
-                        </div>
-                    )}
+                    ) : null}
                     <ZoomControl position="topleft" />
                 </MapContainer>
             </div>

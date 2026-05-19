@@ -13,6 +13,10 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
   const isProgrammaticScroll = useRef(false);
   const isProgrammaticScrollTimeout = useRef(null);
   const lastEdgeScrollRef = useRef(0);
+  const edgeScrollRafRef = useRef(null);
+
+  // Adjust this to control edge-scroll speed (milliseconds)
+  const EDGE_SCROLL_DURATION = 2100;
 
   const MIN_YEAR = 400;
   const MAX_YEAR = 1600;
@@ -43,6 +47,35 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
       isProgrammaticScroll.current = false;
     }, smooth ? 600 : 50);
   }, [yearToPixel]);
+
+  // Custom RAF-based smooth scroll — duration in ms, easeInOutCubic easing
+  const smoothScrollTo = useCallback((element, targetLeft, duration) => {
+    cancelAnimationFrame(edgeScrollRafRef.current);
+    const startLeft = element.scrollLeft;
+    const distance = targetLeft - startLeft;
+    if (distance === 0) return;
+    const startTime = performance.now();
+
+    isProgrammaticScroll.current = true;
+    clearTimeout(isProgrammaticScrollTimeout.current);
+
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      element.scrollLeft = startLeft + distance * ease;
+
+      if (t < 1) {
+        edgeScrollRafRef.current = requestAnimationFrame(animate);
+      } else {
+        isProgrammaticScrollTimeout.current = setTimeout(() => {
+          isProgrammaticScroll.current = false;
+        }, 50);
+      }
+    };
+
+    edgeScrollRafRef.current = requestAnimationFrame(animate);
+  }, []);
 
   // Sync to externally-driven year changes (e.g. kingdom search select)
   useEffect(() => {
@@ -202,19 +235,23 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
                         const thumbPx = yearToPixel(newYear);
                         const scrollLeft = frame.scrollLeft;
                         const viewportWidth = frame.clientWidth;
-                        const EDGE_THRESHOLD = viewportWidth * 0.1;
+                        const EDGE_THRESHOLD = viewportWidth * 0.1579597878
+                        78
+                        ;
 
                         const distFromLeft = thumbPx - scrollLeft;
                         const distFromRight = scrollLeft + viewportWidth - thumbPx;
 
                         if (distFromLeft < EDGE_THRESHOLD || distFromRight < EDGE_THRESHOLD) {
                           const now = Date.now();
-                          if (now - lastEdgeScrollRef.current > 250) {
+                          if (now - lastEdgeScrollRef.current > EDGE_SCROLL_DURATION * 0.9) {
                             lastEdgeScrollRef.current = now;
-                            frame.scrollTo({
-                              left: Math.max(0, thumbPx - viewportWidth / 2),
-                              behavior: 'smooth',
-                            });
+                            const direction = distFromRight < EDGE_THRESHOLD ? 1 : -1;
+                            smoothScrollTo(
+                              frame,
+                              Math.max(0, frame.scrollLeft + direction * viewportWidth * 0.4),
+                              EDGE_SCROLL_DURATION
+                            );
                           }
                         }
                       }
