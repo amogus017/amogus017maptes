@@ -12,6 +12,7 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
   const isDraggingTimeout = useRef(null);
   const isProgrammaticScroll = useRef(false);
   const isProgrammaticScrollTimeout = useRef(null);
+  const lastEdgeScrollRef = useRef(0);
 
   const MIN_YEAR = 400;
   const MAX_YEAR = 1600;
@@ -207,7 +208,14 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
                         const distFromRight = scrollLeft + viewportWidth - thumbPx;
 
                         if (distFromLeft < EDGE_THRESHOLD || distFromRight < EDGE_THRESHOLD) {
-                          frame.scrollLeft = Math.max(0, thumbPx - viewportWidth / 2);
+                          const now = Date.now();
+                          if (now - lastEdgeScrollRef.current > 250) {
+                            lastEdgeScrollRef.current = now;
+                            frame.scrollTo({
+                              left: Math.max(0, thumbPx - viewportWidth / 2),
+                              behavior: 'smooth',
+                            });
+                          }
                         }
                       }
 

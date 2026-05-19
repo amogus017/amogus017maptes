@@ -14,7 +14,7 @@ export const territoriesData = {
 
     timeline: {
       650: {
-        era: 'Founding Era',
+        era: 'Founding Era', eraId: 'Era Pendirian',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -27,9 +27,10 @@ export const territoriesData = {
         religion: 'Mahayana Buddhism',
         government: 'Thalassocracy',
         summary: 'Srivijaya founded on the Musi River, beginning its rise as a maritime power controlling Sumatra',
+        summaryId: 'Sriwijaya didirikan di tepi Sungai Musi, memulai kebangkitannya sebagai kekuatan maritim yang menguasai Sumatra',
         keyEvents: [
-          { year: 650, event: 'Srivijaya founded by Dapunta Hyang', type: 'political' },
-          { year: 671, event: 'I Tsing visits — finds 1,000 Buddhist monks', type: 'cultural' }
+          { year: 650, event: 'Srivijaya founded by Dapunta Hyang', type: 'political', eventId: 'Sriwijaya didirikan oleh Dapunta Hyang' },
+          { year: 671, event: 'I Tsing visits — finds 1,000 Buddhist monks', type: 'cultural', eventId: 'I Tsing mengunjungi — menemukan 1.000 biksu Buddha' }
         ],
         historicalContext: 'Srivijaya emerges as a coastal polity controlling the Strait of Malacca.\n\nEarly Chinese records and the Kedukan Bukit inscription document its rapid rise.',
         economy: {
@@ -52,7 +53,7 @@ export const territoriesData = {
         }
       },
       800: {
-        era: 'Golden Age',
+        era: 'Golden Age', eraId: 'Masa Kejayaan',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -65,9 +66,10 @@ export const territoriesData = {
         religion: 'Mahayana Buddhism',
         government: 'Thalassocracy',
         summary: 'Srivijaya expands control over the Malay Peninsula and Sunda Strait, dominating regional trade',
+        summaryId: 'Sriwijaya memperluas kendalinya atas Semenanjung Melayu dan Selat Sunda, mendominasi perdagangan regional',
         keyEvents: [
-          { year: 775, event: 'Ligor inscription — Srivijaya asserts Malay Peninsula control', type: 'political' },
-          { year: 800, event: 'Extensive Buddhist temple construction', type: 'cultural' }
+          { year: 775, event: 'Ligor inscription — Srivijaya asserts Malay Peninsula control', type: 'political', eventId: 'Prasasti Ligor — Sriwijaya menegaskan kendali atas Semenanjung Melayu' },
+          { year: 800, event: 'Extensive Buddhist temple construction', type: 'cultural', eventId: 'Pembangunan besar-besaran kuil-kuil Buddha' }
         ],
         historicalContext: 'Srivijaya consolidates its grip on the Strait of Malacca and Sunda Strait.\n\nIt becomes the dominant entrepot for trade between China and the Indian Ocean world.',
         economy: {
@@ -91,7 +93,7 @@ export const territoriesData = {
         }
       },
       900: {
-        era: 'Maritime Dominance',
+        era: 'Maritime Dominance', eraId: 'Dominasi Maritim',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -104,9 +106,10 @@ export const territoriesData = {
         religion: 'Mahayana Buddhism',
         government: 'Thalassocracy',
         summary: 'Dominant maritime power controlling the Strait of Malacca trade routes',
+        summaryId: 'Kekuatan maritim dominan yang mengendalikan jalur perdagangan Selat Malaka',
         keyEvents: [
-          { year: 900, event: 'Peak naval supremacy', type: 'military' },
-          { year: 925, event: 'Trade monopoly established', type: 'economic' }
+          { year: 900, event: 'Peak naval supremacy', type: 'military', eventId: 'Puncak supremasi angkatan laut' },
+          { year: 925, event: 'Trade monopoly established', type: 'economic', eventId: 'Monopoli perdagangan ditetapkan' }
         ],
         historicalContext: 'Srivijaya controls the vital maritime trade routes between India and China.\n\nA major center of Buddhist learning attracting scholars from across Asia.',
         economy: {
@@ -130,7 +133,7 @@ export const territoriesData = {
         }
       },
       1025: {
-        era: 'Decline',
+        era: 'Decline', eraId: 'Masa Kemunduran',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -143,9 +146,10 @@ export const territoriesData = {
         religion: 'Mahayana Buddhism',
         government: 'Weakened Thalassocracy',
         summary: 'Chola raids devastate the capital; maritime dominance begins to crumble',
+        summaryId: 'Serangan Chola menghancurkan ibu kota; dominasi maritim mulai runtuh',
         keyEvents: [
-          { year: 1025, event: 'Chola raid devastates Palembang', type: 'military' },
-          { year: 1068, event: 'Further Chola attacks weaken trade network', type: 'military' }
+          { year: 1025, event: 'Chola raid devastates Palembang', type: 'military', eventId: 'Serangan Chola menghancurkan Palembang' },
+          { year: 1068, event: 'Further Chola attacks weaken trade network', type: 'military', eventId: 'Serangan Chola berikutnya melemahkan jaringan perdagangan' }
         ],
         historicalContext: 'After the devastating Chola raids of 1025, Srivijaya never fully recovers.\n\nRising powers in Java and the Malay Peninsula erode its control.',
         economy: {
@@ -181,7 +185,7 @@ export const territoriesData = {
 
     timeline: {
       400: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -194,9 +198,10 @@ export const territoriesData = {
         religion: 'Hindu (Shaivism)',
         government: 'Hindu Kingdom',
         summary: 'One of the earliest known Hindu kingdoms in Southeast Asia, known from the Yupa inscriptions',
+        summaryId: 'Salah satu kerajaan Hindu tertua yang diketahui di Asia Tenggara, dikenal dari prasasti Yupa',
         keyEvents: [
-          { year: 400, event: 'Yupa inscriptions erected by Mulawarman', type: 'cultural' },
-          { year: 400, event: 'Ritual donation of 20,000 cows to Brahmins', type: 'religious' }
+          { year: 400, event: 'Yupa inscriptions erected by Mulawarman', type: 'cultural', eventId: 'Prasasti Yupa didirikan oleh Mulawarman' },
+          { year: 400, event: 'Ritual donation of 20,000 cows to Brahmins', type: 'religious', eventId: 'Pemberian ritual 20.000 ekor sapi kepada para Brahmana' }
         ],
         historicalContext: 'Kutai is among the oldest recorded kingdoms in the Indonesian archipelago.\n\nThe Sanskrit Yupa inscriptions reveal strong Indian cultural influence in early Borneo.',
         economy: {
@@ -216,7 +221,7 @@ export const territoriesData = {
         relations: { 'India': 'Cultural & Religious Exchange' }
       },
       500: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -229,8 +234,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu Kingdom',
         summary: 'Kutai maintains its river-based kingdom across the Mahakam basin over many centuries',
+        summaryId: 'Kutai mempertahankan kerajaan berbasis sungainya di sepanjang cekungan Mahakam selama berabad-abad',
         keyEvents: [
-          { year: 500, event: 'Continued Hindu-Buddhist cultural development', type: 'cultural' }
+          { year: 500, event: 'Continued Hindu-Buddhist cultural development', type: 'cultural', eventId: 'Perkembangan budaya Hindu-Buddha yang berkelanjutan' }
         ],
         historicalContext: 'Kutai persists as a regional power in Borneo, controlling the Mahakam River trade routes.\n\nLimited records from this long period suggest stable but quiet rule.',
         economy: {
@@ -250,7 +256,7 @@ export const territoriesData = {
         relations: { 'Srivijaya': 'Tributary Relations', 'Java': 'Trade Contact' }
       },
       1300: {
-        era: 'Late Period',
+        era: 'Late Period', eraId: 'Periode Akhir',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -263,8 +269,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Regional Kingdom',
         summary: 'Kutai in its final pre-Islamic period before eventual conversion and transformation',
+        summaryId: 'Kutai dalam periode pra-Islam terakhirnya sebelum akhirnya beralih ke Islam',
         keyEvents: [
-          { year: 1361, event: 'End of classical Kutai period', type: 'political' }
+          { year: 1361, event: 'End of classical Kutai period', type: 'political', eventId: 'Berakhirnya periode klasik Kutai' }
         ],
         historicalContext: 'The classical Hindu-Buddhist Kutai kingdom approaches its end.\n\nIslamisation of Borneo will eventually transform the kingdom into the Kutai Sultanate.',
         economy: {
@@ -296,7 +303,7 @@ export const territoriesData = {
     color: '#6B8E4E',
     timeline: {
       400: {
-        era: 'Purnawarman Era',
+        era: 'Purnawarman Era', eraId: 'Era Purnawarman',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -309,8 +316,9 @@ export const territoriesData = {
         religion: 'Hindu (Vaishnavism)',
         government: 'Hindu Kingdom',
         summary: 'Tarumanagara flourishes under Purnawarman, documented through stone inscriptions as one of the earliest Hindu kingdoms of Java',
+        summaryId: 'Tarumanagara berkembang di bawah Purnawarman, terdokumentasi melalui prasasti batu sebagai salah satu kerajaan Hindu tertua di Jawa',
         keyEvents: [
-          { year: 400, event: 'Purnawarman stone inscriptions (Ciaruteun, Kebon Kopi) erected across West Java', type: 'cultural' },
+          { year: 400, event: 'Purnawarman stone inscriptions (Ciaruteun, Kebon Kopi) erected across West Java', type: 'cultural', eventId: 'Prasasti batu Purnawarman (Ciaruteun, Kebon Kopi) didirikan di Jawa Barat' },
         ],
         historicalContext: 'Tarumanagara is among the earliest recorded kingdoms of the archipelago, located in West Java.\n\nThe Purnawarman inscriptions — written in Sanskrit using Pallava script — are the oldest known written records found on Java.',
         economy: {
@@ -330,7 +338,7 @@ export const territoriesData = {
         relations: { 'India': 'Cultural & Religious Exchange' },
       },
       550: {
-        era: 'Late Period',
+        era: 'Late Period', eraId: 'Periode Akhir',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -343,8 +351,9 @@ export const territoriesData = {
         religion: 'Hindu',
         government: 'Hindu Kingdom',
         summary: 'Tarumanagara continues as a regional power in West Java before dissolving into the successor kingdoms of Sunda and Galuh',
+        summaryId: 'Tarumanagara terus menjadi kekuatan regional di Jawa Barat sebelum terpecah menjadi kerajaan penerus Sunda dan Galuh',
         keyEvents: [
-          { year: 669, event: 'Tarumanagara dissolves into the kingdoms of Sunda and Galuh', type: 'political' },
+          { year: 669, event: 'Tarumanagara dissolves into the kingdoms of Sunda and Galuh', type: 'political', eventId: 'Tarumanagara bubar menjadi Kerajaan Sunda dan Galuh' },
         ],
         historicalContext: 'In its later centuries Tarumanagara gradually weakens.\n\nBy 669 the kingdom fragments into Sunda in the west and Galuh to the east, ending the Tarumanagara era.',
         economy: {
@@ -376,7 +385,7 @@ export const territoriesData = {
     color: '#C4A35A',
     timeline: {
       700: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -389,8 +398,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu Kingdom',
         summary: 'Sunda emerges as a successor state to Tarumanagara, controlling the western region of Java',
+        summaryId: 'Sunda muncul sebagai negara penerus Tarumanagara, menguasai wilayah barat Jawa',
         keyEvents: [
-          { year: 684, event: 'Sunda established as successor kingdom in western Java', type: 'political' },
+          { year: 684, event: 'Sunda established as successor kingdom in western Java', type: 'political', eventId: 'Sunda didirikan sebagai kerajaan penerus di Jawa Barat' },
         ],
         historicalContext: 'Following the dissolution of Tarumanagara in 669, Sunda controls the western portion of Java while Galuh holds the eastern.\n\nThe kingdom maintains Hindu-Buddhist traditions throughout its long history.',
         economy: {
@@ -410,7 +420,7 @@ export const territoriesData = {
         relations: { 'Galuh': 'Rival Successor State' },
       },
       1200: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -423,8 +433,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu Kingdom',
         summary: 'Sunda persists as a major Hindu-Buddhist kingdom in West Java amid the rise of Majapahit',
+        summaryId: 'Sunda bertahan sebagai kerajaan Hindu-Buddha besar di Jawa Barat di tengah kebangkitan Majapahit',
         keyEvents: [
-          { year: 1357, event: 'Battle of Bubat — diplomatic crisis with Majapahit', type: 'military' }, // TODO: verify exact year
+          { year: 1357, event: 'Battle of Bubat — diplomatic crisis with Majapahit', type: 'military', eventId: 'Perang Bubat — krisis diplomatik dengan Majapahit' }, // TODO: verify exact year
         ],
         historicalContext: 'The Sunda Kingdom maintains its independence through the Majapahit era.\n\nThe Battle of Bubat marks a turning point in Sunda–Majapahit relations, leaving a lasting wound in Sundanese historical memory.',
         economy: {
@@ -456,7 +467,7 @@ export const territoriesData = {
     color: '#B5651D',
     timeline: {
       700: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -469,8 +480,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu Kingdom',
         summary: 'Galuh established by Wretikandayun as the eastern successor state to Tarumanagara, controlling the eastern half of West Java',
+        summaryId: 'Galuh didirikan oleh Wretikandayun sebagai negara penerus timur Tarumanagara, menguasai bagian timur Jawa Barat',
         keyEvents: [
-          { year: 669, event: 'Galuh founded by Wretikandayun after the split of Tarumanagara', type: 'political' },
+          { year: 669, event: 'Galuh founded by Wretikandayun after the split of Tarumanagara', type: 'political', eventId: 'Galuh didirikan oleh Wretikandayun setelah pemisahan Tarumanagara' },
         ],
         historicalContext: 'Galuh emerges as the eastern successor state to Tarumanagara alongside its western counterpart Sunda.\n\nWretikandayun is credited as the founding figure of the Galuh lineage.',
         economy: {
@@ -490,7 +502,7 @@ export const territoriesData = {
         relations: { 'Sunda': 'Rival Successor State' },
       },
       1000: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -503,6 +515,7 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu Kingdom',
         summary: 'Galuh continues as a regional kingdom in West Java, frequently contesting with or merging with the Sunda Kingdom',
+        summaryId: 'Galuh terus menjadi kerajaan regional di Jawa Barat, sering bersaing atau bergabung dengan Kerajaan Sunda',
         keyEvents: [], // TODO: verify key events for this period
         historicalContext: 'Galuh and Sunda alternately merge and separate across their shared history.\n\nThe two kingdoms share cultural and religious traditions but maintain distinct political identities.',
         economy: {
@@ -534,7 +547,7 @@ export const territoriesData = {
     color: '#9B59B6',
     timeline: {
       732: {
-        era: 'Sanjaya Dynasty',
+        era: 'Sanjaya Dynasty', eraId: 'Dinasti Sanjaya',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -547,8 +560,9 @@ export const territoriesData = {
         religion: 'Hindu (Shaivism)',
         government: 'Hindu Kingdom',
         summary: 'Mataram Kuno founded by Sanjaya in Central Java as a Shaivite Hindu kingdom, establishing dominance over the fertile Kedu Plain',
+        summaryId: 'Mataram Kuno didirikan oleh Sanjaya di Jawa Tengah sebagai kerajaan Hindu Saiwa, menegakkan dominasi di Dataran Kedu yang subur',
         keyEvents: [
-          { year: 732, event: "Canggal inscription records Sanjaya's establishment of the kingdom", type: 'political' },
+          { year: 732, event: "Canggal inscription records Sanjaya's establishment of the kingdom", type: 'political', eventId: 'Prasasti Canggal mencatat pendirian kerajaan oleh Sanjaya' },
         ],
         historicalContext: "The Canggal inscription of 732 CE is the earliest direct record of the Mataram kingdom, describing Sanjaya's establishment of a Shaivite Hindu polity in Central Java.\n\nThe Kedu Plain provides fertile agricultural land underpinning the kingdom's wealth.",
         economy: {
@@ -568,7 +582,7 @@ export const territoriesData = {
         relations: {},
       },
       800: {
-        era: 'Sailendra Period',
+        era: 'Sailendra Period', eraId: 'Periode Sailendra',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -581,8 +595,9 @@ export const territoriesData = {
         religion: 'Buddhist (Mahayana) and Hindu',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'The Sailendra dynasty rises to prominence, commissioning Borobudur — one of the greatest Buddhist monuments in the world',
+        summaryId: 'Dinasti Sailendra bangkit menonjol, menugaskan pembangunan Borobudur — salah satu monumen Buddha terbesar di dunia',
         keyEvents: [
-          { year: 825, event: 'Borobudur Buddhist temple complex completed', type: 'cultural' }, // TODO: verify exact completion date
+          { year: 825, event: 'Borobudur Buddhist temple complex completed', type: 'cultural', eventId: 'Kompleks candi Buddha Borobudur diselesaikan' }, // TODO: verify exact completion date
         ],
         historicalContext: 'The Sailendra dynasty brings Buddhist influence to dominate Mataram alongside the existing Shaivite Sanjaya traditions.\n\nBorobudur, constructed under Sailendra patronage, stands as one of the greatest architectural achievements of the ancient world.',
         economy: {
@@ -614,7 +629,7 @@ export const territoriesData = {
     color: '#E07B39',
     timeline: {
       760: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -627,8 +642,9 @@ export const territoriesData = {
         religion: 'Hindu',
         government: 'Hindu Kingdom',
         summary: 'Kanjuruhan is a short-lived Hindu kingdom of East Java, known from the Dinoyo inscription referencing king Gajayana',
+        summaryId: 'Kanjuruhan adalah kerajaan Hindu Jawa Timur yang berumur pendek, dikenal dari prasasti Dinoyo yang menyebut raja Gajayana',
         keyEvents: [
-          { year: 760, event: 'Dinoyo inscription records King Gajayana and the kingdom of Kanjuruhan', type: 'cultural' }, // TODO: verify exact year
+          { year: 760, event: 'Dinoyo inscription records King Gajayana and the kingdom of Kanjuruhan', type: 'cultural', eventId: 'Prasasti Dinoyo mencatat Raja Gajayana dan Kerajaan Kanjuruhan' }, // TODO: verify exact year
         ],
         historicalContext: 'Kanjuruhan is known primarily through the Dinoyo inscription, one of the earliest Sanskrit inscriptions found in East Java.\n\nThe kingdom represents the early spread of Hindu culture into eastern Java.',
         economy: {
@@ -660,7 +676,7 @@ export const territoriesData = {
     color: '#4CAF50',
     timeline: {
       632: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Ratu',
@@ -673,8 +689,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Kingdom',
         summary: 'Kalingga, known in Chinese sources as Holing, is a trading kingdom on the north coast of Central Java renowned for the strict justice of Queen Ratu Shima',
+        summaryId: 'Kalingga, dikenal dalam sumber Tiongkok sebagai Holing, adalah kerajaan dagang di pesisir utara Jawa Tengah yang terkenal dengan keadilan ketat Ratu Shima',
         keyEvents: [
-          { year: 674, event: 'Tang dynasty Chinese records describe Kalingga (Holing) as a prosperous trading kingdom', type: 'political' }, // TODO: verify exact year of records
+          { year: 674, event: 'Tang dynasty Chinese records describe Kalingga (Holing) as a prosperous trading kingdom', type: 'political', eventId: 'Catatan Tiongkok Dinasti Tang menggambarkan Kalingga (Holing) sebagai kerajaan dagang yang makmur' }, // TODO: verify exact year of records
         ],
         historicalContext: "Kalingga appears in Tang dynasty Chinese chronicles as \"Holing,\" describing it as a wealthy maritime kingdom.\n\nRatu Shima is celebrated for strict justice — Chinese accounts describe her cutting off her own son's hand for touching royal property without permission.",
         economy: {
@@ -706,7 +723,7 @@ export const territoriesData = {
     color: '#3CB371',
     timeline: {
       695: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -719,6 +736,7 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Kingdom',
         summary: 'Northern Kalingga emerges after the split of the Kalingga kingdom, maintaining the coastal region of Central Java',
+        summaryId: 'Kalingga Utara muncul setelah pemisahan kerajaan Kalingga, mempertahankan wilayah pesisir Jawa Tengah',
         keyEvents: [], // TODO: verify key events with academic source
         historicalContext: "After the dissolution of unified Kalingga, the northern territories form a separate polity.\n\nDetails of Northern Kalingga's internal history remain limited in surviving records.",
         economy: {
@@ -750,7 +768,7 @@ export const territoriesData = {
     color: '#2E8B57',
     timeline: {
       695: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -763,6 +781,7 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Kingdom',
         summary: 'Southern Kalingga forms after the split of the Kalingga kingdom, controlling the inland and southern territories of Central Java',
+        summaryId: 'Kalingga Selatan terbentuk setelah pemisahan kerajaan Kalingga, menguasai wilayah pedalaman dan selatan Jawa Tengah',
         keyEvents: [], // TODO: verify key events with academic source
         historicalContext: "The southern territories of Kalingga form a separate polity after the kingdom's dissolution around 695.\n\nSouthern Kalingga eventually becomes absorbed into the emerging Mataram kingdom by 732.",
         economy: {
@@ -794,7 +813,7 @@ export const territoriesData = {
     color: '#8B008B',
     timeline: {
       929: {
-        era: 'East Java Period',
+        era: 'East Java Period', eraId: 'Periode Jawa Timur',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -807,8 +826,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Mpu Sindok relocates the center of Javanese power from Central Java to East Java, founding Medang after a volcanic catastrophe',
+        summaryId: 'Mpu Sindok memindahkan pusat kekuasaan Jawa dari Jawa Tengah ke Jawa Timur, mendirikan Medang setelah bencana gunung berapi',
         keyEvents: [
-          { year: 929, event: 'Mpu Sindok moves the capital from Central Java to East Java', type: 'political' },
+          { year: 929, event: 'Mpu Sindok moves the capital from Central Java to East Java', type: 'political', eventId: 'Mpu Sindok memindahkan ibu kota dari Jawa Tengah ke Jawa Timur' },
         ],
         historicalContext: 'Following a catastrophic volcanic eruption around 929 CE that devastated Central Java, Mpu Sindok relocates the court to East Java.\n\nThis shift marks a pivotal turning point in Javanese political history, establishing the foundations for all later East Javanese kingdoms.',
         economy: {
@@ -828,7 +848,7 @@ export const territoriesData = {
         relations: {},
       },
       980: {
-        era: 'Late Period',
+        era: 'Late Period', eraId: 'Periode Akhir',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -841,8 +861,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Medang continues to dominate East Java before internal conflict leads to its collapse and the rise of Kahuripan under Airlangga',
+        summaryId: 'Medang terus mendominasi Jawa Timur sebelum konflik internal menyebabkan keruntuhannya dan kebangkitan Kahuripan di bawah Airlangga',
         keyEvents: [
-          { year: 1016, event: 'Medang Kingdom collapses following dynastic attack', type: 'political' }, // TODO: verify details
+          { year: 1016, event: 'Medang Kingdom collapses following dynastic attack', type: 'political', eventId: 'Kerajaan Medang runtuh akibat serangan dinasti' }, // TODO: verify details
         ],
         historicalContext: "Medang's later years are marked by dynastic instability.\n\nIts collapse around 1016 creates the conditions for Airlangga's reunification of East Java under the Kahuripan kingdom.",
         economy: {
@@ -874,7 +895,7 @@ export const territoriesData = {
     color: '#DAA520',
     timeline: {
       1019: {
-        era: 'Airlangga Era',
+        era: 'Airlangga Era', eraId: 'Era Airlangga',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -887,9 +908,10 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Airlangga reunifies East Java following the collapse of Medang, building Kahuripan into a prosperous and stable kingdom before dividing it between his two sons',
+        summaryId: 'Airlangga menyatukan kembali Jawa Timur setelah runtuhnya Medang, membangun Kahuripan menjadi kerajaan yang makmur sebelum membaginya antara kedua putranya',
         keyEvents: [
-          { year: 1019, event: 'Airlangga begins reunification of East Java', type: 'political' },
-          { year: 1042, event: 'Airlangga divides the kingdom into Panjalu and Janggala for his sons', type: 'political' },
+          { year: 1019, event: 'Airlangga begins reunification of East Java', type: 'political', eventId: 'Airlangga memulai penyatuan kembali Jawa Timur' },
+          { year: 1042, event: 'Airlangga divides the kingdom into Panjalu and Janggala for his sons', type: 'political', eventId: 'Airlangga membagi kerajaan menjadi Panjalu dan Janggala untuk kedua putranya' },
         ],
         historicalContext: 'Airlangga — of Balinese royal descent — rises to restore order in East Java after the collapse of Medang.\n\nHis reign is notable for prosperity, religious tolerance, and literary patronage. At the end of his life he divides the kingdom between his two sons, creating the rival states of Panjalu and Janggala.',
         economy: {
@@ -921,7 +943,7 @@ export const territoriesData = {
     color: '#CD853F',
     timeline: {
       1042: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -934,8 +956,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Panjalu is established when Airlangga divides his kingdom, controlling the western portion of East Java',
+        summaryId: 'Panjalu didirikan ketika Airlangga membagi kerajaannya, menguasai bagian barat Jawa Timur',
         keyEvents: [
-          { year: 1042, event: 'Panjalu established after Airlangga divides Kahuripan', type: 'political' },
+          { year: 1042, event: 'Panjalu established after Airlangga divides Kahuripan', type: 'political', eventId: 'Panjalu didirikan setelah Airlangga membagi Kahuripan' },
         ],
         historicalContext: "Panjalu (later called Kediri) is one of two kingdoms created from the division of Airlangga's Kahuripan.\n\nRivalry with Janggala dominates its early decades before Panjalu eventually absorbs its rival.",
         economy: {
@@ -967,7 +990,7 @@ export const territoriesData = {
     color: '#2F8A8A',
     timeline: {
       1042: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -980,8 +1003,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Janggala is established alongside Panjalu when Airlangga divides his kingdom, controlling the eastern and coastal portion of East Java',
+        summaryId: 'Janggala didirikan bersama Panjalu ketika Airlangga membagi kerajaannya, menguasai bagian timur dan pesisir Jawa Timur',
         keyEvents: [
-          { year: 1042, event: 'Janggala established after Airlangga divides Kahuripan', type: 'political' },
+          { year: 1042, event: 'Janggala established after Airlangga divides Kahuripan', type: 'political', eventId: 'Janggala didirikan setelah Airlangga membagi Kahuripan' },
         ],
         historicalContext: "Janggala controls the eastern and coastal territories of what was Kahuripan, while Panjalu holds the western inland areas.\n\nThe two kingdoms maintain a rivalry until Janggala is eventually absorbed by Panjalu / Kediri.",
         economy: {
@@ -1013,7 +1037,7 @@ export const territoriesData = {
     color: '#7B68EE',
     timeline: {
       1088: {
-        era: 'Founding Period',
+        era: 'Founding Period', eraId: 'Periode Pendirian',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1026,8 +1050,9 @@ export const territoriesData = {
         religion: 'Buddhist (Mahayana)',
         government: 'Kingdom',
         summary: 'Dharmasraya emerges as a successor state to Srivijaya in the Batanghari River valley of Sumatra, inheriting its Buddhist traditions and trade networks',
+        summaryId: 'Dharmasraya muncul sebagai negara penerus Sriwijaya di lembah Sungai Batanghari Sumatra, mewarisi tradisi Buddha dan jaringan perdagangannya',
         keyEvents: [
-          { year: 1088, event: 'Dharmasraya emerges as the dominant Sumatran kingdom after Srivijaya\'s decline', type: 'political' }, // TODO: verify exact date
+          { year: 1088, event: 'Dharmasraya emerges as the dominant Sumatran kingdom after Srivijaya\'s decline', type: 'political', eventId: 'Dharmasraya muncul sebagai kerajaan Sumatra yang dominan setelah kemunduran Sriwijaya' }, // TODO: verify exact date
         ],
         historicalContext: "As Srivijaya's power wanes after the Chola raids, Dharmasraya rises to fill the vacuum in Sumatra's interior.\n\nLocated along the Batanghari River, it inherits Srivijaya's Mahayana Buddhist culture and maintains the region's gold and forest trade.",
         economy: {
@@ -1059,7 +1084,7 @@ export const territoriesData = {
     color: '#B8860B',
     timeline: {
       1135: {
-        era: 'Golden Age',
+        era: 'Golden Age', eraId: 'Masa Kejayaan',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1072,8 +1097,9 @@ export const territoriesData = {
         religion: 'Hindu (Shaivism)',
         government: 'Hindu Kingdom',
         summary: 'Kediri reaches its golden age under Jayabaya, famed for prophetic writings and a flourishing of Old Javanese Kakawin literature',
+        summaryId: 'Kediri mencapai masa keemasannya di bawah Jayabaya, terkenal dengan ramalan-ramalannya dan perkembangan sastra Kakawin Jawa Kuno',
         keyEvents: [
-          { year: 1157, event: 'Kakawin Bharatayuddha composed — major Old Javanese literary work under Jayabaya', type: 'cultural' }, // TODO: verify exact year
+          { year: 1157, event: 'Kakawin Bharatayuddha composed — major Old Javanese literary work under Jayabaya', type: 'cultural', eventId: 'Kakawin Bharatayuddha digubah — karya sastra Jawa Kuno utama di bawah Jayabaya' }, // TODO: verify exact year
         ],
         historicalContext: "Kediri (successor to Panjalu) becomes the dominant power of East Java under Jayabaya.\n\nJayabaya's reign is celebrated for literary patronage and for the Jayabaya Prophecies — predictions about Java's future that remained influential for centuries.",
         economy: {
@@ -1093,7 +1119,7 @@ export const territoriesData = {
         relations: {},
       },
       1200: {
-        era: 'Late Period',
+        era: 'Late Period', eraId: 'Periode Akhir',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1106,8 +1132,9 @@ export const territoriesData = {
         religion: 'Hindu (Shaivism)',
         government: 'Hindu Kingdom',
         summary: "Kediri declines under its last ruler Kertajaya, whose conflict with the Brahmin clergy allows Ken Arok of Tumapel to overthrow the kingdom in 1222",
+        summaryId: 'Kediri mengalami kemunduran di bawah penguasa terakhirnya Kertajaya, yang konfliknya dengan kaum Brahmana memungkinkan Ken Arok dari Tumapel menggulingkan kerajaan pada 1222',
         keyEvents: [
-          { year: 1222, event: 'Kertajaya defeated by Ken Arok of Tumapel at the Battle of Ganter — end of Kediri', type: 'military' },
+          { year: 1222, event: 'Kertajaya defeated by Ken Arok of Tumapel at the Battle of Ganter — end of Kediri', type: 'military', eventId: 'Kertajaya dikalahkan Ken Arok dari Tumapel dalam Pertempuran Ganter — berakhirnya Kediri' },
         ],
         historicalContext: "King Kertajaya's demands that Brahmins worship him as a god alienate the religious establishment.\n\nThe Brahmins ally with Ken Arok of Tumapel, whose victory at the Battle of Ganter in 1222 ends the Kediri kingdom.",
         economy: {
@@ -1139,7 +1166,7 @@ export const territoriesData = {
     color: '#A0522D',
     timeline: {
       1222: {
-        era: 'Ken Arok Era',
+        era: 'Ken Arok Era', eraId: 'Era Ken Arok',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1152,9 +1179,10 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Ken Arok founds Tumapel after defeating Kediri at the Battle of Ganter, establishing the Rajasa dynasty that would rule through Singasari and Majapahit',
+        summaryId: 'Ken Arok mendirikan Tumapel setelah mengalahkan Kediri dalam Pertempuran Ganter, membangun Dinasti Rajasa yang akan memerintah melalui Singasari dan Majapahit',
         keyEvents: [
-          { year: 1222, event: 'Ken Arok defeats Kertajaya of Kediri at the Battle of Ganter', type: 'military' },
-          { year: 1227, event: 'Ken Arok assassinated by Anusapati', type: 'political' },
+          { year: 1222, event: 'Ken Arok defeats Kertajaya of Kediri at the Battle of Ganter', type: 'military', eventId: 'Ken Arok mengalahkan Kertajaya dari Kediri dalam Pertempuran Ganter' },
+          { year: 1227, event: 'Ken Arok assassinated by Anusapati', type: 'political', eventId: 'Ken Arok dibunuh oleh Anusapati' },
         ],
         historicalContext: "Ken Arok is a legendary figure who rises from low origins to overthrow Kediri and establish Tumapel.\n\nHis brief reign establishes the Rajasa dynasty that would rule through Singasari and ultimately Majapahit.",
         economy: {
@@ -1186,7 +1214,7 @@ export const territoriesData = {
     color: '#DC143C',
     timeline: {
       1254: {
-        era: 'Early Kingdom',
+        era: 'Early Kingdom', eraId: 'Kerajaan Awal',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1199,8 +1227,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist (Shaiva-Buddha syncretism)',
         government: 'Hindu-Buddhist Kingdom',
         summary: 'Singasari consolidates power in East Java under Wisnuwardhana, developing a distinctive syncretic Hindu-Buddhist religious culture',
+        summaryId: 'Singasari mengonsolidasikan kekuasaan di Jawa Timur di bawah Wisnuwardhana, mengembangkan budaya agama Hindu-Buddha sinkretis yang khas',
         keyEvents: [
-          { year: 1254, event: 'Wisnuwardhana consolidates Singasari as the dominant East Java power', type: 'political' }, // TODO: verify exact year
+          { year: 1254, event: 'Wisnuwardhana consolidates Singasari as the dominant East Java power', type: 'political', eventId: 'Wisnuwardhana mengonsolidasikan Singasari sebagai kekuatan dominan Jawa Timur' }, // TODO: verify exact year
         ],
         historicalContext: 'Singasari emerges from the Tumapel kingdom, developing a distinctive syncretic form of Shaivism and Buddhism.\n\nArtistic and religious patronage flourishes, setting the cultural foundation for Majapahit.',
         economy: {
@@ -1220,7 +1249,7 @@ export const territoriesData = {
         relations: {},
       },
       1268: {
-        era: 'Kertanagara Era',
+        era: 'Kertanagara Era', eraId: 'Era Kertanagara',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1233,10 +1262,11 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist (Tantric Buddhism)',
         government: 'Hindu-Buddhist Kingdom',
         summary: "Kertanagara expands Singasari's influence across the archipelago and defiantly refuses tribute to the Mongol Yuan dynasty",
+        summaryId: 'Kertanagara memperluas pengaruh Singasari ke seluruh kepulauan dan dengan tegas menolak memberi upeti kepada Dinasti Yuan Mongol',
         keyEvents: [
-          { year: 1275, event: 'Pamalayu expedition sent to Sumatra to assert Singasari influence', type: 'military' },
-          { year: 1289, event: 'Kertanagara mutilates the Mongol envoy — triggering Yuan invasion plans', type: 'political' },
-          { year: 1292, event: 'Kertanagara killed by Jayakatwang of Kediri — Singasari collapses', type: 'military' },
+          { year: 1275, event: 'Pamalayu expedition sent to Sumatra to assert Singasari influence', type: 'military', eventId: 'Ekspedisi Pamalayu dikirim ke Sumatra untuk menegaskan pengaruh Singasari' },
+          { year: 1289, event: 'Kertanagara mutilates the Mongol envoy — triggering Yuan invasion plans', type: 'political', eventId: 'Kertanagara memutilasi utusan Mongol — memicu rencana invasi Yuan' },
+          { year: 1292, event: 'Kertanagara killed by Jayakatwang of Kediri — Singasari collapses', type: 'military', eventId: 'Kertanagara dibunuh oleh Jayakatwang dari Kediri — Singasari runtuh' },
         ],
         historicalContext: "Kertanagara is the most ambitious king of Singasari, projecting power throughout the archipelago and defying the Mongol Yuan dynasty.\n\nHis assassination in 1292 ends Singasari, but his son-in-law Raden Wijaya would go on to found Majapahit.",
         economy: {
@@ -1271,7 +1301,7 @@ export const territoriesData = {
     color: '#FF8C00',
     timeline: {
       1293: {
-        era: 'Founding Era',
+        era: 'Founding Era', eraId: 'Era Pendirian',
         ruler: {
           portrait: '👑',
           title: 'Raja',
@@ -1284,8 +1314,9 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Empire',
         summary: 'Raden Wijaya founds Majapahit by exploiting the Mongol invasion to destroy Jayakatwang of Kediri, avenging his father-in-law Kertanagara',
+        summaryId: 'Raden Wijaya mendirikan Majapahit dengan memanfaatkan invasi Mongol untuk menghancurkan Jayakatwang dari Kediri, membalas dendam atas mertuanya Kertanagara',
         keyEvents: [
-          { year: 1293, event: 'Raden Wijaya founds Majapahit after defeating both Jayakatwang and the Yuan Mongol fleet', type: 'political' },
+          { year: 1293, event: 'Raden Wijaya founds Majapahit after defeating both Jayakatwang and the Yuan Mongol fleet', type: 'political', eventId: 'Raden Wijaya mendirikan Majapahit setelah mengalahkan Jayakatwang dan armada Mongol Yuan' },
         ],
         historicalContext: "Raden Wijaya brilliantly exploits the Yuan Mongol invasion fleet sent to punish Kertanagara.\n\nAllying with the Mongols to defeat Jayakatwang first, he then turns on the exhausted Mongol forces and drives them from Java, founding Majapahit in the process.",
         economy: {
@@ -1305,7 +1336,7 @@ export const territoriesData = {
         relations: { 'Yuan China': 'Hostile then Normalized' },
       },
       1350: {
-        era: 'Golden Age',
+        era: 'Golden Age', eraId: 'Masa Kejayaan',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -1318,10 +1349,11 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist',
         government: 'Hindu-Buddhist Empire',
         summary: "Under Hayam Wuruk and chief minister Gajah Mada, Majapahit reaches its greatest territorial extent, dominating the Nusantara archipelago",
+        summaryId: 'Di bawah Hayam Wuruk dan mahapatih Gajah Mada, Majapahit mencapai wilayah terluas, mendominasi kepulauan Nusantara',
         keyEvents: [
-          { year: 1336, event: "Gajah Mada swears the Palapa Oath — vowing to unify the archipelago", type: 'political' }, // TODO: verify exact year
-          { year: 1357, event: 'Battle of Bubat — Sunda princess incident strains Majapahit–Sunda relations', type: 'military' }, // TODO: verify exact year
-          { year: 1365, event: 'Nagarakretagama composed — describes Majapahit\'s vast territories', type: 'cultural' },
+          { year: 1336, event: "Gajah Mada swears the Palapa Oath — vowing to unify the archipelago", type: 'political', eventId: 'Gajah Mada bersumpah Sumpah Palapa — bersumpah untuk menyatukan kepulauan' }, // TODO: verify exact year
+          { year: 1357, event: 'Battle of Bubat — Sunda princess incident strains Majapahit–Sunda relations', type: 'military', eventId: 'Perang Bubat — insiden putri Sunda merenggangkan hubungan Majapahit–Sunda' }, // TODO: verify exact year
+          { year: 1365, event: 'Nagarakretagama composed — describes Majapahit\'s vast territories', type: 'cultural', eventId: 'Nagarakretagama digubah — menggambarkan wilayah Majapahit yang luas' },
         ],
         historicalContext: "The reign of Hayam Wuruk represents the apex of Majapahit power.\n\nGajah Mada's Palapa Oath and the Nagarakretagama poem document claims of dominion over much of the archipelago, making Majapahit one of the greatest empires in Southeast Asian history.",
         economy: {
@@ -1345,7 +1377,7 @@ export const territoriesData = {
         },
       },
       1400: {
-        era: 'Decline',
+        era: 'Decline', eraId: 'Masa Kemunduran',
         ruler: {
           portrait: '👑',
           title: 'Maharaja',
@@ -1358,9 +1390,10 @@ export const territoriesData = {
         religion: 'Hindu-Buddhist (with growing Islamic influence)',
         government: 'Weakened Empire',
         summary: 'Majapahit faces internal dynastic conflict and the rising power of Islamic coastal states, beginning a long decline',
+        summaryId: 'Majapahit menghadapi konflik dinasti internal dan kebangkitan negara-negara pesisir Islam, memulai kemunduran yang panjang',
         keyEvents: [
-          { year: 1404, event: 'Paregreg civil war — internal dynastic conflict weakens Majapahit', type: 'military' }, // TODO: verify exact dates
-          { year: 1478, event: 'Majapahit capital falls — effective end of the empire', type: 'political' }, // TODO: verify — some sources give 1527
+          { year: 1404, event: 'Paregreg civil war — internal dynastic conflict weakens Majapahit', type: 'military', eventId: 'Perang saudara Paregreg — konflik dinasti internal melemahkan Majapahit' }, // TODO: verify exact dates
+          { year: 1478, event: 'Majapahit capital falls — effective end of the empire', type: 'political', eventId: 'Ibu kota Majapahit jatuh — berakhirnya kekaisaran secara efektif' }, // TODO: verify — some sources give 1527
         ],
         historicalContext: "After Hayam Wuruk's death the empire enters a long period of internal conflict and dynastic war.\n\nThe rise of Islamic coastal states, particularly Demak and Malacca, gradually erodes Majapahit's power until its final fall.",
         economy: {
@@ -1395,7 +1428,7 @@ export const territoriesData = {
     color: '#556B2F',
     timeline: {
       1482: {
-        era: 'Classical Period',
+        era: 'Classical Period', eraId: 'Periode Klasik',
         ruler: {
           portrait: '👑',
           title: 'Prabu',
@@ -1408,9 +1441,10 @@ export const territoriesData = {
         religion: 'Hindu (Sunda Wiwitan)',
         government: 'Hindu Kingdom',
         summary: 'Pajajaran flourishes as the last great Hindu kingdom of West Java under Sri Baduga Maharaja, maintaining independence from the rising Islamic sultanates',
+        summaryId: 'Pajajaran berkembang sebagai kerajaan Hindu terakhir yang besar di Jawa Barat di bawah Sri Baduga Maharaja, mempertahankan kemerdekaan dari kesultanan Islam yang sedang bangkit',
         keyEvents: [
-          { year: 1482, event: 'Pajajaran consolidated as the dominant West Java kingdom', type: 'political' }, // TODO: verify exact date
-          { year: 1521, event: 'Death of Sri Baduga Maharaja — kingdom begins to decline', type: 'political' }, // TODO: verify
+          { year: 1482, event: 'Pajajaran consolidated as the dominant West Java kingdom', type: 'political', eventId: 'Pajajaran dikonsolidasikan sebagai kerajaan dominan Jawa Barat' }, // TODO: verify exact date
+          { year: 1521, event: 'Death of Sri Baduga Maharaja — kingdom begins to decline', type: 'political', eventId: 'Wafatnya Sri Baduga Maharaja — kerajaan mulai merosot' }, // TODO: verify
         ],
         historicalContext: 'Pajajaran represents the final phase of the long Sunda-Galuh tradition of Hindu kingdoms in West Java.\n\nUnder Sri Baduga Maharaja (also known as Prabu Siliwangi) the kingdom prospers and becomes deeply embedded in Sundanese cultural memory as a golden age.',
         economy: {
@@ -1430,7 +1464,7 @@ export const territoriesData = {
         relations: { 'Demak': 'Hostile' },
       },
       1520: {
-        era: 'Decline',
+        era: 'Decline', eraId: 'Masa Kemunduran',
         ruler: {
           portrait: '👑',
           title: 'Prabu',
@@ -1443,8 +1477,9 @@ export const territoriesData = {
         religion: 'Hindu (Sunda Wiwitan)',
         government: 'Hindu Kingdom (declining)',
         summary: 'Pajajaran faces mounting pressure from Islamic sultanates, eventually falling to Banten and Cirebon in 1579',
+        summaryId: 'Pajajaran menghadapi tekanan dari kesultanan Islam, akhirnya jatuh ke tangan Banten dan Cirebon pada 1579',
         keyEvents: [
-          { year: 1579, event: 'Pajajaran falls to Islamic forces — end of the last Hindu kingdom of Java', type: 'political' },
+          { year: 1579, event: 'Pajajaran falls to Islamic forces — end of the last Hindu kingdom of Java', type: 'political', eventId: 'Pajajaran jatuh ke pasukan Islam — berakhirnya kerajaan Hindu terakhir di Jawa' },
         ],
         historicalContext: 'The expanding Islamic sultanates of Banten and Cirebon systematically isolate and weaken Pajajaran.\n\nThe fall of the capital in 1579 marks the end of Hindu political power in Java, completing the Islamisation of the island.',
         economy: {

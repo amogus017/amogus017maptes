@@ -174,45 +174,51 @@
   font-weight: 500;
 }
 
-/* Leaflet tooltip — matches popup style */
+/* Leaflet tooltip */
 .leaflet-tooltip {
   padding: 0;
-  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
-  border: 3px solid #8B4513;
-  border-radius: 10%;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.5),
-    inset 0 0 20px rgba(139, 69, 19, 0.05);
-  font-family: 'Georgia', serif;
+  background: #F4E8D0;
+  border: 1.5px solid #8B4513;
+  border-radius: 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(139,69,19,0.1);
+  font-family: 'EB Garamond', 'Georgia', serif;
 }
 
 .leaflet-tooltip::before {
   border-top-color: #8B4513;
 }
 
-.leaflet-tooltip h3 {
-  margin: 0 0 10px 0;
-  color: #3E2723;
-  font-size: 18px;
-  font-weight: 700;
+/* Tooltip inner content */
+.tt-inner {
+  padding: 8px 12px;
   text-align: center;
-  border-bottom: 2px solid #8B4513;
-  padding-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-.leaflet-tooltip p {
-  margin: 6px 0;
-  font-size: 14px;
-  color: #5D4037;
-  line-height: 1.6;
-}
-
-.leaflet-tooltip strong {
+.tt-name {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
   color: #3E2723;
-  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.tt-meta {
+  font-family: 'EB Garamond', serif;
+  font-size: 11px;
+  color: #8B4513;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+.tt-ruler {
+  font-family: 'EB Garamond', serif;
+  font-size: 10px;
+  color: #6B4C35;
+  margin-top: 3px;
+  font-style: italic;
+  opacity: 0.85;
 }
 
 /* Remove browser focus ring on clicked polygons */

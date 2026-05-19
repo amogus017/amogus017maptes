@@ -56,6 +56,7 @@ const TAB_IDS = [
 
 const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
   const { language, t } = useLanguage();
+  const loc = (en, id) => (language === 'id' && id) ? id : en;
   const [activeTab, setActiveTab] = useState('overview');
   const [territoryData, setTerritoryData] = useState(null);
   const [wikiOpen, setWikiOpen] = useState(false);
@@ -245,7 +246,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
 
                 <div className="header-content">
                   <div className="era-badge" style={{ backgroundColor: territoryData.color }}>
-                    {territoryData.era}
+                    {loc(territoryData.era, territoryData.eraId)}
                   </div>
 
                   <h1 className="territory-name">{territoryData.name}</h1>
@@ -319,7 +320,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                     {activeTab === 'overview' && (
                       <div className="tab-overview">
                         <div className="v3-section">
-                          <p className="summary-text">{territoryData.summary}</p>
+                          <p className="summary-text">{loc(territoryData.summary, territoryData.summaryId)}</p>
                         </div>
 
                         <div className="v3-stats-grid">
@@ -363,7 +364,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
                               <div key={idx} className={`timeline-event ${event.type}`}>
                                 <span className="event-year">{event.year}</span>
                                 <span className="event-dot" />
-                                <span className="event-text">{event.event}</span>
+                                <span className="event-text">{loc(event.event, event.eventId)}</span>
                               </div>
                             ))}
                           </div>

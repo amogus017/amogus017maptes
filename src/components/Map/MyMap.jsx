@@ -232,11 +232,10 @@ class MyMap extends Component {
         if (!groupLayer) return;
         const info = getTerritoryInfo(empire.id, this.state.currentYear);
         groupLayer.bindTooltip(
-            `<div style="text-align:center;">
-                <h3>${info.name}</h3>
-                <p><strong>Year:</strong> ${this.state.currentYear}</p>
-                <p><strong>Ruler:</strong> ${info.ruler}</p>
-                <p><strong>Era:</strong> ${info.era}</p>
+            `<div class="tt-inner">
+                <div class="tt-name">${info.name}</div>
+                <div class="tt-meta">${info.era} · ${this.state.currentYear} M</div>
+                ${info.ruler ? `<div class="tt-ruler">${info.ruler}</div>` : ''}
             </div>`,
             { sticky: true, direction: 'top', opacity: 1 }
         );
@@ -244,7 +243,7 @@ class MyMap extends Component {
 
     render() {
         const { activeEmpires, currentYear } = this.state;
-        const { t } = this.context || {};
+        const { t, language } = this.context || {};
 
         return (
             <div className="map-wrapper">
@@ -323,7 +322,7 @@ class MyMap extends Component {
                                         {events.map((e, i) => (
                                             <div key={i} className="event-item">
                                                 <span className="event-year">{e.year}</span>
-                                                <span className="event-text">{e.event}</span>
+                                                <span className="event-text">{(language === 'id' && e.eventId) ? e.eventId : e.event}</span>
                                             </div>
                                         ))}
                                     </div>
