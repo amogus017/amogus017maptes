@@ -3,8 +3,8 @@
   position: fixed;
   bottom: 87px;
   right: 20px;
-  z-index: 1500;
-  width: 220px;
+  z-index: 2000;
+  max-width: 220px;
 
   display: flex;
   align-items: center;
@@ -53,22 +53,23 @@
 }
 
 .v3-ask-ai-label {
-  max-width: 170px;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 480px) {
   .v3-ask-ai-btn {
-    bottom: 80px;
+    bottom: 120px;
     right: 12px;
     width: auto;
     padding: 8px 12px;
-    font-size: 12px;
+    font-size: 8px;
   }
 
   .v3-ask-ai-label {
-    max-width: 140px;
+    max-width: 100px;
   }
 }
 

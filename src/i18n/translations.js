@@ -65,7 +65,7 @@ const translations = {
 
     // Ask AI button
     askAbout: (name) => `Tanya: ${name}`,
-    askDefault: 'Tanya Chatbot',
+    askDefault: 'Chatbot',
 
     // Header search
     searchPlaceholder: 'Cari kerajaan...',
@@ -138,7 +138,7 @@ const translations = {
 
     // Ask AI button
     askAbout: (name) => `Ask: ${name}`,
-    askDefault: 'Ask Chatbot',
+    askDefault: 'Chatbot',
 
     // Header search
     searchPlaceholder: 'Search kingdoms...',

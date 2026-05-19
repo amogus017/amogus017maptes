@@ -204,7 +204,7 @@ export function calculateLabelPlacement(geojson, map = null) {
         const pixelW = Math.abs(ne.x - sw.x);
         const pixelH = Math.abs(ne.y - sw.y);
         const pixelExtent = Math.sqrt(pixelW * pixelH);
-        fontSize = Math.max(9, Math.min(24, pixelExtent * 0.14));
+        fontSize = Math.max(7, Math.min(17, pixelExtent * 0.14));
         letterSpacing = Math.max(1, fontSize * 0.15);
     } else {
         const area = bounds.width * bounds.height;
