@@ -149,7 +149,7 @@ function calculateBounds(geojson) {
 /**
  * Main function to calculate optimal label placement
  */
-export function calculateLabelPlacement(geojson, zoom = 5) {
+export function calculateLabelPlacement(geojson, map = null) {
     const bounds = calculateBounds(geojson);
     
     // Calculate proper centroid
@@ -196,16 +196,28 @@ export function calculateLabelPlacement(geojson, zoom = 5) {
     }
     // Else keep horizontal (0°)
 
-    // Calculate font size based on territory area
-    const area = bounds.width * bounds.height;
-    let fontSize = Math.sqrt(area) * 50; // Adjust multiplier
-    fontSize = Math.max(9, Math.min(14, fontSize));
+    // Font size: zoom-aware (pixel-based) when map provided, lat/lng fallback otherwise
+    let fontSize, letterSpacing;
+    if (map) {
+        const sw = map.latLngToLayerPoint([bounds.minLat, bounds.minLng]);
+        const ne = map.latLngToLayerPoint([bounds.maxLat, bounds.maxLng]);
+        const pixelW = Math.abs(ne.x - sw.x);
+        const pixelH = Math.abs(ne.y - sw.y);
+        const pixelExtent = Math.sqrt(pixelW * pixelH);
+        fontSize = Math.max(9, Math.min(24, pixelExtent * 0.14));
+        letterSpacing = Math.max(1, fontSize * 0.15);
+    } else {
+        const area = bounds.width * bounds.height;
+        fontSize = Math.max(9, Math.min(14, Math.sqrt(area) * 50));
+        letterSpacing = 2;
+    }
 
     return {
         position,
         bounds,
         rotation: Math.round(rotation),
-        fontSize: Math.round(fontSize)
+        fontSize: Math.round(fontSize),
+        letterSpacing: Math.round(letterSpacing * 10) / 10,
     };
 }
 

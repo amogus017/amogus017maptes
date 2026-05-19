@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MapContainer, GeoJSON, TileLayer, useMap } from 'react-leaflet';
 import { getEmpiresForYear, getTerritoryInfo } from '../../data/boundaries';
 import { getTerritoryData } from '../../data/territories';
+import { LanguageContext } from '../../contexts/LanguageContext';
 import 'leaflet/dist/leaflet.css';
 import './MyMap.css';
 import { calculateLabelPlacement } from './labelUtils';
@@ -56,7 +57,22 @@ class TerritoryLabelsLayer extends Component {
             this.labels.forEach(({ el }) => { el.style.visibility = 'hidden'; });
         };
 
+        this.updateLabelStyles = () => {
+            this.labels.forEach(({ el, sw, ne }) => {
+                const swPt = map.latLngToLayerPoint(sw);
+                const nePt = map.latLngToLayerPoint(ne);
+                const pixelW = Math.abs(nePt.x - swPt.x);
+                const pixelH = Math.abs(nePt.y - swPt.y);
+                const pixelExtent = Math.sqrt(pixelW * pixelH);
+                const fontSize = Math.max(9, Math.min(34, pixelExtent * 0.14));
+                const letterSpacing = Math.max(1, fontSize * 0.15);
+                el.style.fontSize      = fontSize + 'px';
+                el.style.letterSpacing = letterSpacing + 'px';
+            });
+        };
+
         this.showLabels = () => {
+            this.updateLabelStyles();
             this.updatePositions();
             this.labels.forEach(({ el }) => { el.style.visibility = 'visible'; });
         };
@@ -85,7 +101,7 @@ class TerritoryLabelsLayer extends Component {
 
         empires.forEach((empire) => {
             const info      = getTerritoryInfo(empire.id, currentYear);
-            const placement = calculateLabelPlacement(empire.boundary);
+            const placement = calculateLabelPlacement(empire.boundary, map);
             if (!placement.position) return;
 
             const el = document.createElement('div');
@@ -96,12 +112,12 @@ class TerritoryLabelsLayer extends Component {
                 transform:     `translate(-50%, -50%) rotate(${placement.rotation}deg)`,
                 color:         'white',
                 fontSize:      `${placement.fontSize}px`,
-                fontWeight:    'bold',
-                fontFamily:    'Georgia, serif',
-                letterSpacing: '2px',
+                fontWeight:    '600',
+                fontFamily:    "'Cinzel', serif",
+                letterSpacing: `${placement.letterSpacing}px`,
                 textTransform: 'uppercase',
                 whiteSpace:    'nowrap',
-                textShadow:    '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 0 8px rgba(0,0,0,0.9)',
+                textShadow:    '0 0 4px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,0.85), 0 0 24px rgba(0,0,0,0.5)',
                 userSelect:    'none',
                 pointerEvents: 'none',
             });
@@ -111,7 +127,12 @@ class TerritoryLabelsLayer extends Component {
             el.style.top  = point.y + 'px';
 
             pane.appendChild(el);
-            this.labels.push({ el, position: placement.position });
+            this.labels.push({
+                el,
+                position: placement.position,
+                sw: [placement.bounds.minLat, placement.bounds.minLng],
+                ne: [placement.bounds.maxLat, placement.bounds.maxLng],
+            });
         });
     }
 
@@ -140,6 +161,8 @@ function TerritoryLabels({ empires, currentYear }) {
 // ─── Main Map ────────────────────────────────────────────────────────────────
 
 class MyMap extends Component {
+    static contextType = LanguageContext;
+
     state = {
         currentYear:   1350,
         activeEmpires: [],
@@ -221,6 +244,7 @@ class MyMap extends Component {
 
     render() {
         const { activeEmpires, currentYear } = this.state;
+        const { t } = this.context || {};
 
         return (
             <div className="map-wrapper">
@@ -269,8 +293,8 @@ class MyMap extends Component {
 
                     {activeEmpires.length > 0 ? (
                         <div className="legend-events-stack">
-                            <div className="empire-legend" role="region" aria-label="Active kingdoms">
-                                <h4>Active Empires ({currentYear})</h4>
+                            <div className="empire-legend" role="region" aria-label={t?.legendAriaLabel ?? 'Active kingdoms'}>
+                                <h4>{t?.legendTitle(currentYear) ?? `Active Empires (${currentYear})`}</h4>
                                 {activeEmpires.map((empire) => {
                                     const info = getTerritoryInfo(empire.id, currentYear);
                                     return (
@@ -294,8 +318,8 @@ class MyMap extends Component {
 
                                 if (events.length === 0) return null;
                                 return (
-                                    <div className="events-panel" role="region" aria-label="Recent events">
-                                        <h4>Peristiwa</h4>
+                                    <div className="events-panel" role="region" aria-label={t?.eventsAriaLabel ?? 'Recent events'}>
+                                        <h4>{t?.eventsTitle ?? 'Events'}</h4>
                                         {events.map((e, i) => (
                                             <div key={i} className="event-item">
                                                 <span className="event-year">{e.year}</span>
@@ -308,7 +332,7 @@ class MyMap extends Component {
                         </div>
                     ) : (
                         <div className="map-empty-state" role="status" aria-live="polite">
-                            No recorded kingdoms for this period
+                            {t?.emptyState ?? 'No recorded kingdoms for this period'}
                         </div>
                     )}
                     <ZoomControl position="topleft" />

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTerritoryData, regionalEvents } from '../../data/territories';
 import WikiPanel from './WikiPanel';
+import { useLanguage } from '../../contexts/LanguageContext';
 import './TerritoryInfoPanel.css';
 
 // Dummy sources — replace with real ones per territory via territoryData.sources
@@ -45,15 +46,16 @@ const DUMMY_SOURCES = [
   },
 ];
 
-const TABS = [
-  { id: 'overview', label: 'Overview', icon: '📜' },
-  { id: 'history', label: 'History', icon: '📖' },
-  { id: 'economy', label: 'Economy', icon: '💰' },
-  { id: 'culture', label: 'Culture', icon: '🏛️' },
-  { id: 'relations', label: 'Relations', icon: '⚖️' },
+const TAB_IDS = [
+  { id: 'overview', icon: '📜' },
+  { id: 'history',  icon: '📖' },
+  { id: 'economy',  icon: '💰' },
+  { id: 'culture',  icon: '🏛️' },
+  { id: 'relations',icon: '⚖️' },
 ];
 
-const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, language = 'en' }) => {
+const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
   const [territoryData, setTerritoryData] = useState(null);
   const [wikiOpen, setWikiOpen] = useState(false);
@@ -147,7 +149,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                 <div className="header-decoration top-right" />
 
                 {/* Close button — top left */}
-                <button className="v3-close-btn" onClick={onClose} aria-label="Close panel">
+                <button className="v3-close-btn" onClick={onClose} aria-label={t.closePanel}>
                   <span aria-hidden="true">✕</span>
                 </button>
 
@@ -155,8 +157,8 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                 <button
                   className={`v3-wiki-btn ${wikiOpen ? 'active' : ''}`}
                   onClick={() => setWikiOpen(prev => !prev)}
-                  title={wikiOpen ? 'Close Wikipedia' : 'Open Wikipedia'}
-                  aria-label={wikiOpen ? 'Close Wikipedia panel' : 'Open Wikipedia panel'}
+                  title={wikiOpen ? t.closeWiki : t.openWiki}
+                  aria-label={wikiOpen ? t.closeWikiPanel : t.openWikiPanel}
                   aria-expanded={wikiOpen}
                 >
                   <span className="wiki-btn-w" aria-hidden="true">W</span>
@@ -167,8 +169,8 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                   <button
                     className={`v3-sources-btn ${sourcesOpen ? 'active' : ''}`}
                     onClick={() => setSourcesOpen(prev => !prev)}
-                    title="Sources & References"
-                    aria-label="Sources & References"
+                    title={t.sourcesTitle}
+                    aria-label={t.sourcesTitle}
                     aria-expanded={sourcesOpen}
                   >
                     <span className="sources-btn-icon" aria-hidden="true">📚</span>
@@ -185,11 +187,11 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                       >
                         {/* Popup Header */}
                         <div className="sources-popup-header">
-                          <span className="sources-popup-title">Sources & References</span>
+                          <span className="sources-popup-title">{t.sourcesTitle}</span>
                           <button
                             className="sources-popup-close"
                             onClick={() => setSourcesOpen(false)}
-                            aria-label="Close sources"
+                            aria-label={t.closeSources}
                           ><span aria-hidden="true">✕</span></button>
                         </div>
 
@@ -234,7 +236,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
 
                         {/* Popup Footer */}
                         <div className="sources-popup-footer">
-                          <span>Always verify with primary sources</span>
+                          <span>{t.sourceFooter}</span>
                         </div>
                       </motion.div>
                     )}
@@ -285,20 +287,23 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
               </div>
 
               {/* Tab Navigation */}
-              <div className="v3-tab-nav" role="tablist" aria-label="Kingdom information tabs">
-                {TABS.map(tab => (
-                  <button
-                    key={tab.id}
-                    role="tab"
-                    aria-selected={activeTab === tab.id}
-                    aria-controls={`tabpanel-${tab.id}`}
-                    className={`v3-tab ${activeTab === tab.id ? 'active' : ''}`}
-                    onClick={() => setActiveTab(tab.id)}
-                  >
-                    <span className="tab-icon" aria-hidden="true">{tab.icon}</span>
-                    <span className="tab-label">{tab.label}</span>
-                  </button>
-                ))}
+              <div className="v3-tab-nav" role="tablist" aria-label={t.tabsAriaLabel}>
+                {TAB_IDS.map(tab => {
+                  const labelMap = { overview: t.tabOverview, history: t.tabHistory, economy: t.tabEconomy, culture: t.tabCulture, relations: t.tabRelations };
+                  return (
+                    <button
+                      key={tab.id}
+                      role="tab"
+                      aria-selected={activeTab === tab.id}
+                      aria-controls={`tabpanel-${tab.id}`}
+                      className={`v3-tab ${activeTab === tab.id ? 'active' : ''}`}
+                      onClick={() => setActiveTab(tab.id)}
+                    >
+                      <span className="tab-icon" aria-hidden="true">{tab.icon}</span>
+                      <span className="tab-label">{labelMap[tab.id]}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Tab Content */}
@@ -321,28 +326,28 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           {territoryData.capital && (
                             <div className="stat-card">
                               <span className="stat-icon" aria-hidden="true">🏛️</span>
-                              <span className="stat-label">Capital</span>
+                              <span className="stat-label">{t.capital}</span>
                               <span className="stat-value">{territoryData.capital}</span>
                             </div>
                           )}
                           {territoryData.population && (
                             <div className="stat-card">
                               <span className="stat-icon" aria-hidden="true">👥</span>
-                              <span className="stat-label">Population</span>
+                              <span className="stat-label">{t.population}</span>
                               <span className="stat-value">{territoryData.population}</span>
                             </div>
                           )}
                           {territoryData.religion && (
                             <div className="stat-card">
                               <span className="stat-icon" aria-hidden="true">⛪</span>
-                              <span className="stat-label">Religion</span>
+                              <span className="stat-label">{t.religion}</span>
                               <span className="stat-value">{territoryData.religion}</span>
                             </div>
                           )}
                           {territoryData.government && (
                             <div className="stat-card">
                               <span className="stat-icon" aria-hidden="true">👑</span>
-                              <span className="stat-label">Government</span>
+                              <span className="stat-label">{t.government}</span>
                               <span className="stat-value">{territoryData.government}</span>
                             </div>
                           )}
@@ -351,7 +356,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">⚔️</span>
-                            Key Events
+                            {t.keyEvents}
                           </h3>
                           <div className="events-timeline">
                             {territoryData.keyEvents.map((event, idx) => (
@@ -371,7 +376,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">📖</span>
-                            Historical Context
+                            {t.historicalContext}
                           </h3>
                           <div className="history-text">
                             {territoryData.historicalContext.split('\n\n').map((paragraph, idx) => (
@@ -383,7 +388,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">🗓️</span>
-                            Regional Timeline
+                            {t.regionalTimeline}
                           </h3>
                           <div className="regional-timeline">
                             {relevantEvents.map((event, idx) => (
@@ -410,7 +415,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">⚒️</span>
-                            Primary Industries
+                            {t.primaryIndustries}
                           </h3>
                           <div className="industry-list">
                             {territoryData.economy.primary.map((industry, idx) => (
@@ -425,7 +430,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">📦</span>
-                            Exports
+                            {t.exports}
                           </h3>
                           <div className="exports-grid">
                             {territoryData.economy.exports.map((item, idx) => (
@@ -439,7 +444,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">🚢</span>
-                            Trading Partners
+                            {t.tradingPartners}
                           </h3>
                           <div className="partners-list">
                             {territoryData.economy.tradingPartners.map((partner, idx) => (
@@ -459,7 +464,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           <div className="culture-card">
                             <div className="culture-header">
                               <span className="culture-icon">🗣️</span>
-                              <span className="culture-label">Language</span>
+                              <span className="culture-label">{t.language}</span>
                             </div>
                             <span className="culture-value">{territoryData.culture.language}</span>
                           </div>
@@ -467,7 +472,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           <div className="culture-card">
                             <div className="culture-header">
                               <span className="culture-icon">✍️</span>
-                              <span className="culture-label">Script</span>
+                              <span className="culture-label">{t.script}</span>
                             </div>
                             <span className="culture-value">{territoryData.culture.script}</span>
                           </div>
@@ -475,7 +480,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           <div className="culture-card full-width">
                             <div className="culture-header">
                               <span className="culture-icon">🏛️</span>
-                              <span className="culture-label">Architecture</span>
+                              <span className="culture-label">{t.architecture}</span>
                             </div>
                             <span className="culture-value">{territoryData.culture.architecture}</span>
                           </div>
@@ -483,7 +488,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           <div className="culture-card full-width">
                             <div className="culture-header">
                               <span className="culture-icon">📚</span>
-                              <span className="culture-label">Literature</span>
+                              <span className="culture-label">{t.literature}</span>
                             </div>
                             <span className="culture-value">{territoryData.culture.literature}</span>
                           </div>
@@ -496,7 +501,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">🏰</span>
-                            Territories
+                            {t.territories}
                           </h3>
                           <div className="territory-tags">
                             {territoryData.territories.map((territory, idx) => (
@@ -511,7 +516,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           <div className="v3-section">
                             <h3 className="section-title">
                               <span className="title-icon">🤝</span>
-                              Vassals & Tributaries
+                              {t.vassals}
                             </h3>
                             <div className="territory-tags">
                               {territoryData.vassals.map((vassal, idx) => (
@@ -527,7 +532,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                           <div className="v3-section">
                             <h3 className="section-title">
                               <span className="title-icon">⚔️</span>
-                              Rivals
+                              {t.rivals}
                             </h3>
                             <div className="territory-tags">
                               {territoryData.rivals.map((rival, idx) => (
@@ -542,7 +547,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
                         <div className="v3-section">
                           <h3 className="section-title">
                             <span className="title-icon">📜</span>
-                            Diplomatic Relations
+                            {t.diplomaticRelations}
                           </h3>
                           <div className="relations-list">
                             {Object.entries(territoryData.relations).map(([nation, status], idx) => (
@@ -564,7 +569,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, languag
               {/* Footer */}
               <div className="v3-panel-footer">
                 <div className="footer-decoration" />
-                <span className="footer-text">Southeast Asian Historical Atlas</span>
+                <span className="footer-text">{t.footerText}</span>
                 <div className="footer-decoration" />
               </div>
             </motion.div>

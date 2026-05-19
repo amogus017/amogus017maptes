@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { askGemini } from "./GeminiService";
+import { useLanguage } from "../../contexts/LanguageContext";
 import "./HistoryBot.css";
 
 function renderWithCitations(text) {
@@ -13,10 +14,12 @@ function renderWithCitations(text) {
 }
 
 export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onClose }) {
+  const { t } = useLanguage();
+
   const getGreeting = (territory, year) =>
     territory
-      ? `You are exploring the ${territory.name} in ${year} CE, during the ${territory.era} period. What would you like to know about this kingdom?`
-      : "Welcome, scholar. Ask me anything about the pre-colonial kingdoms of Nusantara (400–1600 CE).";
+      ? t.greetingTerritory(territory.name, year, territory.era)
+      : t.greetingDefault;
 
   const [messages, setMessages] = useState([
     { role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] },
@@ -48,17 +51,14 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
 
     const userMsg = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", text: userMsg }]);
+    setMessages(prev => [...prev, { role: "user", text: userMsg, sources: [] }]);
     setLoading(true);
 
     try {
       const reply = await askGemini(userMsg, selectedTerritory, currentYear);
-      setMessages((prev) => [...prev, { role: "bot", text: reply.text, sources: reply.sources }]);
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { role: "bot", text: `⚠️ Error: ${err.message}`, sources: [] },
-      ]);
+      setMessages(prev => [...prev, { role: "bot", text: reply.text, sources: reply.sources }]);
+    } catch {
+      setMessages(prev => [...prev, { role: "bot", text: "⚠️ Error: Could not get a response. Please try again.", sources: [] }]);
     } finally {
       setLoading(false);
     }
@@ -72,6 +72,7 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
   }
 
   function clearChat() {
+    prevTerritoryName.current = selectedTerritory?.name;
     setMessages([{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
   }
 
@@ -85,31 +86,31 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
           exit={{ x: '100%', opacity: 0 }}
           transition={{ type: 'tween', duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
           role="dialog"
-          aria-label="Sejarah AI chatbot"
+          aria-label={t.botAriaLabel}
         >
           {/* Header */}
           <div className="hbot-header">
             <div className="hbot-header-left">
               <span className="hbot-icon" aria-hidden="true">📜</span>
               <div>
-                <div className="hbot-title">Sejarah AI</div>
+                <div className="hbot-title">{t.botTitle}</div>
                 {selectedTerritory && (
                   <div className="hbot-subtitle">{selectedTerritory.name}</div>
                 )}
               </div>
             </div>
             <div className="hbot-header-actions">
-              <button className="hbot-btn-icon" onClick={clearChat} title="Clear chat" aria-label="Clear chat">
+              <button className="hbot-btn-icon" onClick={clearChat} title={t.clearChat} aria-label={t.clearChat}>
                 <span aria-hidden="true">↺</span>
               </button>
-              <button className="hbot-btn-icon" onClick={onClose} title="Close" aria-label="Close chatbot">
+              <button className="hbot-btn-icon" onClick={onClose} title={t.closeChatbot} aria-label={t.closeChatbot}>
                 <span aria-hidden="true">✕</span>
               </button>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="hbot-messages" aria-live="polite" aria-label="Chat messages">
+          <div className="hbot-messages" aria-live="polite" aria-label={t.messagesAriaLabel}>
             {messages.map((msg, i) => (
               <div key={i} className={`hbot-msg hbot-msg--${msg.role}`}>
                 {msg.role === "bot" && <span className="hbot-msg-avatar" aria-hidden="true">⚜</span>}
@@ -132,7 +133,7 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
               </div>
             ))}
             {loading && (
-              <div className="hbot-msg hbot-msg--bot" aria-label="Thinking...">
+              <div className="hbot-msg hbot-msg--bot" aria-label={t.thinkingAriaLabel}>
                 <span className="hbot-msg-avatar" aria-hidden="true">⚜</span>
                 <div className="hbot-msg-bubble hbot-typing" aria-hidden="true">
                   <span /><span /><span />
@@ -150,15 +151,15 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask about this kingdom..."
-              aria-label="Ask a question about this kingdom"
+              placeholder={t.inputPlaceholder}
+              aria-label={t.inputAriaLabel}
               disabled={loading}
             />
             <button
               className="hbot-send-btn"
               onClick={handleSend}
               disabled={loading || !input.trim()}
-              aria-label="Send message"
+              aria-label={t.sendMessage}
             >
               <span aria-hidden="true">➤</span>
             </button>

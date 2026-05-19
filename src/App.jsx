@@ -1,4 +1,3 @@
-// At the very top of App.jsx
 import React, { useState, useMemo } from 'react';
 import MyMap from "./components/Map/MyMap";
 import Timeline from "./components/Timeline/Timeline";
@@ -7,15 +6,15 @@ import HistoryBot from "./components/HistoryBot/HistoryBot";
 import Header from "./components/Header/Header";
 import { getTerritoryData } from "./data/territories";
 import { getTerritoryInfo } from "./data/boundaries";
+import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import './App.css';
 
-
-function App() {
+function AppContent() {
+  const { t } = useLanguage();
   const [currentYear, setCurrentYear] = useState(1350);
   const [selectedTerritory, setSelectedTerritory] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isBotOpen, setIsBotOpen] = useState(false);
-  const [language, setLanguage] = useState('id');
 
   const handleYearChange = (newYear) => {
     setCurrentYear(newYear);
@@ -28,7 +27,6 @@ function App() {
 
   const handleClosePanel = () => {
     setIsPanelOpen(false);
-    // selectedTerritory kept in state so the bot retains context after panel closes
   };
 
   const handleKingdomSelect = (empire) => {
@@ -38,7 +36,6 @@ function App() {
     setIsPanelOpen(true);
   };
 
-  // Memoised — only recomputes when territory or year actually changes
   const enrichedTerritory = useMemo(() => selectedTerritory
     ? { ...selectedTerritory, ...(getTerritoryData(selectedTerritory.id, currentYear) ?? {}) }
     : null,
@@ -46,11 +43,7 @@ function App() {
 
   return (
     <div>
-      <Header
-        language={language}
-        onLanguageChange={setLanguage}
-        onKingdomSelect={handleKingdomSelect}
-      />
+      <Header onKingdomSelect={handleKingdomSelect} />
       <MyMap
         currentYear={currentYear}
         onTerritoryClick={handleTerritoryClick}
@@ -58,16 +51,13 @@ function App() {
 
       <Timeline onYearChange={handleYearChange} currentYear={currentYear} isPanelOpen={isPanelOpen} />
 
-      {/* Territory Information Panel */}
       <TerritoryInfoPanel
         territoryId={selectedTerritory?.id}
         currentYear={currentYear}
         isOpen={isPanelOpen}
         onClose={handleClosePanel}
-        language={language}
       />
 
-      {/* AI Chatbot Panel */}
       <HistoryBot
         selectedTerritory={enrichedTerritory}
         currentYear={currentYear}
@@ -75,18 +65,25 @@ function App() {
         onClose={() => setIsBotOpen(false)}
       />
 
-      {/* Floating Ask AI button */}
       <button
         className="v3-ask-ai-btn"
         onClick={() => setIsBotOpen(prev => !prev)}
-        title={selectedTerritory ? `Ask about ${selectedTerritory.name}` : 'Ask about Nusantara'}
+        title={selectedTerritory ? t.askAbout(selectedTerritory.name) : t.askDefault}
       >
         <span className="v3-ask-ai-icon">⚜</span>
         <span className="v3-ask-ai-label">
-          {selectedTerritory ? `Ask about ${selectedTerritory.name}` : 'Ask about Nusantara'}
+          {selectedTerritory ? t.askAbout(selectedTerritory.name) : t.askDefault}
         </span>
       </button>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 

@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { EMPIRES } from '../../data/boundaries';
+import { useLanguage } from '../../contexts/LanguageContext';
 import './Header.css';
 
-export default function Header({ language, onLanguageChange, onKingdomSelect }) {
+export default function Header({ onKingdomSelect }) {
+  const { language, setLanguage, t } = useLanguage();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const searchRef = useRef(null);
@@ -40,11 +42,11 @@ export default function Header({ language, onLanguageChange, onKingdomSelect }) 
         <input
           className="app-header-search-input"
           type="search"
-          placeholder={language === 'id' ? 'Cari kerajaan...' : 'Search kingdoms...'}
+          placeholder={t.searchPlaceholder}
           value={query}
           onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
           onFocus={() => query.length > 0 && setOpen(true)}
-          aria-label={language === 'id' ? 'Cari kerajaan' : 'Search kingdoms'}
+          aria-label={t.searchAriaLabel}
           aria-expanded={open}
           aria-autocomplete="list"
         />
@@ -70,7 +72,7 @@ export default function Header({ language, onLanguageChange, onKingdomSelect }) 
           <button
             key={code}
             className={`app-header-lang-btn${language === code ? ' active' : ''}`}
-            onClick={() => onLanguageChange(code)}
+            onClick={() => setLanguage(code)}
             aria-pressed={language === code}
           >
             {code.toUpperCase()}
