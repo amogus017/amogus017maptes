@@ -165,8 +165,9 @@ class MyMap extends Component {
     static contextType = LanguageContext;
 
     state = {
-        currentYear:   1350,
-        activeEmpires: [],
+        currentYear:    1350,
+        activeEmpires:  [],
+        legendCollapsed: false,
     }
 
     // Stable per-empire ref callbacks — keyed by empire.id so the same
@@ -295,6 +296,16 @@ class MyMap extends Component {
 
                     {activeEmpires.length > 0 ? (
                         <div className="legend-events-stack">
+                            <button
+                                className="legend-collapse-btn"
+                                onClick={() => this.setState(s => ({ legendCollapsed: !s.legendCollapsed }))}
+                                aria-label={this.state.legendCollapsed ? 'Show legend' : 'Hide legend'}
+                                aria-expanded={!this.state.legendCollapsed}
+                            >
+                                <span>{t?.legendTitle(currentYear) ?? `Kingdoms · ${currentYear}`}</span>
+                                <span className="legend-collapse-arrow">{this.state.legendCollapsed ? '▼' : '▲'}</span>
+                            </button>
+                            <div className={`legend-collapse-body${this.state.legendCollapsed ? ' collapsed' : ''}`}>
                             <div className="empire-legend" role="region" aria-label={t?.legendAriaLabel ?? 'Active kingdoms'}>
                                 <h4>{t?.legendTitle(currentYear) ?? `Active Empires (${currentYear})`}</h4>
                                 {activeEmpires.map((empire) => {
@@ -331,6 +342,7 @@ class MyMap extends Component {
                                     </div>
                                 );
                             })()}
+                            </div>{/* legend-collapse-body */}
                         </div>
                     ) : null}
                     <ZoomControl position="topleft" />

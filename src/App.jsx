@@ -5,7 +5,7 @@ import TerritoryInfoPanel from "./components/TerritoryInfo/TerritoryInfoPanel";
 import HistoryBot from "./components/HistoryBot/HistoryBot";
 import Header from "./components/Header/Header";
 import { getTerritoryData } from "./data/territories";
-import { getTerritoryInfo } from "./data/boundaries";
+import { getTerritoryInfo, EMPIRES } from "./data/boundaries";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import './App.css';
 
@@ -36,10 +36,16 @@ function AppContent() {
     setIsPanelOpen(true);
   };
 
-  const enrichedTerritory = useMemo(() => selectedTerritory
-    ? { ...selectedTerritory, ...(getTerritoryData(selectedTerritory.id, currentYear) ?? {}) }
-    : null,
-  [selectedTerritory, currentYear]);
+  const enrichedTerritory = useMemo(() => {
+    if (!selectedTerritory) return null;
+    const empire = EMPIRES[selectedTerritory.id];
+    return {
+      ...selectedTerritory,
+      ...(getTerritoryData(selectedTerritory.id, currentYear) ?? {}),
+      startYear: empire?.startYear,
+      endYear: empire?.endYear,
+    };
+  }, [selectedTerritory, currentYear]);
 
   return (
     <div>
@@ -56,6 +62,8 @@ function AppContent() {
         currentYear={currentYear}
         isOpen={isPanelOpen}
         onClose={handleClosePanel}
+        startYear={EMPIRES[selectedTerritory?.id]?.startYear}
+        endYear={EMPIRES[selectedTerritory?.id]?.endYear}
       />
 
       <HistoryBot

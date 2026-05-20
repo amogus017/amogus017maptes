@@ -32,29 +32,40 @@ export async function askGemini(userMessage, kingdomContext = null, currentYear 
     ? buildAcademicSection(userMessage, kingdomContext.id, year)
     : { section: "", sources: [] };
 
+  const outOfRangeNote = (kingdomContext?.startYear && kingdomContext?.endYear)
+    ? (year > kingdomContext.endYear
+        ? `\nIMPORTANT: The user is viewing year ${year} CE but ${kingdomContext.name} ended in ${kingdomContext.endYear} CE. Open your answer with one sentence acknowledging this, then answer based on the kingdom's actual history.`
+        : year < kingdomContext.startYear
+          ? `\nIMPORTANT: The user is viewing year ${year} CE but ${kingdomContext.name} was not founded until ${kingdomContext.startYear} CE. Open with one sentence noting this, then answer about the kingdom.`
+          : '')
+    : '';
+
   const systemContext = kingdomContext
     ? `You are a knowledgeable historical guide for pre-colonial Nusantara and Southeast Asian history.
 The user is viewing an interactive historical atlas and has navigated to the year ${year} CE.
 They are currently exploring the ${kingdomContext.name}${englishName && englishName !== kingdomContext.name ? ` (${englishName})` : ''} during the ${kingdomContext.era} period.
 
 Key facts for this era:
+- Kingdom period: ${kingdomContext.startYear ?? '?'}–${kingdomContext.endYear ?? '?'} CE (user is viewing year ${year} CE)
 - Ruler: ${rulerName}${rulerTitle ? ` (${rulerTitle})` : ''}
 - Capital: ${kingdomContext.capital || 'Unknown'}
 - Religion: ${kingdomContext.religion || 'Unknown'}
 - Government: ${kingdomContext.government || 'Unknown'}
 - Economy: ${kingdomContext.economy?.primary?.join(', ') || 'Unknown'}
 - Trading partners: ${kingdomContext.economy?.tradingPartners?.join(', ') || 'Unknown'}
+- Architecture: ${kingdomContext.culture?.architecture || 'Unknown'}
 - Summary: ${kingdomContext.summary || ''}${academicSection}
 
-Answer questions in an educational, engaging tone suitable for Indonesian high school students (SMA level).
-Keep answers concise — 2 to 4 paragraphs maximum. Use clear language.
-If the user asks something unrelated to Nusantara or Southeast Asian history, politely redirect them back to the topic.
-Do not use markdown formatting like **bold** or ## headers — write in plain paragraphs.`
+Answer questions in an educational tone suitable for Indonesian high school students (SMA level).
+Lead with the direct answer in the first sentence — no preamble. Keep answers to 1–2 short paragraphs maximum.
+For questions about temples, architecture, or cultural achievements, cover the kingdom's full historical period (${kingdomContext.startYear}–${kingdomContext.endYear} CE), not just year ${year}. If a notable structure was built after the current viewing year, mention it and briefly note when it was built.
+If the user asks something unrelated to Nusantara or Southeast Asian history, politely redirect them in one sentence.
+Do not use markdown formatting like **bold** or ## headers — write in plain paragraphs.${outOfRangeNote}`
     : `You are a knowledgeable historical guide for pre-colonial Nusantara and Southeast Asian kingdoms (400–1600 CE).
 The user is currently viewing the map at year ${year} CE.
-Answer in an educational tone suitable for Indonesian high school students (SMA level).
-Keep answers concise — 2 to 4 paragraphs. Write in plain paragraphs, no markdown formatting.
-If asked about unrelated topics, politely redirect to Nusantara history.`;
+Lead with the direct answer in the first sentence — no preamble. Keep answers to 1–2 short paragraphs maximum.
+Write in plain paragraphs, no markdown formatting.
+If asked about unrelated topics, redirect in one sentence.`;
 
   const response = await fetch(PROXY_URL, {
     method: "POST",
@@ -65,7 +76,7 @@ If asked about unrelated topics, politely redirect to Nusantara history.`;
         { role: "system", content: systemContext },
         { role: "user", content: userMessage },
       ],
-      max_tokens: 512,
+      max_tokens: 280,
       temperature: 0.2,
     }),
   });
@@ -81,8 +92,9 @@ If asked about unrelated topics, politely redirect to Nusantara history.`;
   }
 
   const data = await response.json();
+  const content = data.choices?.[0]?.message?.content;
   return {
-    text: data.choices?.[0]?.message?.content ?? "I could not generate a response. Please try again.",
-    sources,
+    text: content ?? "I could not generate a response. Please try again.",
+    sources: content ? sources : [],
   };
 }

@@ -77,7 +77,7 @@ export const EMPIRES = {
   },
   kalingga_n: {
     id: 'kalingga_n',
-    name: 'Kalingga Utara',
+    name: 'Kalingga U',
     color: '#3CB371',
     startYear: 695,
     endYear: 732,
@@ -86,7 +86,7 @@ export const EMPIRES = {
   },
   kalingga_s: {
     id: 'kalingga_s',
-    name: 'Kalingga Selatan',
+    name: 'Kalingga S',
     color: '#2E8B57',
     startYear: 695,
     endYear: 732,
@@ -297,10 +297,10 @@ export function getTerritoryInfo(empireId, year) {
     return { id: 'kalingga', name: 'Kalingga', ruler: 'Ratu Shima', color: '#4CAF50', era: 'Classical Period' };
 
   if (empireId === 'kalingga_n')
-    return { id: 'kalingga_n', name: 'Kalingga Utara', ruler: 'Various Rajas', color: '#3CB371', era: 'Classical Period' };
+    return { id: 'kalingga_n', name: 'Kalingga.U', ruler: 'Various Rajas', color: '#3CB371', era: 'Classical Period' };
 
   if (empireId === 'kalingga_s')
-    return { id: 'kalingga_s', name: 'Kalingga Selatan', ruler: 'Ratu Shima', color: '#2E8B57', era: 'Classical Period' };
+    return { id: 'kalingga_s', name: 'Kalingga.S', ruler: 'Ratu Shima', color: '#2E8B57', era: 'Classical Period' };
 
   if (empireId === 'medang')
     return { id: 'medang', name: 'Medang', ruler: 'Mpu Sindok', color: '#8B008B', era: 'Classical Period' };

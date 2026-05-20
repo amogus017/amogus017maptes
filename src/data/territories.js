@@ -716,7 +716,7 @@ export const territoriesData = {
   // Kalingga Utara (695–732)
   kalingga_n: {
     id: 'kalingga_n',
-    name: 'Kalingga Utara',
+    name: 'Kalingga U',
     englishName: 'Northern Kalingga',
     wikiSlug: 'Kalingga_Kingdom', // no standalone article — parent kingdom covers the split
     idWikiSlug: 'Kerajaan_Kalingga',
@@ -761,7 +761,7 @@ export const territoriesData = {
   // Kalingga Selatan (695–732)
   kalingga_s: {
     id: 'kalingga_s',
-    name: 'Kalingga Selatan',
+    name: 'Kalingga S',
     englishName: 'Southern Kalingga',
     wikiSlug: 'Kalingga_Kingdom', // no standalone article — parent kingdom covers the split
     idWikiSlug: 'Kerajaan_Kalingga',

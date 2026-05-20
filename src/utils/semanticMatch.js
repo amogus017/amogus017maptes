@@ -33,18 +33,11 @@ export function getRelevantChunks(question, kingdomId, currentYear, academicSour
     .slice(0, 2)
     .map(([topic]) => topic);
 
-  let matched;
+  if (topTopics.length === 0) return [];
 
-  if (topTopics.length === 0) {
-    matched = period.chunks;
-  } else {
-    matched = period.chunks.filter(chunk =>
-      chunk.topic.some(t => topTopics.includes(t))
-    );
-    if (matched.length === 0) matched = period.chunks;
-  }
+  const matched = period.chunks.filter(chunk =>
+    chunk.topic.some(t => topTopics.includes(t))
+  );
 
-  // Filter empty chunks here so callers always receive filled content
-  const filled = matched.filter(c => c.text && c.text.trim() !== "");
-  return filled.slice(0, 3);
+  return matched.filter(c => c.text && c.text.trim() !== "").slice(0, 3);
 }

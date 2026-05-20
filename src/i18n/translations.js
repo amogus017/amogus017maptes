@@ -60,7 +60,7 @@ const translations = {
     inputAriaLabel: 'Ajukan pertanyaan tentang kerajaan ini',
     sendMessage: 'Kirim pesan',
     greetingTerritory: (name, year, era) =>
-      `Anda menjelajahi ${name} pada tahun ${year} M, masa ${era}. Apa yang ingin Anda ketahui tentang kerajaan ini?`,
+      `Anda menjelajahi ${name} dalam linimasa ini, masa ${era}. Apa yang ingin Anda ketahui tentang kerajaan ini?`,
     greetingDefault: 'Selamat datang, pelajar. Tanyakan apa saja tentang kerajaan pra-kolonial Nusantara (400–1600 M).',
 
     // Ask AI button
@@ -133,7 +133,7 @@ const translations = {
     inputAriaLabel: 'Ask a question about this kingdom',
     sendMessage: 'Send message',
     greetingTerritory: (name, year, era) =>
-      `You are exploring ${name} in ${year} CE, during the ${era} period. What would you like to know about this kingdom?`,
+      `You are exploring ${name} in this timeline, during the ${era}. What would you like to know about this kingdom?`,
     greetingDefault: 'Welcome, scholar. Ask me anything about the pre-colonial kingdoms of Nusantara (400–1600 CE).',
 
     // Ask AI button

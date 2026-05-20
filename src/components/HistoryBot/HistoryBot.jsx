@@ -95,7 +95,7 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
               <div>
                 <div className="hbot-title">{t.botTitle}</div>
                 {selectedTerritory && (
-                  <div className="hbot-subtitle">{selectedTerritory.name}</div>
+                  <div className="hbot-subtitle">{selectedTerritory.name} · {currentYear} M</div>
                 )}
               </div>
             </div>

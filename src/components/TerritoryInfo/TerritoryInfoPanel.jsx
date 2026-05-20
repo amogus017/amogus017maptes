@@ -54,7 +54,7 @@ const TAB_IDS = [
   { id: 'relations',icon: '⚖️' },
 ];
 
-const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
+const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYear, endYear }) => {
   const { language, t } = useLanguage();
   const loc = (en, id) => (language === 'id' && id) ? id : en;
   const [activeTab, setActiveTab] = useState('overview');
@@ -63,15 +63,21 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const sourcesRef = useRef(null);
 
+  const clampedYear = (startYear && endYear)
+    ? Math.min(endYear, Math.max(startYear, currentYear))
+    : currentYear;
+  const isOutOfRange = !!(startYear && endYear &&
+    (currentYear < startYear || currentYear > endYear));
+
   useEffect(() => {
-    if (territoryId && currentYear) {
-      const data = getTerritoryData(territoryId, currentYear);
+    if (territoryId && clampedYear) {
+      const data = getTerritoryData(territoryId, clampedYear);
       setTerritoryData(data);
       // Close wiki panel when switching territories
       setWikiOpen(false);
       setSourcesOpen(false);
     }
-  }, [territoryId, currentYear]);
+  }, [territoryId, clampedYear]);
 
   // Reset to overview tab when switching territories
   useEffect(() => {
@@ -99,9 +105,9 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
 
   const relevantEvents = useMemo(
     () => regionalEvents
-      .filter(e => Math.abs(e.year - currentYear) <= 50)
+      .filter(e => Math.abs(e.year - clampedYear) <= 50)
       .sort((a, b) => a.year - b.year),
-    [currentYear]
+    [clampedYear]
   );
 
   if (!territoryData) return null;
@@ -254,13 +260,25 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose }) => {
 
                   <div className="year-display">
                     <span className="year-label">Anno Domini</span>
-                    <span className="year-value">{currentYear}</span>
+                    <span className="year-value">{clampedYear}</span>
                   </div>
                 </div>
 
                 <div className="header-decoration bottom-left" />
                 <div className="header-decoration bottom-right" />
               </div>
+
+              {/* Out-of-range banner */}
+              {isOutOfRange && (
+                <div className="v3-outofrange-banner">
+                  <span aria-hidden="true">{currentYear > endYear ? '⚔️' : '📜'}</span>
+                  <span>
+                    {currentYear > endYear
+                      ? `${territoryData.name} fell in ${endYear} CE — showing last recorded state`
+                      : `${territoryData.name} was founded in ${startYear} CE — showing earliest known state`}
+                  </span>
+                </div>
+              )}
 
               {/* Ruler Card */}
               <div className="v3-ruler-card">

@@ -79,6 +79,11 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
     edgeScrollRafRef.current = requestAnimationFrame(animate);
   }, []);
 
+  // Pause autoplay when the territory panel opens
+  useEffect(() => {
+    if (isPanelOpen) setIsPlaying(false);
+  }, [isPanelOpen]);
+
   // Sync to externally-driven year changes (e.g. kingdom search select)
   useEffect(() => {
     if (externalYear == null || externalYear === year) return;

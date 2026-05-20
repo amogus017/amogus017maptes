@@ -18,6 +18,24 @@
 }
 
 /* ==========================================
+   OUT-OF-RANGE BANNER
+   ========================================== */
+.v3-outofrange-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: rgba(139, 69, 19, 0.10);
+  border-bottom: 1px solid rgba(139, 69, 19, 0.28);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #5D4037;
+  text-align: center;
+}
+
+/* ==========================================
    MAIN PANEL
    ========================================== */
 .v3-territory-panel {
