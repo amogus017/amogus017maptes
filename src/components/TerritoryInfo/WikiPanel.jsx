@@ -86,11 +86,6 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defau
     fetchWiki();
   }, [wikiSlug, idWikiSlug, isOpen, language]);
 
-  // Reset language when territory changes
-  useEffect(() => {
-    setLanguage('en');
-  }, [wikiSlug]);
-
   // Clear content when panel closes
   useEffect(() => {
     if (!isOpen) {

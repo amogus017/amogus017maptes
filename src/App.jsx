@@ -1,20 +1,31 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import MyMap from "./components/Map/MyMap";
 import Timeline from "./components/Timeline/Timeline";
 import TerritoryInfoPanel from "./components/TerritoryInfo/TerritoryInfoPanel";
 import HistoryBot from "./components/HistoryBot/HistoryBot";
 import Header from "./components/Header/Header";
 import { getTerritoryData } from "./data/territories";
-import { getTerritoryInfo, EMPIRES } from "./data/boundaries";
+import { getTerritoryInfo, EMPIRES, initBoundaries } from "./data/boundaries";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import './App.css';
 
 function AppContent() {
   const { t } = useLanguage();
-  const [currentYear, setCurrentYear] = useState(1350);
+  const [currentYear, setCurrentYear] = useState(900);
   const [selectedTerritory, setSelectedTerritory] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isBotOpen, setIsBotOpen] = useState(false);
+  const [isMapReady, setIsMapReady] = useState(false);
+
+  useEffect(() => {
+    initBoundaries()
+      .then(() => setIsMapReady(true))
+      .catch(() => {
+        console.error('Failed to load GeoJSON');
+        setIsMapReady(true);
+      });
+  }, []);
 
   const handleYearChange = (newYear) => {
     setCurrentYear(newYear);
@@ -50,12 +61,12 @@ function AppContent() {
   return (
     <div>
       <Header onKingdomSelect={handleKingdomSelect} />
-      <MyMap
+      {isMapReady && <MyMap
         currentYear={currentYear}
         onTerritoryClick={handleTerritoryClick}
-      />
+      />}
 
-      <Timeline onYearChange={handleYearChange} currentYear={currentYear} isPanelOpen={isPanelOpen} />
+      <Timeline onYearChange={handleYearChange} currentYear={currentYear} isPanelOpen={isPanelOpen} isBotOpen={isBotOpen} />
 
       <TerritoryInfoPanel
         territoryId={selectedTerritory?.id}
@@ -83,6 +94,25 @@ function AppContent() {
           {selectedTerritory ? t.askAbout(selectedTerritory.name) : t.askDefault}
         </span>
       </button>
+
+      <AnimatePresence>
+        {!isMapReady && (
+          <motion.div
+            className="map-loading-overlay"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            <div className="map-loading-content">
+              <span className="map-loading-ornament" aria-hidden="true">⚜</span>
+              <p className="map-loading-text">Loading Nusantara Atlas</p>
+              <div className="map-loading-dots" aria-hidden="true">
+                <span /><span /><span />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

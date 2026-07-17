@@ -87,6 +87,18 @@
   topic: ["territory", "relations"],
   text: "Pada abad ke-13, Sriwijaya (San-fo-ch'i) masih menjadi suzerain dari 15 negara tributaris yang sebagian besar berada di Semenanjung Melayu, termasuk Langkasuka, Tambralinga (Ligor), Grahi (Jaiya), dan Lamuri di ujung utara Sumatera. Sebuah prasasti Khmer dari Jaiya membuktikan bahwa seorang mahasenapati yang memerintah wilayah Grahi bertindak atas perintah seorang maharaja — kemungkinan besar raja Palembang — menunjukkan kontrol langsung Sriwijaya atas wilayah-wilayah ini.",
   citation: "Coedès, G. 'Le Royaume de Çrīvijaya'. BEFEO XVIII (1918), p. 19, 33-35", url: "https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf" },
+  {
+  topic: ["trade", "territory"],
+  text: "Kataha (bentuk Tamil: Kadāram, Kidāram) diidentifikasi Coedès dengan Kedah di ujung barat laut Semenanjung Melayu — pelabuhan terakhir sebelum menyeberangi Teluk Benggala menuju India, sekaligus pelabuhan pertama yang disinggahi dari arah India. Biksu I-Tsing menyebut Kie-tch'a sebagai titik persinggahan wajib dalam perjalanan Cina–India. Fakta bahwa raja Sriwijaya bergelar ganda 'raja Kataha dan Sriwijaya' menunjukkan Kedah bukan negeri merdeka melainkan bagian integral dari sistem pelabuhan Sriwijaya.",
+  citation: "Coedès, G. 'Le Royaume de Çrīvijaya'. BEFEO XVIII (1918), p. 19–22",
+  url: "https://www.persee.fr/doc/befeo_0336-1519_1918_num_18_1_5894"
+},
+{
+  topic: ["origins", "relations"],
+  text: "Coedès membuktikan bahwa nama asli kerajaan Palembang yang selama ini ditranskripsi Cina sebagai Fo-che dan San-fo-ts'i adalah Çrīvijaya, bukan Çrībhoja seperti dugaan sebelumnya. Bukti kuncinya adalah prasasti Champa: pada akhir abad ke-10, ibu kota Champa bernama Vijaya dan sumber Cina menyebutnya Fo-che — membuktikan fo-che = vijaya secara fonetis. Dengan demikian, seluruh catatan Cina tentang San-fo-ts'i sejak abad ke-7 merujuk langsung pada kerajaan Sriwijaya yang berpusat di Palembang.",
+  citation: "Coedès, G. 'Le Royaume de Çrīvijaya'. BEFEO XVIII (1918), p. 23–25",
+  url: "https://www.persee.fr/doc/befeo_0336-1519_1918_num_18_1_5894"
+},
         ]
       },
     ]

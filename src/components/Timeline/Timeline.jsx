@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import './Timeline.css';
 
-const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpen }) => {
+const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpen, isBotOpen }) => {
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playDirection, setPlayDirection] = useState('forward'); // 'forward' | 'reverse'
@@ -79,10 +79,10 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
     edgeScrollRafRef.current = requestAnimationFrame(animate);
   }, []);
 
-  // Pause autoplay when the territory panel opens
+  // Pause autoplay when the territory panel or chatbot opens
   useEffect(() => {
-    if (isPanelOpen) setIsPlaying(false);
-  }, [isPanelOpen]);
+    if (isPanelOpen || isBotOpen) setIsPlaying(false);
+  }, [isPanelOpen, isBotOpen]);
 
   // Sync to externally-driven year changes (e.g. kingdom search select)
   useEffect(() => {
@@ -285,9 +285,7 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
                         const thumbPx = yearToPixel(newYear);
                         const scrollLeft = frame.scrollLeft;
                         const viewportWidth = frame.clientWidth;
-                        const EDGE_THRESHOLD = viewportWidth * 0.1579597878
-                        78
-                        ;
+                        const EDGE_THRESHOLD = viewportWidth * 0.157959787878;
 
                         const distFromLeft = thumbPx - scrollLeft;
                         const distFromRight = scrollLeft + viewportWidth - thumbPx;

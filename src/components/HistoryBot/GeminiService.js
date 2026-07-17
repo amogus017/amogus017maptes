@@ -76,7 +76,7 @@ If asked about unrelated topics, redirect in one sentence.`;
         { role: "system", content: systemContext },
         { role: "user", content: userMessage },
       ],
-      max_tokens: 280,
+      max_tokens: 500,
       temperature: 0.2,
     }),
   });

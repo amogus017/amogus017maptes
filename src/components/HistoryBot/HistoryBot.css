@@ -301,7 +301,7 @@
     right: 10px;
     left: 10px;
     width: auto;
-    bottom: 0;
-    max-height: calc(100dvh - 60px);
+    bottom: 70px;
+    max-height: calc(100dvh - 60px - 70px);
   }
 }

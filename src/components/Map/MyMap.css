@@ -43,6 +43,7 @@
 .evt-inner {
   padding: 8px 12px;
   white-space: normal;
+  width:200px
 }
 .evt-title {
   font-family: 'Cinzel', serif;
@@ -501,5 +502,10 @@
   .territory-label-content {
     font-size: 14px !important;
   }
+  .evt-inner {
+  padding: 8px 12px;
+  white-space: normal;
+  width:150px
+}
 }
 

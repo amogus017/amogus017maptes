@@ -994,6 +994,14 @@ background: linear-gradient(135deg, #F5EBD7 0%, #EAD9BE 50%, #DFC9A8 100%);
   border: 1px solid #B22222;
 }
 
+.territory-tag .source-context-ref {
+  color: rgba(255, 248, 231, 0.85);
+}
+.territory-tag .source-context-ref:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .relations-list {
   display: flex;
   flex-direction: column;
@@ -1089,6 +1097,17 @@ background: linear-gradient(135deg, #F5EBD7 0%, #EAD9BE 50%, #DFC9A8 100%);
   text-transform: uppercase;
 }
 
+.footer-disclaimer {
+  display: block;
+  text-align: center;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.65rem;
+  color: #8B6914;
+  opacity: 0.6;
+  margin-top: 4px;
+  font-style: italic;
+}
+
 /* ==========================================
    RESPONSIVE
    ========================================== */
@@ -1132,4 +1151,118 @@ background: linear-gradient(135deg, #F5EBD7 0%, #EAD9BE 50%, #DFC9A8 100%);
   .tab-icon {
     font-size: 1.4em;
   }
+}
+
+/* ── Empty tab notice ───────────────────────────────────────── */
+.tab-empty-notice {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #8B6914;
+  text-align: center;
+  padding: 32px 16px;
+  opacity: 0.75;
+}
+
+/* ── Academic Sources accordion (History tab) ───────────────── */
+.sources-accordion {
+  margin-top: 20px;
+  border-top: 1px solid rgba(212, 196, 168, 0.3);
+}
+
+.sources-accordion-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8B4513;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.15s;
+}
+
+.sources-accordion-toggle:hover {
+  background: rgba(212, 196, 168, 0.1);
+}
+
+.sources-chevron {
+  font-size: 10px;
+}
+
+/* Source excerpt paragraphs rendered inline inside history-text */
+
+.source-context-ref {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #8B4513;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 2px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.source-context-ref:hover {
+  text-decoration: underline;
+  color: #5a2d0c;
+}
+
+/* IEEE-style reference list in the accordion */
+.sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 16px 16px;
+}
+
+.source-ref-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.source-ref-number {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8B4513;
+  min-width: 26px;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.source-ref-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.source-citation {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 13px;
+  color: #4E342E;
+  line-height: 1.5;
+}
+
+.source-link {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: #8B4513;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  align-self: flex-start;
+  opacity: 0.8;
+}
+
+.source-link:hover {
+  text-decoration: underline;
+  opacity: 1;
 }

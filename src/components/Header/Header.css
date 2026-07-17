@@ -305,78 +305,63 @@
   margin-bottom: 0;
 }
 
-/* Responsive */
-@media (max-width: 700px) {
-  .app-header {
-    padding: 0 12px;
-    gap: 8px;
+/* ── Tablet (≤ 768px) ─────────────────────────────────────────
+   Pull nav back into grid flow so it no longer overlaps the
+   search box. Switch to the ··· menu to save horizontal space. */
+@media (max-width: 768px) {
+  .nav-item-desktop { display: none; }
+  .nav-item-mobile  { display: block; }
+  .app-header-nav {
+    position: static;
+    transform: none;
   }
-
-  .app-header-title {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-  }
-
   .app-header-search-input {
     width: 160px;
   }
 }
 
-@media (max-width: 520px) {
+/* ── Small tablet / large phone (≤ 600px) ── */
+@media (max-width: 600px) {
   .app-header {
-    grid-template-columns: auto 1fr auto;
     padding: 0 10px;
+    gap: 6px;
   }
-
-  .app-header-title {
-    font-size: 10px;
-    letter-spacing: 0.05em;
+  .app-header-search-input {
+    width: 130px;
   }
-
   .app-header-period {
     display: none;
   }
+}
 
+/* ── Phone (≤ 480px) ── */
+@media (max-width: 480px) {
+  .app-header {
+    grid-template-columns: auto 1fr auto auto;
+    padding: 0 8px;
+    gap: 4px;
+  }
   .app-header-search-input {
     width: 100%;
   }
-
   .app-header-search {
     width: 100%;
-    justify-self: stretch;
+    min-width: 0;
   }
-}
-
-@media (max-width: 480px) {
-  /* Nav sits inline after the search bar */
-  .app-header-nav {
-    position: static;
+  /* Anchor dropdown to right edge so it doesn't clip off-screen */
+  .nav-mobile-dropdown {
+    left: auto;
+    right: 0;
     transform: none;
-    justify-self: start;
-    gap: 0;
-  }
-  .nav-item-desktop { display: block; }
-  .nav-item-mobile  { display: none;  }
-
-  /* Smaller search to leave room for nav */
-  .app-header-search-input {
-    width: 80px;
-  }
-
-  /* Compact nav buttons on mobile */
-  .nav-btn {
-    font-size: 9px;
-    padding: 0 6px;
-    letter-spacing: 0.03em;
   }
 }
 
-@media (max-width: 380px) {
+/* ── Very small phone (≤ 360px) ── */
+@media (max-width: 360px) {
+  .app-header {
+    grid-template-columns: 1fr auto auto;
+  }
   .app-header-title {
     display: none;
-  }
-
-  .app-header {
-    grid-template-columns: 1fr auto;
   }
 }

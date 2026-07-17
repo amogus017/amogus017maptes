@@ -1,6 +1,12 @@
 ﻿// src/data/boundaries/index.jsx
 
-import allKingdoms from './geojson/kerajaan_hindhu_buddha.json';
+let allKingdoms = null;
+
+export async function initBoundaries() {
+  const { default: data } = await import('./geojson/kerajaan_hindhu_buddha.json');
+  allKingdoms = data;
+  Object.values(EMPIRES).forEach(empire => { empire.geojson = allKingdoms; });
+}
 
 export const EMPIRES = {
   srivijaya: {
@@ -9,7 +15,7 @@ export const EMPIRES = {
     color: '#329ccd',
     startYear: 650,
     endYear: 1090,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'sriwijaya',
   },
   kutai: {
@@ -18,7 +24,7 @@ export const EMPIRES = {
     color: '#8B5E3C',
     startYear: 400,
     endYear: 1600,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kutai',
   },
   tarumanagara: {
@@ -27,7 +33,7 @@ export const EMPIRES = {
     color: '#6B8E4E',
     startYear: 362,
     endYear: 669,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'tarumanagara',
   },
   sunda: {
@@ -36,7 +42,7 @@ export const EMPIRES = {
     color: '#C4A35A',
     startYear: 684,
     endYear: 1482,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'sunda',
   },
   galuh: {
@@ -45,7 +51,7 @@ export const EMPIRES = {
     color: '#B5651D',
     startYear: 669,
     endYear: 1482,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'galuh',
   },
   mataram: {
@@ -54,7 +60,7 @@ export const EMPIRES = {
     color: '#9B59B6',
     startYear: 732,
     endYear: 927,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'mataram',
   },
   kanjuruhan: {
@@ -63,7 +69,7 @@ export const EMPIRES = {
     color: '#E07B39',
     startYear: 760,
     endYear: 763,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kanjuruhan',
   },
   kalingga: {
@@ -72,25 +78,25 @@ export const EMPIRES = {
     color: '#4CAF50',
     startYear: 632,
     endYear: 695,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kalingga',
   },
   kalingga_n: {
     id: 'kalingga_n',
-    name: 'Kalingga U',
+    name: 'Kalingga Utara',
     color: '#3CB371',
     startYear: 695,
     endYear: 732,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kalingga.N',
   },
   kalingga_s: {
     id: 'kalingga_s',
-    name: 'Kalingga S',
+    name: 'Kalingga Selatan',
     color: '#2E8B57',
     startYear: 695,
     endYear: 732,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kalingga.S',
   },
   medang: {
@@ -99,7 +105,7 @@ export const EMPIRES = {
     color: '#8B008B',
     startYear: 929,
     endYear: 1016,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'medang',
   },
   kahuripan: {
@@ -108,7 +114,7 @@ export const EMPIRES = {
     color: '#DAA520',
     startYear: 1019,
     endYear: 1042,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kahuripan',
   },
   panjalu: {
@@ -117,7 +123,7 @@ export const EMPIRES = {
     color: '#CD853F',
     startYear: 1042,
     endYear: 1135,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'panjalu',
   },
   janggala: {
@@ -126,7 +132,7 @@ export const EMPIRES = {
     color: '#2F8A8A',
     startYear: 1042,
     endYear: 1185,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'janggala',
   },
   dharmasraya: {
@@ -135,7 +141,7 @@ export const EMPIRES = {
     color: '#7B68EE',
     startYear: 1088,
     endYear: 1288,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'dharmasraya',
   },
   kediri: {
@@ -144,7 +150,7 @@ export const EMPIRES = {
     color: '#B8860B',
     startYear: 1135,
     endYear: 1250,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'kediri',
   },
   tumapel: {
@@ -153,7 +159,7 @@ export const EMPIRES = {
     color: '#A0522D',
     startYear: 1222,
     endYear: 1254,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'tumapel',
   },
   singasari: {
@@ -162,7 +168,7 @@ export const EMPIRES = {
     color: '#DC143C',
     startYear: 1254,
     endYear: 1293,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'singasari',
   },
   majapahit: {
@@ -171,7 +177,7 @@ export const EMPIRES = {
     color: '#FF8C00',
     startYear: 1293,
     endYear: 1527,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'majapahit',
   },
   pajajaran: {
@@ -180,12 +186,13 @@ export const EMPIRES = {
     color: '#556B2F',
     startYear: 1482,
     endYear: 1579,
-    geojson: allKingdoms,
+    geojson: null,
     featureName: 'pajajaran',
   },
 };
 
 export function getEmpiresForYear(year) {
+  if (!allKingdoms) return [];
   const activeEmpires = [];
 
   Object.values(EMPIRES).forEach(empire => {
@@ -218,20 +225,6 @@ export function getEmpiresForYear(year) {
   });
 
   return activeEmpires;
-}
-
-function getEmpireBoundary(empireId, year) {
-  const empire = EMPIRES[empireId];
-  if (!empire) return null;
-  if (year < empire.startYear || year > empire.endYear) return null;
-
-  const filteredFeatures = empire.geojson.features.filter(f => {
-    const nameMatch = empire.featureName ? f.properties.name === empire.featureName : true;
-    return nameMatch && year >= f.properties.start && year < f.properties.end;
-  });
-
-  if (filteredFeatures.length === 0) return null;
-  return { ...empire.geojson, features: filteredFeatures };
 }
 
 export function getTerritoryInfo(empireId, year) {
@@ -297,10 +290,10 @@ export function getTerritoryInfo(empireId, year) {
     return { id: 'kalingga', name: 'Kalingga', ruler: 'Ratu Shima', color: '#4CAF50', era: 'Classical Period' };
 
   if (empireId === 'kalingga_n')
-    return { id: 'kalingga_n', name: 'Kalingga.U', ruler: 'Various Rajas', color: '#3CB371', era: 'Classical Period' };
+    return { id: 'kalingga_n', name: 'Kalingga Utara', ruler: 'Various Rajas', color: '#3CB371', era: 'Classical Period' };
 
   if (empireId === 'kalingga_s')
-    return { id: 'kalingga_s', name: 'Kalingga.S', ruler: 'Ratu Shima', color: '#2E8B57', era: 'Classical Period' };
+    return { id: 'kalingga_s', name: 'Kalingga Selatan', ruler: 'Ratu Shima', color: '#2E8B57', era: 'Classical Period' };
 
   if (empireId === 'medang')
     return { id: 'medang', name: 'Medang', ruler: 'Mpu Sindok', color: '#8B008B', era: 'Classical Period' };
@@ -351,9 +344,4 @@ export function getTerritoryInfo(empireId, year) {
     return { id: 'pajajaran', name: 'Pajajaran', ruler: 'Various Kings', color: '#556B2F', era: 'Classical Period' };
 
   return { id: empireId, name: empire.name, ruler: 'Unknown', color: empire.color, era: 'Unknown' };
-}
-
-function getBoundaryForYear(year) {
-  const empires = getEmpiresForYear(year);
-  return empires.length > 0 ? empires[0].boundary : null;
 }
