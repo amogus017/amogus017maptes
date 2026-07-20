@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MyMap from "./components/Map/MyMap";
 import Timeline from "./components/Timeline/Timeline";
@@ -8,6 +8,7 @@ import Header from "./components/Header/Header";
 import { getTerritoryData } from "./data/territories";
 import { getTerritoryInfo, EMPIRES, initBoundaries } from "./data/boundaries";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
+import TutorialOverlay from "./components/Tutorial/TutorialOverlay";
 import './App.css';
 
 function AppContent() {
@@ -17,6 +18,28 @@ function AppContent() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isBotOpen, setIsBotOpen] = useState(false);
   const [isMapReady, setIsMapReady] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('atlas_tutorial_seen')) {
+      setShowTutorial(true);
+    }
+  }, []);
+
+  const handleCloseTutorial = useCallback(() => {
+    localStorage.setItem('atlas_tutorial_seen', '1');
+    setShowTutorial(false);
+  }, []);
+
+  const handleTutorialAutoSelect = useCallback((empireId) => {
+    const info = getTerritoryInfo(empireId, currentYear);
+    setSelectedTerritory(info);
+    setIsPanelOpen(true);
+  }, [currentYear]);
+
+  const handleTutorialClosePanel = useCallback(() => {
+    setIsPanelOpen(false);
+  }, []);
 
   useEffect(() => {
     initBoundaries()
@@ -60,7 +83,7 @@ function AppContent() {
 
   return (
     <div>
-      <Header onKingdomSelect={handleKingdomSelect} />
+      <Header onKingdomSelect={handleKingdomSelect} onOpenTutorial={() => setShowTutorial(true)} />
       {isMapReady && <MyMap
         currentYear={currentYear}
         onTerritoryClick={handleTerritoryClick}
@@ -94,6 +117,13 @@ function AppContent() {
           {selectedTerritory ? t.askAbout(selectedTerritory.name) : t.askDefault}
         </span>
       </button>
+
+      <TutorialOverlay
+        isOpen={showTutorial}
+        onClose={handleCloseTutorial}
+        onClosePanel={handleTutorialClosePanel}
+        onAutoSelect={handleTutorialAutoSelect}
+      />
 
       <AnimatePresence>
         {!isMapReady && (

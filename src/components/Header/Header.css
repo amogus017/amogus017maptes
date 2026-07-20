@@ -115,7 +115,7 @@
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
-  right: 0;
+  min-width: 280px;
   background: linear-gradient(135deg, #F4E8D0 0%, #EDD9A3 100%);
   border: 1px solid #8B4513;
   border-radius: 2px;
@@ -124,17 +124,34 @@
   list-style: none;
   margin: 0;
   padding: 4px 0;
-  max-height: 240px;
+  max-height: 320px;
   overflow-y: auto;
+}
+
+.dropdown-group-header {
+  padding: 5px 14px 3px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8B4513;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.dropdown-group-header:not(:first-child) {
+  border-top: 1px solid rgba(139, 69, 19, 0.18);
+  margin-top: 2px;
+  padding-top: 7px;
 }
 
 .app-header-dropdown-item {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  padding: 7px 14px;
+  padding: 6px 14px;
   cursor: pointer;
-  gap: 8px;
+  gap: 6px;
   transition: background 0.1s;
 }
 
@@ -142,11 +159,23 @@
   background: rgba(139, 69, 19, 0.1);
 }
 
+.dropdown-item-icon {
+  font-size: 11px;
+  flex-shrink: 0;
+  line-height: 1;
+  opacity: 0.8;
+}
+
 .dropdown-name {
   font-family: 'Cinzel', serif;
   font-size: 12px;
   color: #3E2723;
   font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dropdown-period {
@@ -232,6 +261,8 @@
   color: #5D4037;
   line-height: 1.6;
   margin-bottom: 4px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .src-author { font-weight: 600; color: #3E2723; }
@@ -271,6 +302,18 @@
   background: #8B4513;
   color: #F4E8D0;
   border-color: #8B4513;
+}
+
+.header-tutorial-btn {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 28px;
+  opacity: 0.7;
+}
+
+.header-tutorial-btn:hover {
+  opacity: 1;
 }
 
 /* Nav desktop/mobile visibility */
@@ -318,6 +361,17 @@
   .app-header-search-input {
     width: 160px;
   }
+  /* Fix mobile dropdown: use fixed positioning relative to the
+     viewport instead of the tiny ··· button (position:relative),
+     which caused the dropdown to bleed off the left edge. */
+  .nav-mobile-dropdown {
+    position: fixed;
+    top: 58px;
+    right: 12px;
+    left: auto;
+    transform: none;
+    max-width: calc(100vw - 24px);
+  }
 }
 
 /* ── Small tablet / large phone (≤ 600px) ── */
@@ -347,12 +401,6 @@
   .app-header-search {
     width: 100%;
     min-width: 0;
-  }
-  /* Anchor dropdown to right edge so it doesn't clip off-screen */
-  .nav-mobile-dropdown {
-    left: auto;
-    right: 0;
-    transform: none;
   }
 }
 

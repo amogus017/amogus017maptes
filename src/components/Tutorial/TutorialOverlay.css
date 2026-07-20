@@ -1,0 +1,205 @@
+/* src/components/Tutorial/TutorialOverlay.css */
+
+.tut-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+}
+
+/* Full-screen click-blocker. Transparent when spotlight handles the dimming. */
+.tut-backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  pointer-events: all;
+}
+
+.tut-backdrop--dim {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* Gold ripple dot at the centre of the spotlit territory */
+.tut-pulse-marker {
+  position: fixed;
+  z-index: 9993;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.9);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: tut-ripple 1.4s ease-out infinite;
+}
+
+@keyframes tut-ripple {
+  0%   { box-shadow: 0 0 0 0   rgba(212, 175, 55, 0.7); }
+  70%  { box-shadow: 0 0 0 18px rgba(212, 175, 55, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(212, 175, 55, 0);   }
+}
+
+/* Gold spotlight ring — its massive box-shadow dims everything outside it */
+.tut-spotlight {
+  position: fixed;
+  z-index: 9991;
+  background: transparent;
+  border: 2px solid #D4AF37;
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 9999px rgba(0, 0, 0, 0.65),
+    0 0 16px 4px rgba(212, 175, 55, 0.35);
+  pointer-events: none;
+  transition: top 0.22s ease, left 0.22s ease, width 0.22s ease, height 0.22s ease;
+}
+
+/* Parchment tooltip card */
+.tut-card {
+  position: fixed;
+  z-index: 9999;
+  width: 300px;
+  background: linear-gradient(135deg, #F4E8D0 0%, #E8DCC8 100%);
+  border: 1.5px solid #8B4513;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(139, 69, 19, 0.1);
+  padding: 16px 18px 14px;
+  font-family: 'EB Garamond', 'Georgia', serif;
+  pointer-events: all;
+}
+
+/* Centered modal for welcome / done steps */
+.tut-card--modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  text-align: center;
+  z-index: 9999;
+}
+
+/* Step progress dots */
+.tut-step-dots {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.tut-card--modal .tut-step-dots {
+  justify-content: center;
+}
+
+.tut-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(139, 69, 19, 0.25);
+  transition: background 0.2s;
+}
+
+.tut-dot--active {
+  background: #8B4513;
+}
+
+/* Card title */
+.tut-card-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3E2723;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 7px;
+  border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+  padding-bottom: 6px;
+}
+
+/* Card body text */
+.tut-card-body {
+  font-size: 13px;
+  color: #5D4037;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+/* Actions row */
+.tut-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tut-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.tut-btn {
+  height: 28px;
+  padding: 0 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.tut-btn--primary {
+  background: #8B4513;
+  color: #F4E8D0;
+  border: 1px solid #8B4513;
+}
+
+.tut-btn--primary:hover {
+  background: #6B3410;
+  border-color: #6B3410;
+}
+
+.tut-btn--outline {
+  background: transparent;
+  color: #6B4C35;
+  border: 1px solid rgba(139, 69, 19, 0.5);
+}
+
+.tut-btn--outline:hover {
+  background: rgba(139, 69, 19, 0.08);
+  border-color: #8B4513;
+}
+
+.tut-btn--ghost {
+  background: transparent;
+  color: #9E7B61;
+  border: none;
+  padding: 0 4px;
+  font-size: 9px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tut-btn--ghost:hover {
+  color: #5D4037;
+}
+
+/* ── Tablet (≤ 768px) ── */
+@media (max-width: 768px) {
+  /* JS already shrinks tooltip width to vw-32; just cap modal width */
+  .tut-card--modal {
+    width: min(320px, calc(100vw - 32px));
+  }
+}
+
+/* ── Mobile (≤ 480px) ── */
+@media (max-width: 480px) {
+  .tut-card-body {
+    font-size: 12px;
+  }
+
+  .tut-btn {
+    font-size: 9px;
+    padding: 0 9px;
+  }
+}

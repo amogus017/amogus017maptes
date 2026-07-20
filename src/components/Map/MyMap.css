@@ -295,6 +295,12 @@
     outline: none;
 }
 
+.tut-map-active path.leaflet-interactive {
+  stroke:       #ffffff !important;
+  stroke-width: 3px     !important;
+  fill-opacity: 0.9     !important;
+}
+
 /* Empty state — shown when no kingdoms are active at the current year */
 .map-empty-state {
   position: absolute;

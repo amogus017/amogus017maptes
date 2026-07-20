@@ -1,8 +1,11 @@
 // components/Timeline/Timeline.jsx
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 import './Timeline.css';
 
 const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpen, isBotOpen }) => {
+  const { language } = useLanguage();
+  const yearUnit = language === 'id' ? 'M' : 'AD';
   const [year, setYear] = useState(1350);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playDirection, setPlayDirection] = useState('forward'); // 'forward' | 'reverse'
@@ -168,32 +171,6 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
 
         {/* Play controls — pinned left, same level as year tooltip */}
         <div className="v3-play-controls">
-          <button
-            className={`v3-play-btn${isPlaying && playDirection === 'reverse' ? ' playing' : ''}`}
-            onClick={() => {
-              if (isPlaying && playDirection === 'reverse') {
-                setIsPlaying(false);
-              } else {
-                setPlayDirection('reverse');
-                setIsPlaying(true);
-              }
-            }}
-            aria-label="Play reverse"
-            title="Play in reverse"
-          >◀</button>
-          <button
-            className={`v3-play-btn${isPlaying && playDirection === 'forward' ? ' playing' : ''}`}
-            onClick={() => {
-              if (isPlaying && playDirection === 'forward') {
-                setIsPlaying(false);
-              } else {
-                setPlayDirection('forward');
-                setIsPlaying(true);
-              }
-            }}
-            aria-label="Play forward"
-            title="Play forward"
-          >▶</button>
           <div className={`v3-speed-chips${isPlaying ? ' visible' : ''}`}>
             {[1, 2, 3, 5, 10].map(s => (
               <button
@@ -203,6 +180,27 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
                 aria-label={`Speed ×${s}`}
               >×{s}</button>
             ))}
+          </div>
+          <div className="v3-play-btn-group">
+            <button
+              className={`v3-play-btn${isPlaying && playDirection === 'reverse' ? ' playing' : ''}`}
+              onClick={() => { setPlayDirection('reverse'); setIsPlaying(true); }}
+              aria-label="Play reverse"
+              title="Play in reverse"
+            >◀</button>
+            <button
+              className={`v3-play-btn v3-pause-btn${!isPlaying ? ' inactive' : ''}`}
+              onClick={() => setIsPlaying(false)}
+              disabled={!isPlaying}
+              aria-label="Pause"
+              title="Pause"
+            >⏸</button>
+            <button
+              className={`v3-play-btn${isPlaying && playDirection === 'forward' ? ' playing' : ''}`}
+              onClick={() => { setPlayDirection('forward'); setIsPlaying(true); }}
+              aria-label="Play forward"
+              title="Play forward"
+            >▶</button>
           </div>
         </div>
 
@@ -239,7 +237,7 @@ const Victoria3Timeline = ({ onYearChange, currentYear: externalYear, isPanelOpe
             title="Click to type a year"
             aria-label={`Current year: ${year}. Click to edit.`}
           >
-            {year}
+            {year} <span className="year-unit">{yearUnit}</span>
           </div>
         )}
 

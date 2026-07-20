@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { EMPIRES } from '../../data/boundaries';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { buildSearchIndex } from '../../data/searchIndex';
 import './Header.css';
 
 const NAV_CONTENT = {
@@ -71,7 +71,7 @@ function NavDropdownContent({ content }) {
   );
 }
 
-export default function Header({ onKingdomSelect }) {
+export default function Header({ onKingdomSelect, onOpenTutorial }) {
   const { language, setLanguage, t } = useLanguage();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -79,15 +79,30 @@ export default function Header({ onKingdomSelect }) {
   const searchRef = useRef(null);
   const navRef = useRef(null);
 
-  const kingdoms = Object.values(EMPIRES);
-  const filtered = query.length > 0
-    ? kingdoms.filter(e => e.name.toLowerCase().includes(query.toLowerCase()))
-    : [];
-
-  const handleSelect = (empire) => {
-    onKingdomSelect(empire);
+  const handleSelect = (result) => {
+    onKingdomSelect({ id: result.kingdomId, startYear: result.year });
     setQuery('');
     setOpen(false);
+  };
+
+  const q = query.toLowerCase();
+  const allResults = q.length >= 2
+    ? buildSearchIndex().filter(r =>
+        r.label.toLowerCase().includes(q) || r.labelId.toLowerCase().includes(q)
+      )
+    : [];
+  const grouped = {
+    kingdom: allResults.filter(r => r.type === 'kingdom').slice(0, 5),
+    ruler:   allResults.filter(r => r.type === 'ruler').slice(0, 5),
+    event:   allResults.filter(r => r.type === 'event').slice(0, 5),
+  };
+  const hasResults = allResults.length > 0;
+
+  const formatSub = (r) => {
+    const suf = language === 'id' ? 'M' : 'CE';
+    if (r.type === 'kingdom') return `${r.startYear}–${r.endYear} ${suf}`;
+    if (r.type === 'ruler')   return `${r.kingdomName} · ${r.reignStart}–${r.reignEnd} ${suf}`;
+    return `${r.year} ${suf}`;
   };
 
   useEffect(() => {
@@ -126,19 +141,43 @@ export default function Header({ onKingdomSelect }) {
           aria-expanded={open}
           aria-autocomplete="list"
         />
-        {open && filtered.length > 0 && (
+        {open && hasResults && (
           <ul className="app-header-dropdown" role="listbox">
-            {filtered.map(empire => (
-              <li
-                key={empire.id}
-                className="app-header-dropdown-item"
-                role="option"
-                onMouseDown={() => handleSelect(empire)}
-              >
-                <span className="dropdown-name">{empire.name}</span>
-                <span className="dropdown-period">{empire.startYear}–{empire.endYear} M</span>
+            {grouped.kingdom.length > 0 && <>
+              <li className="dropdown-group-header">
+                {language === 'id' ? 'Kerajaan' : 'Kingdoms'}
               </li>
-            ))}
+              {grouped.kingdom.map(r => (
+                <li key={r.kingdomId} className="app-header-dropdown-item" role="option" onMouseDown={() => handleSelect(r)}>
+                  <span className="dropdown-name">{language === 'id' ? r.labelId : r.label}</span>
+                  <span className="dropdown-period">{formatSub(r)}</span>
+                </li>
+              ))}
+            </>}
+            {grouped.ruler.length > 0 && <>
+              <li className="dropdown-group-header">
+                {language === 'id' ? 'Penguasa' : 'Rulers'}
+              </li>
+              {grouped.ruler.map((r, i) => (
+                <li key={`${r.kingdomId}-${r.reignStart}-${i}`} className="app-header-dropdown-item" role="option" onMouseDown={() => handleSelect(r)}>
+                  <span className="dropdown-item-icon">👤</span>
+                  <span className="dropdown-name">{r.label}</span>
+                  <span className="dropdown-period">{formatSub(r)}</span>
+                </li>
+              ))}
+            </>}
+            {grouped.event.length > 0 && <>
+              <li className="dropdown-group-header">
+                {language === 'id' ? 'Peristiwa' : 'Events'}
+              </li>
+              {grouped.event.map(r => (
+                <li key={r.label} className="app-header-dropdown-item" role="option" onMouseDown={() => handleSelect(r)}>
+                  <span className="dropdown-item-icon">{r.icon}</span>
+                  <span className="dropdown-name">{language === 'id' ? r.labelId : r.label}</span>
+                  <span className="dropdown-period">{formatSub(r)}</span>
+                </li>
+              ))}
+            </>}
           </ul>
         )}
       </div>
@@ -195,6 +234,14 @@ export default function Header({ onKingdomSelect }) {
             {code.toUpperCase()}
           </button>
         ))}
+        <button
+          className="app-header-lang-btn header-tutorial-btn"
+          onClick={onOpenTutorial}
+          aria-label={t.tutorial?.reopen ?? 'Tutorial'}
+          title={t.tutorial?.reopen ?? 'Tutorial'}
+        >
+          ?
+        </button>
       </div>
     </header>
   );

@@ -235,6 +235,14 @@
   outline: 1px solid rgba(212, 175, 55, 0.4);
 }
 
+.year-unit {
+  font-size: 0.7em;
+  font-weight: 400;
+  opacity: 0.65;
+  letter-spacing: 0.08em;
+  margin-left: 2px;
+}
+
 .year-tooltip-editable {
   border-bottom: 1px dashed rgba(212, 175, 55, 0.5);
 }
@@ -302,12 +310,33 @@
   border-color: rgba(212, 175, 55, 0.55);
 }
 
+.v3-pause-btn {
+  font-size: 13px;
+}
+
+.v3-pause-btn.inactive {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.v3-pause-btn.inactive:hover {
+  background: #3E2723;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.22);
+}
+
+.v3-play-btn-group {
+  display: flex;
+  gap: 4px;
+  order: 1;
+}
+
 .v3-speed-chips {
   display: flex;
   gap: 2px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
+  order: 2;
 }
 
 .v3-speed-chips.visible {
@@ -368,4 +397,14 @@
   .ruler-background {
     transform: translateY(-55%);
   }
+
+  /* Stack speed chips above ◀⏸▶ on mobile so they don't
+     overlap the centered year tooltip vertically. */
+  .v3-play-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .v3-play-btn-group { order: 2; }
+  .v3-speed-chips    { order: 1; }
 }
