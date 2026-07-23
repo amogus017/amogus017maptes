@@ -10,6 +10,7 @@ const NAV_CONTENT = {
       points: [
         'Atlas ini hanya menampilkan kerajaan Hindu-Buddha Nusantara (400–1600 M).',
         'Mencakup ±20 kerajaan besar yang relevan dengan kurikulum Sejarah SMA.',
+        'Pemilihan kerajaan didasarkan pada silabus Kurikulum Merdeka Fase E; kerajaan kecil atau lokal yang tidak dibahas kurikulum tidak ditampilkan.',
         'Kesultanan Islam dan periode sebelum Hindu-Buddha tidak termasuk.',
         'Kelengkapan data bervariasi; beberapa kerajaan hanya memiliki data dasar.',
       ],
@@ -19,6 +20,7 @@ const NAV_CONTENT = {
       points: [
         'This atlas covers only Hindu-Buddhist kingdoms of Nusantara (400–1600 CE).',
         'Approx. 20 major kingdoms aligned with the Indonesian SMA history curriculum.',
+        'Kingdom selection follows the Kurikulum Merdeka Fase E syllabus; smaller or local kingdoms not covered by the curriculum are not included.',
         'Islamic sultanates and pre-Hindu/Buddhist periods are not included.',
         'Data completeness varies; some kingdoms have only basic information.',
       ],
@@ -26,23 +28,17 @@ const NAV_CONTENT = {
   },
   sumber: {
     id: {
-      title: 'Sumber & Referensi',
+      title: 'Sumber Wilayah',
       items: [
-        { author: 'George Coedès', title: 'The Indianized States of Southeast Asia', year: '1968' },
-        { author: 'O.W. Wolters', title: 'History, Culture and Region in Southeast Asian Perspectives', year: '1982' },
-        { author: 'Slamet Muljana', title: 'Tafsir Sejarah Nagarakretagama', year: '1979' },
-        { author: 'Slamet Muljana', title: 'Runtuhnya Kerajaan Hindu-Jawa dan Timbulnya Negara-Negara Islam di Nusantara', year: '2005' },
-        { author: 'Wikipedia ID/EN', title: 'Artikel Kerajaan Nusantara', year: '' },
+        { author: 'Lazardi Wong Jogja', title: 'YouTube', year: '' },
+        { author: 'Emperor Tigerstar', title: 'YouTube', year: '' },
       ],
     },
     en: {
-      title: 'Sources & References',
+      title: 'Territory Sources',
       items: [
-        { author: 'George Coedès', title: 'The Indianized States of Southeast Asia', year: '1968' },
-        { author: 'O.W. Wolters', title: 'History, Culture and Region in Southeast Asian Perspectives', year: '1982' },
-        { author: 'Slamet Muljana', title: 'Tafsir Sejarah Nagarakretagama', year: '1979' },
-        { author: 'Slamet Muljana', title: 'Runtuhnya Kerajaan Hindu-Jawa', year: '2005' },
-        { author: 'Wikipedia ID/EN', title: 'Nusantara Kingdom Articles', year: '' },
+        { author: 'Lazardi Wong Jogja', title: 'YouTube', year: '' },
+        { author: 'Emperor Tigerstar', title: 'YouTube', year: '' },
       ],
     },
   },
@@ -116,7 +112,7 @@ export default function Header({ onKingdomSelect, onOpenTutorial }) {
 
   const navLabel = (key) => key === 'limitasi'
     ? (language === 'id' ? 'Limitasi' : 'Limitations')
-    : (language === 'id' ? 'Sumber' : 'Sources');
+    : (language === 'id' ? 'Sumber Wilayah' : 'Territory Sources');
 
   return (
     <header className="app-header" role="banner">
@@ -224,16 +220,18 @@ export default function Header({ onKingdomSelect, onOpenTutorial }) {
       </div>
 
       <div className="app-header-lang" role="group" aria-label="Language">
-        {['id', 'en'].map(code => (
-          <button
-            key={code}
-            className={`app-header-lang-btn${language === code ? ' active' : ''}`}
-            onClick={() => setLanguage(code)}
-            aria-pressed={language === code}
-          >
-            {code.toUpperCase()}
-          </button>
-        ))}
+        <div className="app-header-lang-toggle">
+          {['id', 'en'].map(code => (
+            <button
+              key={code}
+              className={`app-header-lang-btn${language === code ? ' active' : ''}`}
+              onClick={() => setLanguage(code)}
+              aria-pressed={language === code}
+            >
+              {code.toUpperCase()}
+            </button>
+          ))}
+        </div>
         <button
           className="app-header-lang-btn header-tutorial-btn"
           onClick={onOpenTutorial}

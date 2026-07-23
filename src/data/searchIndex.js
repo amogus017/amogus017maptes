@@ -47,6 +47,30 @@ export function buildSearchIndex() {
     }
   }
 
+  // Prime ministers / chief ministers
+  for (const [id, territory] of Object.entries(territoriesData)) {
+    if (!territory.timeline) continue;
+    const empire = EMPIRES[id];
+    if (!empire) continue;
+    const seen = new Set();
+    for (const yk of Object.keys(territory.timeline).sort((a, b) => +a - +b)) {
+      const { primeMinister } = territory.timeline[yk];
+      if (!primeMinister?.name) continue;
+      if (seen.has(primeMinister.name)) continue;
+      seen.add(primeMinister.name);
+      index.push({
+        type: 'ruler',
+        label: primeMinister.name,
+        labelId: primeMinister.name,
+        kingdomId: id,
+        kingdomName: empire.name,
+        reignStart: primeMinister.reignStart,
+        reignEnd: primeMinister.reignEnd,
+        year: primeMinister.reignStart,
+      });
+    }
+  }
+
   // Historical events
   for (const ev of historicalEvents) {
     if (!ev.kingdoms?.length) continue;

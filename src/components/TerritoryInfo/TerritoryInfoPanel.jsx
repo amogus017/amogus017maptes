@@ -15,9 +15,20 @@ const TAB_IDS = [
   { id: 'relations',icon: '⚖️' },
 ];
 
+// Data-audit citations are tagged with a leading "UNVERIFIED" marker (see
+// territories.js) to flag claims the audit couldn't confirm against its
+// primary source. That internal audit note shouldn't leak to students
+// verbatim — isUnverifiedCitation() detects it, publicCitationText() below
+// swaps it for a student-facing sentence instead of deleting the citation
+// (which would misalign the static citation-index arrays in territories.js).
+const isUnverifiedCitation = (cit) => !!cit && typeof cit.citation === 'string' && cit.citation.startsWith('UNVERIFIED');
+
 const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYear, endYear }) => {
   const { language, t } = useLanguage();
   const loc = (en, id) => (language === 'id' && id) ? id : en;
+  const publicCitationText = (cit) => isUnverifiedCitation(cit)
+    ? loc('Not verified against the primary academic source — treat as approximate.', 'Belum diverifikasi terhadap sumber akademis utama — anggap sebagai perkiraan.')
+    : cit.citation;
   const [activeTab, setActiveTab] = useState('overview');
   const [territoryData, setTerritoryData] = useState(null);
   const [wikiOpen, setWikiOpen] = useState(false);
@@ -64,10 +75,10 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
     const statRefs = {};
     for (const key of ['capital', 'population', 'religion', 'government']) {
       const cit = territoryData.statCitations?.[key];
-      if (cit) { statRefs[key] = allRefs.length; allRefs.push(cit); }
+      if (cit && !isUnverifiedCitation(cit)) { statRefs[key] = allRefs.length; allRefs.push(cit); }
     }
     const eventRefs = (territoryData.keyEvents || []).map(event => {
-      if (!event.citation) return null;
+      if (!event.citation || isUnverifiedCitation(event.citation)) return null;
       const existing = allRefs.findIndex(r => r.citation === event.citation.citation);
       if (existing >= 0) return existing;
       const idx = allRefs.length;
@@ -191,11 +202,11 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                     {loc(territoryData.era, territoryData.eraId)}
                   </div>
 
-                  <h1 className="territory-name">{territoryData.name}</h1>
-                  <h2 className="territory-english">{territoryData.englishName}</h2>
+                  <h1 className="territory-name">{loc(territoryData.name, territoryData.nameId)}</h1>
+                  <h2 className="territory-english">{loc(territoryData.englishName, territoryData.englishNameId)}</h2>
 
                   <div className="year-display">
-                    <span className="year-label">Anno Domini</span>
+                    <span className="year-label">{t.yearLabel}</span>
                     <span className="year-value">{clampedYear}</span>
                   </div>
                 </div>
@@ -207,41 +218,72 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
               {/* Out-of-range banner */}
               {isOutOfRange && (
                 <div className="v3-outofrange-banner">
-                  <span aria-hidden="true">{currentYear > endYear ? '⚔️' : '📜'}</span>
+                  <span aria-hidden="true">{currentYear > endYear ? (territoryData.renamedTo ? '🔄' : '⚔️') : '📜'}</span>
                   <span>
                     {currentYear > endYear
-                      ? `${territoryData.name} fell in ${endYear} CE — showing last recorded state`
-                      : `${territoryData.name} was founded in ${startYear} CE — showing earliest known state`}
+                      ? (territoryData.renamedTo
+                          ? loc(
+                              `${territoryData.name} was renamed ${loc(territoryData.renamedTo, territoryData.renamedToId)} in ${endYear} CE — showing last recorded state`,
+                              `${territoryData.name} berganti nama menjadi ${loc(territoryData.renamedTo, territoryData.renamedToId)} pada ${endYear} M — menampilkan catatan terakhir`
+                            )
+                          : loc(
+                              `${territoryData.name} fell in ${endYear} CE — showing last recorded state`,
+                              `${territoryData.name} runtuh pada ${endYear} M — menampilkan catatan terakhir`
+                            ))
+                      : loc(
+                          `${territoryData.name} was founded in ${startYear} CE — showing earliest known state`,
+                          `${territoryData.name} didirikan pada ${startYear} M — menampilkan catatan awal`
+                        )}
                   </span>
                 </div>
               )}
 
               {/* Ruler Card */}
-              <div className="v3-ruler-card">
-                <div className="ruler-portrait">
-                  <span className="portrait-emoji">{territoryData.ruler.portrait}</span>
-                </div>
-                <div className="ruler-info">
-                  <span className="ruler-title">{territoryData.ruler.title}</span>
-                  <span className="ruler-name">{territoryData.ruler.name}</span>
-                  {(territoryData.ruler.reignStart || territoryData.ruler.reignEnd) && (
-                    <span className="ruler-reign">
-                      Reign: {territoryData.ruler.reignStart}{territoryData.ruler.reignStart && territoryData.ruler.reignEnd ? ' – ' : ''}{territoryData.ruler.reignEnd}
-                    </span>
-                  )}
-                </div>
-                {territoryData.primeMinister && (
-                  <div className="minister-info">
-                    <div className="minister-portrait">
-                      <span>{territoryData.primeMinister.portrait}</span>
+              {(() => {
+                const r = territoryData.ruler;
+                const isUnknown = r.name === 'Unknown';
+                const isInterregnum = r.name === 'Interregnum';
+                const reignLabel = isInterregnum
+                  ? loc('Period', 'Periode')
+                  : loc('Reign', 'Berkuasa');
+                return (
+                  <div className="v3-ruler-card">
+                    <div className="ruler-portrait">
+                      <span className="portrait-emoji">
+                        {isInterregnum ? '⚔️' : r.portrait}
+                      </span>
                     </div>
-                    <div className="minister-details">
-                      <span className="minister-title">{territoryData.primeMinister.title}</span>
-                      <span className="minister-name">{territoryData.primeMinister.name}</span>
+                    <div className="ruler-info">
+                      {!isInterregnum && (
+                        <span className="ruler-title">{r.title}</span>
+                      )}
+                      <span className={`ruler-name${isUnknown || isInterregnum ? ' ruler-name--dim' : ''}`}>
+                        {isUnknown
+                          ? loc('Unknown', 'Tidak Diketahui')
+                          : isInterregnum
+                            ? loc('Interregnum', 'Masa Peralihan')
+                            : r.name}
+                      </span>
+                      {!isUnknown && (r.reignStart || r.reignEnd) && (
+                        <span className="ruler-reign">
+                          {reignLabel}: {r.reignStart}{r.reignStart && r.reignEnd ? ' – ' : ''}{r.reignEnd}
+                        </span>
+                      )}
                     </div>
+                    {territoryData.primeMinister && (
+                      <div className="minister-info">
+                        <div className="minister-portrait">
+                          <span>{territoryData.primeMinister.portrait}</span>
+                        </div>
+                        <div className="minister-details">
+                          <span className="minister-title">{territoryData.primeMinister.title}</span>
+                          <span className="minister-name">{territoryData.primeMinister.name}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                );
+              })()}
 
               {/* Tab Navigation */}
               <div className="v3-tab-nav" role="tablist" aria-label={t.tabsAriaLabel}>
@@ -297,7 +339,9 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">👥</span>
                               <span className="stat-label">{t.population}</span>
                               <span className="stat-value">
-                                {loc(territoryData.population, territoryData.populationId)}
+                                {isUnverifiedCitation(territoryData.statCitations?.population)
+                                  ? loc('Not documented in sources', 'Tidak terdokumentasi dalam sumber')
+                                  : loc(territoryData.population, territoryData.populationId)}
                                 {overviewCitations.statRefs.population !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.population}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.population); }}>[{overviewCitations.statRefs.population + 1}]</a>
                                 )}
@@ -366,7 +410,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   <div key={i} id={`ov-ref-${i}`} className="source-ref-item">
                                     <span className="source-ref-number">[{i + 1}]</span>
                                     <div className="source-ref-body">
-                                      <span className="source-citation">{ref.citation}</span>
+                                      <span className="source-citation">{publicCitationText(ref)}</span>
                                       {ref.url && (
                                         <a href={ref.url} target="_blank" rel="noopener noreferrer" className="source-link">
                                           {loc('View Document →', 'Lihat Dokumen →')}
@@ -541,7 +585,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   <div key={i} id={`econ-ref-${i}`} className="source-ref-item">
                                     <span className="source-ref-number">[{i + 1}]</span>
                                     <div className="source-ref-body">
-                                      <span className="source-citation">{ref.citation}</span>
+                                      <span className="source-citation">{publicCitationText(ref)}</span>
                                       {ref.url && (
                                         <a href={ref.url} target="_blank" rel="noopener noreferrer" className="source-link">
                                           {loc('View Document →', 'Lihat Dokumen →')}
@@ -644,7 +688,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   <div key={i} id={`cult-ref-${i}`} className="source-ref-item">
                                     <span className="source-ref-number">[{i + 1}]</span>
                                     <div className="source-ref-body">
-                                      <span className="source-citation">{ref.citation}</span>
+                                      <span className="source-citation">{publicCitationText(ref)}</span>
                                       {ref.url && (
                                         <a href={ref.url} target="_blank" rel="noopener noreferrer" className="source-link">
                                           {loc('View Document →', 'Lihat Dokumen →')}
@@ -754,7 +798,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   <div key={i} id={`rel-ref-${i}`} className="source-ref-item">
                                     <span className="source-ref-number">[{i + 1}]</span>
                                     <div className="source-ref-body">
-                                      <span className="source-citation">{ref.citation}</span>
+                                      <span className="source-citation">{publicCitationText(ref)}</span>
                                       {ref.url && (
                                         <a href={ref.url} target="_blank" rel="noopener noreferrer" className="source-link">
                                           {loc('View Document →', 'Lihat Dokumen →')}

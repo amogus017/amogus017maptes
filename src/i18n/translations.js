@@ -14,6 +14,9 @@ const translations = {
     tabCulture: 'Budaya',
     tabRelations: 'Hubungan',
 
+    // Header year label
+    yearLabel: 'Tahun Masehi',
+
     // Stat labels
     capital: 'Ibu Kota',
     population: 'Populasi',
@@ -151,6 +154,9 @@ const translations = {
     tabEconomy: 'Economy',
     tabCulture: 'Culture',
     tabRelations: 'Relations',
+
+    // Header year label
+    yearLabel: 'CE',
 
     // Stat labels
     capital: 'Capital',

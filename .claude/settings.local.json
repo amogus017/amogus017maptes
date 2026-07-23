@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell($json = Get-Content \"c:\\\\reactjs\\\\leaftlet-map\\\\src\\\\data\\\\boundaries\\\\geojson\\\\kerajaan_hindhu_buddha.json\" -Raw | ConvertFrom-Json; $json.features | Where-Object { $_.properties.name -in @\\(\"galuh\",\"kalingga\",\"kutai\"\\) } | ForEach-Object { \"name:$\\($_.properties.name\\) start:$\\($_.properties.start\\) end:$\\($_.properties.end\\)\" } | Sort-Object)",
-      "Bash(node --input-type=module)",
-      "Bash(node -e \"require\\('./src/data/territories.js'\\)\")"
-    ]
-  }
-}

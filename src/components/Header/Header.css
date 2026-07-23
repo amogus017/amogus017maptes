@@ -277,6 +277,11 @@
   grid-column: 4;
 }
 
+.app-header-lang-toggle {
+  display: flex;
+  gap: 3px;
+}
+
 .app-header-lang-btn {
   height: 28px;
   min-width: 34px;

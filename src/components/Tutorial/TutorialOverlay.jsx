@@ -6,15 +6,15 @@ import './TutorialOverlay.css';
 const STEPS = [
   { selector: null },
   { selector: '.victoria3-timeline' },
-  { selector: '.slider-frame' },
+  { selector: '.slider-frame', clip: '/clips/step2.mp4' },
   { selector: '.v3-play-controls' },
-  { selector: '.leaflet-container', hoverEffect: true, trimBottom: '.victoria3-timeline' },
+  { selector: '.leaflet-container', hoverEffect: true, trimBottom: '.victoria3-timeline', clip: '/clips/step5.mp4' },
   { selector: '.v3-territory-panel', autoSelect: 'srivijaya', prefer: 'right' },
   { selector: '.v3-wiki-btn', prefer: 'right' },
   { selector: '.v3-tab-nav', prefer: 'right', closeOnLeave: true },
   { selector: '.app-header-search' },
   { selector: '.v3-ask-ai-btn' },
-  { selector: '.app-header-lang' },
+  { selector: '.app-header-lang-toggle' },
   { selector: '.header-tutorial-btn' },
   { selector: null },
 ];
@@ -215,6 +215,16 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
               ))}
             </div>
 
+            {STEPS[step].clip && (
+              <video
+                className="tut-clip"
+                src={STEPS[step].clip}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            )}
             <div className="tut-card-title">{stepData.title}</div>
             <div className="tut-card-body">{stepData.body}</div>
 

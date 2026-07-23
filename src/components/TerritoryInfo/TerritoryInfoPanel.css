@@ -530,6 +530,12 @@ background: linear-gradient(135deg, #F5EBD7 0%, #EAD9BE 50%, #DFC9A8 100%);
   color: #2C1810;
 }
 
+.ruler-name--dim {
+  font-style: italic;
+  color: #8B7355;
+  font-weight: 400;
+}
+
 .ruler-reign {
   font-family: 'EB Garamond', serif;
   font-size: 0.9em;

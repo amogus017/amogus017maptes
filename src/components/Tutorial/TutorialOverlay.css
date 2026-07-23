@@ -101,6 +101,17 @@
   background: #8B4513;
 }
 
+/* Clip / demo video */
+.tut-clip {
+  display: block;
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(139, 69, 19, 0.25);
+  margin-bottom: 10px;
+}
+
 /* Card title */
 .tut-card-title {
   font-family: 'Cinzel', serif;

@@ -167,7 +167,7 @@ export const EMPIRES = {
     name: 'Singasari',
     color: '#DC143C',
     startYear: 1254,
-    endYear: 1293,
+    endYear: 1292,
     geojson: null,
     featureName: 'singasari',
   },
