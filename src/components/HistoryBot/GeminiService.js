@@ -14,7 +14,9 @@ function buildAcademicSection(userMessage, kingdomId, year) {
     `[${i + 1}] ${c.text}${c.citation ? `\n    Source: ${c.citation}` : ''}`
   );
   const section =
-    "\n\nACADEMIC SOURCES (cite inline as [1], [2], [3] when using them — do not list them again at the end):\n"
+    "\n\nACADEMIC SOURCES — you MUST cite every claim drawn from these using the matching bracket number "
+    + "([1], [2], [3]) placed right after the sentence that uses it, e.g. \"Ia naik takhta pada 1350 M [1].\" "
+    + "This is mandatory, not optional. Do not repeat the source list again at the end of your answer:\n"
     + lines.join("\n");
   return { section, sources: filledChunks };
 }
@@ -40,6 +42,10 @@ export async function askGemini(userMessage, kingdomContext = null, currentYear 
           : '')
     : '';
 
+  const citationReminder = academicSection
+    ? '\nYou were given ACADEMIC SOURCES above — you must place a [1]/[2]/[3] marker after every sentence that draws on them. Do not skip this.'
+    : '';
+
   const systemContext = kingdomContext
     ? `You are a knowledgeable historical guide for pre-colonial Nusantara and Southeast Asian history.
 The user is viewing an interactive historical atlas and has navigated to the year ${year} CE.
@@ -60,7 +66,7 @@ Answer questions in an educational tone suitable for Indonesian high school stud
 Lead with the direct answer in the first sentence — no preamble. Keep answers to 1–2 short paragraphs maximum.
 For questions about temples, architecture, or cultural achievements, cover the kingdom's full historical period (${kingdomContext.startYear}–${kingdomContext.endYear} CE), not just year ${year}. If a notable structure was built after the current viewing year, mention it and briefly note when it was built.
 If the user asks something unrelated to Nusantara or Southeast Asian history, politely redirect them in one sentence.
-Do not use markdown formatting like **bold** or ## headers — write in plain paragraphs.${outOfRangeNote}`
+Do not use markdown formatting like **bold** or ## headers — write in plain paragraphs.${outOfRangeNote}${citationReminder}`
     : `You are a knowledgeable historical guide for pre-colonial Nusantara and Southeast Asian kingdoms (400–1600 CE).
 The user is currently viewing the map at year ${year} CE.
 Lead with the direct answer in the first sentence — no preamble. Keep answers to 1–2 short paragraphs maximum.
