@@ -120,7 +120,7 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
                     <div className="hbot-sources">
                       {msg.sources.map((s, j) => (
                         <div key={j} className="hbot-source-item">
-                          <span className="hbot-source-num" aria-hidden="true">[{j + 1}]</span>
+                          <span className="hbot-source-num" aria-hidden="true">[{s.citationNumber ?? j + 1}]</span>
                           {s.url
                             ? <a href={s.url} target="_blank" rel="noopener noreferrer" className="hbot-source-citation hbot-source-link">{s.citation}</a>
                             : <span className="hbot-source-citation">{s.citation}</span>

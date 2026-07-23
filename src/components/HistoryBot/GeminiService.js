@@ -117,8 +117,13 @@ If asked about unrelated topics, redirect in one sentence.`;
   // Only show sources the model actually cited (its [N] marker appears in the
   // text) — getRelevantChunks() retrieves up to 3 candidates, but the model
   // may only end up using a subset of them to answer the specific question.
+  // Keep the ORIGINAL bracket number (citationNumber) attached to each source
+  // so the reference list can display [2] as "[2]" even when [1] got dropped —
+  // renumbering by filtered array position would desync it from the text.
   const citedSources = content
-    ? sources.filter((_, i) => content.includes(`[${i + 1}]`))
+    ? sources
+        .map((s, i) => ({ ...s, citationNumber: i + 1 }))
+        .filter(s => content.includes(`[${s.citationNumber}]`))
     : [];
   return {
     text: content ?? "I could not generate a response. Please try again.",
