@@ -13,9 +13,15 @@ function buildAcademicSection(userMessage, kingdomId, year) {
   const lines = filledChunks.map((c, i) =>
     `[${i + 1}] ${c.text}${c.citation ? `\n    Source: ${c.citation}` : ''}`
   );
+  // The valid bracket numbers depend on how many sources were actually
+  // retrieved for THIS question — stating a fixed "[1], [2], [3]" example
+  // regardless of count anchors the model into inventing a [3] even when
+  // only 1-2 sources exist.
+  const validNumbers = filledChunks.map((_, i) => `[${i + 1}]`).join(', ');
   const section =
-    "\n\nACADEMIC SOURCES — you MUST cite every claim drawn from these using the matching bracket number "
-    + "([1], [2], [3]) placed right after the sentence that uses it, e.g. \"Ia naik takhta pada 1350 M [1].\" "
+    `\n\nACADEMIC SOURCES — there are exactly ${filledChunks.length} source(s) below, numbered ${validNumbers}. `
+    + `You MUST cite every claim drawn from these using ONLY these exact bracket numbers, placed right after the sentence that uses it, `
+    + `e.g. "Ia naik takhta pada 1350 M [1]." Never invent a bracket number higher than ${filledChunks.length}. `
     + "This is mandatory, not optional. Do not repeat the source list again at the end of your answer:\n"
     + lines.join("\n");
   return { section, sources: filledChunks };
@@ -43,7 +49,7 @@ export async function askGemini(userMessage, kingdomContext = null, currentYear 
     : '';
 
   const citationReminder = academicSection
-    ? '\nYou were given ACADEMIC SOURCES above — you must place a [1]/[2]/[3] marker after every sentence that draws on them. Do not skip this.'
+    ? `\nYou were given ${sources.length} ACADEMIC SOURCES above (numbered ${sources.map((_, i) => `[${i + 1}]`).join(', ')}) — place the matching marker after every sentence that draws on them, and never cite a number outside that range. Do not skip this.`
     : '';
 
   const systemContext = kingdomContext
@@ -98,7 +104,16 @@ If asked about unrelated topics, redirect in one sentence.`;
   }
 
   const data = await response.json();
-  const content = data.choices?.[0]?.message?.content;
+  const rawContent = data.choices?.[0]?.message?.content;
+  // Safety net: strip any [N] marker the model invented beyond the number of
+  // sources actually provided (e.g. citing [3] when only 2 sources exist) —
+  // the prompt asks it not to, but LLM instruction-following isn't guaranteed.
+  const content = rawContent
+    ? rawContent
+        .replace(/\[(\d+)\]/g, (match, n) => (Number(n) >= 1 && Number(n) <= sources.length) ? match : '')
+        .replace(/\s+([.,;:!?])/g, '$1')
+        .replace(/[ \t]{2,}/g, ' ')
+    : rawContent;
   // Only show sources the model actually cited (its [N] marker appears in the
   // text) — getRelevantChunks() retrieves up to 3 candidates, but the model
   // may only end up using a subset of them to answer the specific question.
