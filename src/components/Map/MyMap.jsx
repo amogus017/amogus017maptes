@@ -8,6 +8,7 @@ import './MyMap.css';
 import { calculateLabelPlacement } from './labelUtils';
 import ZoomControl from './ZoomControl';
 import EventMarkers from './EventMarkers';
+import { historicalEvents } from '../../data/historicalEvents';
 
 // ─── Label Layer ────────────────────────────────────────────────────────────
 // Class component with direct DOM manipulation — no useState, no useEffect,
@@ -292,7 +293,7 @@ class MyMap extends Component {
                         currentYear={currentYear}
                     />
 
-                    <EventMarkers currentYear={currentYear} />
+                    <EventMarkers currentYear={currentYear} onEventClick={this.props.onEventClick} />
 
                     {activeEmpires.length > 0 ? (
                         <div className="legend-events-stack">
@@ -320,14 +321,18 @@ class MyMap extends Component {
                             </div>
 
                             {(() => {
-                                const events = activeEmpires.flatMap((empire) => {
+                                const territoryEvents = activeEmpires.flatMap((empire) => {
                                     const data = getTerritoryData(empire.id, currentYear);
-                                    const info = getTerritoryInfo(empire.id, currentYear);
                                     if (!data?.keyEvents) return [];
                                     return data.keyEvents
                                         .filter(e => e.event && e.year <= currentYear && e.year >= currentYear - 200)
                                         .map(e => ({ ...e }));
-                                }).sort((a, b) => b.year - a.year).slice(0, 5);
+                                });
+                                const legendOnlyEvents = historicalEvents
+                                    .filter(e => e.legendOnly && currentYear >= e.startYear && currentYear <= e.endYear)
+                                    .map(e => ({ year: e.year, event: e.title, eventId: e.titleId }));
+                                const events = [...territoryEvents, ...legendOnlyEvents]
+                                    .sort((a, b) => b.year - a.year).slice(0, 5);
 
                                 if (events.length === 0) return null;
                                 return (

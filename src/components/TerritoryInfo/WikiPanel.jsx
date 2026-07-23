@@ -23,7 +23,7 @@ const LANGUAGES = {
   },
 };
 
-const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defaultLanguage = 'en' }) => {
+const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defaultLanguage = 'en', side = 'left' }) => {
   const [wikiContent, setWikiContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -225,10 +225,10 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defau
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="wiki-panel"
-          initial={{ x: '-100%', opacity: 0 }}
+          className={`wiki-panel${side === 'right' ? ' wiki-panel--right' : ''}`}
+          initial={{ x: side === 'right' ? '100%' : '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: '-100%', opacity: 0 }}
+          exit={{ x: side === 'right' ? '100%' : '-100%', opacity: 0 }}
           transition={{ type: 'tween', duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.04 }}
         >
           {/* Header */}

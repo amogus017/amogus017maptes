@@ -4,7 +4,7 @@ import L from 'leaflet';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { historicalEvents } from '../../data/historicalEvents';
 
-export default function EventMarkers({ currentYear }) {
+export default function EventMarkers({ currentYear, onEventClick }) {
   const map = useMap();
   const { language } = useLanguage();
   const markersRef = useRef([]);
@@ -14,7 +14,7 @@ export default function EventMarkers({ currentYear }) {
     markersRef.current = [];
 
     const active = historicalEvents.filter(
-      e => currentYear >= e.startYear && currentYear <= e.endYear
+      e => currentYear >= e.startYear && currentYear <= e.endYear && !e.legendOnly
     );
 
     active.forEach(event => {
@@ -42,6 +42,9 @@ export default function EventMarkers({ currentYear }) {
       );
 
       marker.addTo(map);
+      if (event.wikiSlug && onEventClick) {
+        marker.on('click', () => onEventClick(event));
+      }
       markersRef.current.push(marker);
     });
 

@@ -12,7 +12,7 @@ export async function initBoundaries() {
 export const EMPIRES = {
   srivijaya: {
     id: 'srivijaya',
-    name: 'Srivijaya',
+    name: 'Sriwijaya',
     color: '#329ccd',
     startYear: 650,
     endYear: 1090,

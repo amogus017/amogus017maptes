@@ -9,6 +9,7 @@ import { getTerritoryData } from "./data/territories";
 import { getTerritoryInfo, EMPIRES, initBoundaries } from "./data/boundaries";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import TutorialOverlay from "./components/Tutorial/TutorialOverlay";
+import WikiPanel from "./components/TerritoryInfo/WikiPanel";
 import './App.css';
 
 function AppContent() {
@@ -19,6 +20,7 @@ function AppContent() {
   const [isBotOpen, setIsBotOpen] = useState(false);
   const [isMapReady, setIsMapReady] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [activeEventWiki, setActiveEventWiki] = useState(null);
 
   useEffect(() => {
     if (!localStorage.getItem('atlas_tutorial_seen')) {
@@ -87,6 +89,7 @@ function AppContent() {
       {isMapReady && <MyMap
         currentYear={currentYear}
         onTerritoryClick={handleTerritoryClick}
+        onEventClick={(event) => setActiveEventWiki({ slug: event.wikiSlug, idSlug: event.idWikiSlug, name: event.title, nameId: event.titleId })}
       />}
 
       <Timeline onYearChange={handleYearChange} currentYear={currentYear} isPanelOpen={isPanelOpen} isBotOpen={isBotOpen} />
@@ -117,6 +120,15 @@ function AppContent() {
           {selectedTerritory ? t.askAbout(selectedTerritory.name) : t.askDefault}
         </span>
       </button>
+
+      <WikiPanel
+        wikiSlug={activeEventWiki?.slug}
+        idWikiSlug={activeEventWiki?.idSlug}
+        territoryName={activeEventWiki?.name}
+        isOpen={!!activeEventWiki}
+        onClose={() => setActiveEventWiki(null)}
+        side="right"
+      />
 
       <TutorialOverlay
         isOpen={showTutorial}

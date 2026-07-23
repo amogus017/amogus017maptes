@@ -775,7 +775,7 @@ export const territoriesData = {
   // Srivijaya Empire
   srivijaya: {
     id: 'srivijaya',
-    name: 'Srivijaya',
+    name: 'Sriwijaya',
     nameId: 'Sriwijaya',
     englishName: 'Srivijaya Empire',
     englishNameId: 'Kerajaan Sriwijaya',
