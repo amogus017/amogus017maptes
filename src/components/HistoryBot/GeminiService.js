@@ -99,8 +99,14 @@ If asked about unrelated topics, redirect in one sentence.`;
 
   const data = await response.json();
   const content = data.choices?.[0]?.message?.content;
+  // Only show sources the model actually cited (its [N] marker appears in the
+  // text) — getRelevantChunks() retrieves up to 3 candidates, but the model
+  // may only end up using a subset of them to answer the specific question.
+  const citedSources = content
+    ? sources.filter((_, i) => content.includes(`[${i + 1}]`))
+    : [];
   return {
     text: content ?? "I could not generate a response. Please try again.",
-    sources: content ? sources : [],
+    sources: citedSources,
   };
 }
