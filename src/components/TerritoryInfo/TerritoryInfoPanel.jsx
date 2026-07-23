@@ -23,12 +23,146 @@ const TAB_IDS = [
 // (which would misalign the static citation-index arrays in territories.js).
 const isUnverifiedCitation = (cit) => !!cit && typeof cit.citation === 'string' && cit.citation.startsWith('UNVERIFIED');
 
+// Many otherwise-valid citations also have internal audit commentary appended
+// after an em-dash (e.g. "...p.134 — corroborates the alliance/aid narrative,
+// matching the Wikipedia/Alchetron account already used") — research notes
+// for whoever verified the source, not reader-facing text. Some citations
+// legitimately use an em-dash within the real reference too (e.g. "Title —
+// Publisher"), so we only cut at an em-dash immediately followed by one of
+// these known commentary-opening phrases, not at any em-dash.
+const AUDIT_COMMENTARY_TRIGGERS = [
+  'dates the', 'corroborates', 'confirms the', 'confirms Coedès', 'verifies the',
+  'matches the', 'matching the', 'consistent with', 'kept as', 'kept from',
+  'treat as', 'treat with', 'not independently', 'directly documenting',
+  'the same citation', 'general continuity', 'describes the', 'the stormy',
+  'the mongol conflict', 'confirms these', 'confirms the kingdom',
+  // sourcing-methodology commentary (talks about the research process itself,
+  // not the kingdom's history)
+  'coedès does not', 'does not mention', 'does not name', 'does not detail',
+  'does not cover', 'does not discuss', 'does not itemize', 'does not confirm',
+  'so wikipedia', 'so web source', 'not covered by coedès', 'falls within coedès',
+  'falls outside coedès', 'carried over', 'not re-fetched', 'the sibling',
+];
+const AUDIT_COMMENTARY_RE = new RegExp(
+  `\\s+—\\s+(?:${AUDIT_COMMENTARY_TRIGGERS.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
+  'i'
+);
+const stripAuditCommentary = (text) => {
+  const match = text.match(AUDIT_COMMENTARY_RE);
+  return match ? text.slice(0, match.index).trim() : text;
+};
+
+// Beyond audit-process commentary, most citations also carry a legitimate,
+// informative annotation after the reference (e.g. "p.134 — diplomatic/trade
+// relations with the Cholas..."). That annotation is still English-only prose
+// with no Indonesian counterpart anywhere in territories.js, and translating
+// ~169 unique instances isn't practical — so in Indonesian mode we show only
+// the bare bibliographic reference, same convention as author names/titles
+// already being kept untranslated. Cuts right after the last page-number
+// (p.NNN / hlm.NNN) or closing-paren that's immediately followed by " — ",
+// so a legitimate "Title — Publisher (detail)" citation stays intact.
+const CITATION_ANNOTATION_RE = /((?:p\.\s?\d+(?:[-–—]\d+)?|hlm\.?\s?\d+(?:[-–—]\d+)?|\)))\s+—\s+.*$/i;
+const stripCitationAnnotation = (text) => text.replace(CITATION_ANNOTATION_RE, '$1').trim();
+
+// territories[]/vassals[]/rivals[] in territories.js have no *Id counterpart
+// (unlike every other bilingual field) — always English regardless of UI
+// language. Rather than add territoriesId/vassalsId/rivalsId arrays to all 65
+// timeline snapshots, translate the bounded set of distinct region/polity
+// names that actually appear across the whole dataset once, here.
+const REGION_NAME_ID = {
+  'Bali': 'Bali',
+  'Batanghari River Basin': 'Lembah Sungai Batanghari',
+  'Central Java': 'Jawa Tengah',
+  'Citanduy River Basin': 'Lembah Sungai Citanduy',
+  'Citarum River Basin': 'Lembah Sungai Citarum',
+  'Daha River Basin': 'Lembah Sungai Daha',
+  'East Java': 'Jawa Timur',
+  'East Java (reduced)': 'Jawa Timur (menyusut)',
+  'East Kalimantan': 'Kalimantan Timur',
+  'East of West Java': 'Bagian timur Jawa Barat',
+  'East part of East Java': 'Bagian timur Jawa Timur',
+  'Interior Sumatra': 'Pedalaman Sumatra',
+  'Interior West Java (shrinking)': 'Pedalaman Jawa Barat (menyusut)',
+  'Java': 'Jawa',
+  'Kedu Plain': 'Dataran Kedu',
+  'Mahakam River Basin': 'Lembah Sungai Mahakam',
+  'Malay Peninsula': 'Semenanjung Melayu',
+  'Musi River Delta': 'Delta Sungai Musi',
+  'North Coast of Central Java': 'Pesisir Utara Jawa Tengah',
+  'Northern Central Java Coast': 'Pesisir Utara Jawa Tengah',
+  'Pakuan Region': 'Wilayah Pakuan',
+  'Parts of Kalimantan': 'Sebagian Kalimantan',
+  'Parts of Sumatra': 'Sebagian Sumatra',
+  'Parts of Sumatra (via Pamalayu)': 'Sebagian Sumatra (melalui Ekspedisi Pamalayu)',
+  'Southern Central Java': 'Jawa Tengah Selatan',
+  'Southern Sumatra': 'Sumatra Selatan',
+  'Sumatra': 'Sumatra',
+  'West Java': 'Jawa Barat',
+  'West part of East Java': 'Bagian barat Jawa Timur',
+  'Jambi (rising in power, eventually eclipsing Palembang)': 'Jambi (kekuatannya meningkat, akhirnya melampaui Palembang)',
+  'Kedah': 'Kedah',
+  'Various Regional Polities': 'Berbagai Kerajaan Regional',
+  'Banten': 'Banten',
+  'Chola Dynasty': 'Dinasti Chola',
+  'Cirebon': 'Cirebon',
+  'Demak (Islamic)': 'Demak (Islam)',
+  'Galuh': 'Galuh',
+  'Islamic Coastal States': 'Negara-negara Pesisir Islam',
+  'Janggala': 'Janggala',
+  'Kediri (Jayakatwang)': 'Kediri (Jayakatwang)',
+  'Kediri Kingdom (Kertajaya)': 'Kerajaan Kediri (Kertajaya)',
+  'Kutai Kartanegara': 'Kutai Kartanegara',
+  'Majapahit': 'Majapahit',
+  'Melayu Kingdom': 'Kerajaan Melayu',
+  'Panjalu': 'Panjalu',
+  'Regional Borneo Polities': 'Berbagai Kerajaan Regional Kalimantan',
+  'Regional Competitors': 'Pesaing Regional',
+  'Sunda': 'Sunda',
+  'Tumapel': 'Tumapel',
+  'Yuan China': 'Tiongkok Yuan',
+  'Yuan Mongols': 'Mongol Yuan',
+};
+
+// religion/government have no *Id counterpart anywhere in territories.js —
+// same problem and same fix as REGION_NAME_ID above: a small, bounded,
+// reused-across-snapshots set of values, translated once here instead of
+// adding religionId/governmentId to all 65 timeline snapshots individually.
+const RELIGION_ID = {
+  'Buddhist (Mahayana)': 'Buddha (Mahayana)',
+  'Buddhist (Mahayana) and Hindu': 'Buddha (Mahayana) dan Hindu',
+  'Hindu': 'Hindu',
+  'Hindu (Shaivism)': 'Hindu (aliran Siwa)',
+  'Hindu (Sunda Wiwitan)': 'Hindu (Sunda Wiwitan)',
+  'Hindu (Vaishnavism)': 'Hindu (aliran Waisnawa)',
+  'Hindu-Buddhist': 'Hindu-Buddha',
+  'Hindu-Buddhist (Shaiva-Buddha syncretism)': 'Hindu-Buddha (sinkretisme Siwa-Buddha)',
+  'Hindu-Buddhist (Tantric Buddhism)': 'Hindu-Buddha (Buddha Tantrayana)',
+  'Hindu-Buddhist (with growing Islamic influence)': 'Hindu-Buddha (dengan pengaruh Islam yang berkembang)',
+  'Mahayana Buddhism': 'Buddha Mahayana',
+};
+const GOVERNMENT_ID = {
+  'Hindu Kingdom': 'Kerajaan Hindu',
+  'Hindu Kingdom (conquered, absorbed into Kutai Kartanegara)': 'Kerajaan Hindu (ditaklukkan, digabungkan ke Kutai Kartanegara)',
+  'Hindu Kingdom (declining)': 'Kerajaan Hindu (memudar)',
+  'Hindu-Buddhist Empire': 'Kekaisaran Hindu-Buddha',
+  'Hindu-Buddhist Kingdom': 'Kerajaan Hindu-Buddha',
+  'Kingdom': 'Kerajaan',
+  'Thalassocracy': 'Talasokrasi',
+  'Weakened Empire': 'Kekaisaran yang Melemah',
+  'Weakened Thalassocracy': 'Talasokrasi yang Melemah',
+};
+
 const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYear, endYear }) => {
   const { language, t } = useLanguage();
   const loc = (en, id) => (language === 'id' && id) ? id : en;
-  const publicCitationText = (cit) => isUnverifiedCitation(cit)
-    ? loc('Not verified against the primary academic source — treat as approximate.', 'Belum diverifikasi terhadap sumber akademis utama — anggap sebagai perkiraan.')
-    : cit.citation;
+  const publicCitationText = (cit) => {
+    if (isUnverifiedCitation(cit)) {
+      return loc('Not verified against the primary academic source — treat as approximate.', 'Belum diverifikasi terhadap sumber akademis utama — anggap sebagai perkiraan.');
+    }
+    const clean = stripAuditCommentary(cit.citation);
+    return language === 'id' ? stripCitationAnnotation(clean) : clean;
+  };
+  const locRegion = (name) => (language === 'id' && REGION_NAME_ID[name]) ? REGION_NAME_ID[name] : name;
   const [activeTab, setActiveTab] = useState('overview');
   const [territoryData, setTerritoryData] = useState(null);
   const [wikiOpen, setWikiOpen] = useState(false);
@@ -353,7 +487,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">⛪</span>
                               <span className="stat-label">{t.religion}</span>
                               <span className="stat-value">
-                                {loc(territoryData.religion, territoryData.religionId)}
+                                {loc(territoryData.religion, RELIGION_ID[territoryData.religion])}
                                 {overviewCitations.statRefs.religion !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.religion}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.religion); }}>[{overviewCitations.statRefs.religion + 1}]</a>
                                 )}
@@ -365,7 +499,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">👑</span>
                               <span className="stat-label">{t.government}</span>
                               <span className="stat-value">
-                                {loc(territoryData.government, territoryData.governmentId)}
+                                {loc(territoryData.government, GOVERNMENT_ID[territoryData.government])}
                                 {overviewCitations.statRefs.government !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.government}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.government); }}>[{overviewCitations.statRefs.government + 1}]</a>
                                 )}
@@ -714,7 +848,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                           <div className="territory-tags">
                             {territoryData.territories.map((territory, idx) => (
                               <span key={idx} className="territory-tag owned">
-                                {territory}
+                                {locRegion(territory)}
                                 {territoryData.relationsCitationRefs && territoryData.territoriesCitations?.[idx] !== undefined && (
                                   <a className="source-context-ref" href={`#rel-ref-${territoryData.territoriesCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToRelationsRef(territoryData.territoriesCitations[idx]); }}>[{territoryData.territoriesCitations[idx] + 1}]</a>
                                 )}
@@ -732,7 +866,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                             <div className="territory-tags">
                               {territoryData.vassals.map((vassal, idx) => (
                                 <span key={idx} className="territory-tag vassal">
-                                  {vassal}
+                                  {locRegion(vassal)}
                                   {territoryData.relationsCitationRefs && territoryData.vassalsCitations?.[idx] !== undefined && (
                                     <a className="source-context-ref" href={`#rel-ref-${territoryData.vassalsCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToRelationsRef(territoryData.vassalsCitations[idx]); }}>[{territoryData.vassalsCitations[idx] + 1}]</a>
                                   )}
@@ -751,7 +885,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                             <div className="territory-tags">
                               {territoryData.rivals.map((rival, idx) => (
                                 <span key={idx} className="territory-tag rival">
-                                  {rival}
+                                  {locRegion(rival)}
                                   {territoryData.relationsCitationRefs && territoryData.rivalsCitations?.[idx] !== undefined && (
                                     <a className="source-context-ref" href={`#rel-ref-${territoryData.rivalsCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToRelationsRef(territoryData.rivalsCitations[idx]); }}>[{territoryData.rivalsCitations[idx] + 1}]</a>
                                   )}

@@ -232,7 +232,7 @@ class MyMap extends Component {
 
     bindGroupTooltip = (groupLayer, empire) => {
         if (!groupLayer) return;
-        const info = getTerritoryInfo(empire.id, this.state.currentYear);
+        const info = getTerritoryInfo(empire.id, this.state.currentYear, this.context?.language);
         groupLayer.bindTooltip(
             `<div class="tt-inner">
                 <div class="tt-name">${info.name}</div>

@@ -1,4 +1,5 @@
 ﻿// src/data/boundaries/index.jsx
+import { getTerritoryData } from '../territories.js';
 
 let allKingdoms = null;
 
@@ -227,121 +228,29 @@ export function getEmpiresForYear(year) {
   return activeEmpires;
 }
 
-export function getTerritoryInfo(empireId, year) {
+// Reads live from territoriesData/getTerritoryData (territories.js) instead of
+// a hand-maintained copy — a hardcoded per-era ruler snapshot here previously
+// drifted out of sync every time the actual ruler timeline was reworked (e.g.
+// still saying "Hayam Wuruk" for 1310-1389 after that range was split into
+// three separate reigns). Deriving from the same source the detail panel uses
+// means this can never go stale again.
+export function getTerritoryInfo(empireId, year, language = 'en') {
   const empire = EMPIRES[empireId];
   if (!empire) {
     return { id: 'unknown', name: 'Unknown Territory', color: '#CCCCCC', era: 'Unknown' };
   }
 
-  if (empireId === 'srivijaya') {
-    if (year >= 650 && year <= 700)
-      return { id: 'srivijaya', name: 'Srivijaya', ruler: 'Dapunta Hyang Sri Jayanasa', color: '#329ccd', era: 'Founding Era' };
-    else if (year >= 701 && year <= 900)
-      return { id: 'srivijaya', name: 'Srivijaya', ruler: 'Various Maharajas', color: '#329ccd', era: 'Golden Age' };
-    else if (year >= 901 && year <= 1024)
-      return { id: 'srivijaya', name: 'Srivijaya', ruler: 'Various Maharajas', color: '#329ccd', era: 'Maritime Dominance' };
-    else if (year >= 1025 && year <= 1090)
-      return { id: 'srivijaya', name: 'Srivijaya', ruler: 'Unknown', color: '#5a8fa8', era: 'Decline' };
+  const data = getTerritoryData(empireId, year);
+  if (!data) {
+    return { id: empireId, name: empire.name, ruler: 'Unknown', color: empire.color, era: 'Unknown' };
   }
 
-  if (empireId === 'kutai') {
-    if (year >= 400 && year <= 499)
-      return { id: 'kutai', name: 'Kutai', ruler: 'Mulawarman', color: '#8B5E3C', era: 'Early Kingdom' };
-    else if (year >= 500 && year <= 1299)
-      return { id: 'kutai', name: 'Kutai', ruler: 'Various Rajas', color: '#8B5E3C', era: 'Classical Period' };
-    else if (year >= 1300 && year <= 1600)
-      return { id: 'kutai', name: 'Kutai', ruler: 'Unknown', color: '#6b4a30', era: 'Late Period' };
-  }
-
-  if (empireId === 'tarumanagara') {
-    if (year >= 362 && year <= 450)
-      return { id: 'tarumanagara', name: 'Tarumanagara', ruler: 'Purnawarman', color: '#6B8E4E', era: 'Early Kingdom' };
-    else if (year >= 451 && year <= 669)
-      return { id: 'tarumanagara', name: 'Tarumanagara', ruler: 'Various Rajas', color: '#6B8E4E', era: 'Classical Period' };
-  }
-
-  if (empireId === 'sunda') {
-    if (year >= 684 && year <= 900)
-      return { id: 'sunda', name: 'Sunda', ruler: 'Sri Jayabhupati', color: '#C4A35A', era: 'Early Kingdom' };
-    else if (year >= 901 && year <= 1482)
-      return { id: 'sunda', name: 'Sunda', ruler: 'Various Kings', color: '#C4A35A', era: 'Classical Period' };
-  }
-
-  if (empireId === 'galuh') {
-    if (year >= 669 && year <= 900)
-      return { id: 'galuh', name: 'Galuh', ruler: 'Wretikandayun', color: '#B5651D', era: 'Early Kingdom' };
-    else if (year >= 901 && year <= 1482)
-      return { id: 'galuh', name: 'Galuh', ruler: 'Various Kings', color: '#B5651D', era: 'Classical Period' };
-  }
-
-  if (empireId === 'mataram') {
-    if (year >= 732 && year <= 752)
-      return { id: 'mataram', name: 'Mataram Kuno', ruler: 'Sanjaya', color: '#9B59B6', era: 'Founding Era' };
-    else if (year >= 753 && year <= 905)
-      return { id: 'mataram', name: 'Mataram Kuno', ruler: 'Sailendra Dynasty', color: '#9B59B6', era: 'Golden Age' };
-    else if (year >= 906 && year <= 927)
-      return { id: 'mataram', name: 'Mataram Kuno', ruler: 'Mpu Sindok', color: '#7d3c98', era: 'Late Period' };
-  }
-
-  if (empireId === 'kanjuruhan')
-    return { id: 'kanjuruhan', name: 'Kanjuruhan', ruler: 'Gajayana', color: '#E07B39', era: 'Early Kingdom' };
-
-  if (empireId === 'kalingga')
-    return { id: 'kalingga', name: 'Kalingga', ruler: 'Ratu Shima', color: '#4CAF50', era: 'Classical Period' };
-
-  if (empireId === 'kalingga_n')
-    return { id: 'kalingga_n', name: 'Kalingga Utara', ruler: 'Various Rajas', color: '#3CB371', era: 'Classical Period' };
-
-  if (empireId === 'kalingga_s')
-    return { id: 'kalingga_s', name: 'Kalingga Selatan', ruler: 'Ratu Shima', color: '#2E8B57', era: 'Classical Period' };
-
-  if (empireId === 'medang')
-    return { id: 'medang', name: 'Medang', ruler: 'Mpu Sindok', color: '#8B008B', era: 'Classical Period' };
-
-  if (empireId === 'kahuripan')
-    return { id: 'kahuripan', name: 'Kahuripan', ruler: 'Airlangga', color: '#DAA520', era: 'Early Kingdom' };
-
-  if (empireId === 'panjalu') {
-    if (year >= 1042 && year <= 1100)
-      return { id: 'panjalu', name: 'Panjalu', ruler: 'Sri Samarawijaya', color: '#CD853F', era: 'Early Kingdom' };
-    else
-      return { id: 'panjalu', name: 'Panjalu', ruler: 'Various Kings', color: '#CD853F', era: 'Classical Period' };
-  }
-
-  if (empireId === 'janggala')
-    return { id: 'janggala', name: 'Janggala', ruler: 'Various Kings', color: '#2F8A8A', era: 'Classical Period' };
-
-  if (empireId === 'dharmasraya')
-    return { id: 'dharmasraya', name: 'Dharmasraya', ruler: 'Various Kings', color: '#7B68EE', era: 'Classical Period' };
-
-  if (empireId === 'kediri') {
-    if (year >= 1135 && year <= 1190)
-      return { id: 'kediri', name: 'Kediri', ruler: 'Jayabaya', color: '#B8860B', era: 'Golden Age' };
-    else
-      return { id: 'kediri', name: 'Kediri', ruler: 'Various Kings', color: '#B8860B', era: 'Late Period' };
-  }
-
-  if (empireId === 'tumapel')
-    return { id: 'tumapel', name: 'Tumapel', ruler: 'Ken Arok', color: '#A0522D', era: 'Founding Era' };
-
-  if (empireId === 'singasari') {
-    if (year >= 1254 && year <= 1268)
-      return { id: 'singasari', name: 'Singasari', ruler: 'Wisnuwardhana', color: '#DC143C', era: 'Early Kingdom' };
-    else
-      return { id: 'singasari', name: 'Singasari', ruler: 'Kertanagara', color: '#DC143C', era: 'Golden Age' };
-  }
-
-  if (empireId === 'majapahit') {
-    if (year >= 1293 && year <= 1309)
-      return { id: 'majapahit', name: 'Majapahit', ruler: 'Raden Wijaya', color: '#FF8C00', era: 'Founding Era' };
-    else if (year >= 1310 && year <= 1389)
-      return { id: 'majapahit', name: 'Majapahit', ruler: 'Hayam Wuruk', color: '#FF8C00', era: 'Golden Age' };
-    else
-      return { id: 'majapahit', name: 'Majapahit', ruler: 'Various Kings', color: '#e07a00', era: 'Late Period' };
-  }
-
-  if (empireId === 'pajajaran')
-    return { id: 'pajajaran', name: 'Pajajaran', ruler: 'Various Kings', color: '#556B2F', era: 'Classical Period' };
-
-  return { id: empireId, name: empire.name, ruler: 'Unknown', color: empire.color, era: 'Unknown' };
+  const useId = language === 'id';
+  return {
+    id: empireId,
+    name: (useId && data.nameId) ? data.nameId : (data.name || empire.name),
+    ruler: data.ruler?.name || 'Unknown',
+    color: empire.color,
+    era: (useId && data.eraId) ? data.eraId : (data.era || 'Unknown'),
+  };
 }

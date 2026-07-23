@@ -13,7 +13,7 @@ import './App.css';
 
 function AppContent() {
   const { t } = useLanguage();
-  const [currentYear, setCurrentYear] = useState(900);
+  const [currentYear, setCurrentYear] = useState(732);
   const [selectedTerritory, setSelectedTerritory] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isBotOpen, setIsBotOpen] = useState(false);
@@ -135,7 +135,7 @@ function AppContent() {
           >
             <div className="map-loading-content">
               <span className="map-loading-ornament" aria-hidden="true">⚜</span>
-              <p className="map-loading-text">Loading Nusantara Atlas</p>
+              <p className="map-loading-text">Loading</p>
               <div className="map-loading-dots" aria-hidden="true">
                 <span /><span /><span />
               </div>

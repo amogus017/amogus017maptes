@@ -8,7 +8,7 @@ const NAV_CONTENT = {
     id: {
       title: 'Limitasi Atlas',
       points: [
-        'Atlas ini hanya menampilkan kerajaan Hindu-Buddha Nusantara (400–1600 M).',
+        'Atlas ini hanya menampilkan kerajaan utama Hindu-Buddha Nusantara (400–1600 M).',
         'Mencakup ±20 kerajaan besar yang relevan dengan kurikulum Sejarah SMA.',
         'Pemilihan kerajaan didasarkan pada silabus Kurikulum Merdeka Fase E; kerajaan kecil atau lokal yang tidak dibahas kurikulum tidak ditampilkan.',
         'Kesultanan Islam dan periode sebelum Hindu-Buddha tidak termasuk.',
@@ -18,7 +18,7 @@ const NAV_CONTENT = {
     en: {
       title: 'Atlas Limitations',
       points: [
-        'This atlas covers only Hindu-Buddhist kingdoms of Nusantara (400–1600 CE).',
+        'This atlas covers only major Hindu-Buddhist kingdoms of Nusantara (400–1600 CE).',
         'Approx. 20 major kingdoms aligned with the Indonesian SMA history curriculum.',
         'Kingdom selection follows the Kurikulum Merdeka Fase E syllabus; smaller or local kingdoms not covered by the curriculum are not included.',
         'Islamic sultanates and pre-Hindu/Buddhist periods are not included.',

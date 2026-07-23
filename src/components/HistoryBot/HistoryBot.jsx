@@ -14,12 +14,14 @@ function renderWithCitations(text) {
 }
 
 export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onClose }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const getGreeting = (territory, year) =>
-    territory
-      ? t.greetingTerritory(territory.name, year, territory.era)
-      : t.greetingDefault;
+  const getGreeting = (territory, year) => {
+    if (!territory) return t.greetingDefault;
+    const name = (language === 'id' && territory.nameId) ? territory.nameId : territory.name;
+    const era = (language === 'id' && territory.eraId) ? territory.eraId : territory.era;
+    return t.greetingTerritory(name, year, era);
+  };
 
   const [messages, setMessages] = useState([
     { role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] },
@@ -45,6 +47,18 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
       setMessages([{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
     }
   }, [selectedTerritory?.name]);
+
+  // The initial greeting is set once in useState's initializer, which only
+  // runs on mount — if the component stays mounted across a language toggle
+  // (rather than remounting), that greeting stays frozen in whichever
+  // language was active at mount. Regenerate it on language change, but only
+  // while the chat still shows just the untouched greeting (a single
+  // message) — don't blow away an actual conversation for a language toggle.
+  useEffect(() => {
+    setMessages(prev => (prev.length === 1
+      ? [{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]
+      : prev));
+  }, [language]);
 
   async function handleSend() {
     if (!input.trim() || loading) return;

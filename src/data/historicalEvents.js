@@ -17,7 +17,7 @@ export const historicalEvents = [
   },
   {
     id: 'chola-raid-1025',
-    year: 1025, startYear: 1010, endYear: 1060,
+    year: 1025, startYear: 1020, endYear: 1030,
     type: 'battle',
     icon: '⚔️',
     title: 'Chola Invasion',
