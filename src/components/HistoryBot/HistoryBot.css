@@ -78,6 +78,33 @@
   transition: all 0.15s;
 }
 
+.hbot-context-btn {
+  background: transparent;
+  border: 1px solid #5a4010;
+  border-radius: 3px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0.55;
+}
+
+.hbot-context-btn:hover {
+  opacity: 1;
+  border-color: #8b6914;
+  background: rgba(139, 105, 20, 0.15);
+}
+
+.hbot-context-btn.active {
+  opacity: 1;
+  border-color: #c8982a;
+  background: rgba(200, 152, 42, 0.15);
+}
+
 .hbot-btn-icon:hover {
   background: rgba(200, 152, 42, 0.15);
   color: #c8982a;

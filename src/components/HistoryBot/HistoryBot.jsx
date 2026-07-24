@@ -28,9 +28,17 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [contextAware, setContextAware] = useState(true);
+
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
-  const prevTerritoryName = useRef(selectedTerritory?.name);
+  const messagesRef = useRef(messages);
+  const prevTerritoryId = useRef(selectedTerritory?.id);
+  const contextHistoriesRef = useRef({});
+  const freeHistoryRef = useRef(null);
+
+  // Keep messagesRef in sync so save-on-toggle captures latest messages
+  useEffect(() => { messagesRef.current = messages; }, [messages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,25 +48,48 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
-  // Reset chat when territory changes
+  // Territory changed — only act in context mode
   useEffect(() => {
-    if (selectedTerritory?.name && selectedTerritory.name !== prevTerritoryName.current) {
-      prevTerritoryName.current = selectedTerritory.name;
-      setMessages([{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
-    }
-  }, [selectedTerritory?.name]);
+    if (!selectedTerritory?.id) return;
+    if (selectedTerritory.id === prevTerritoryId.current) return;
 
-  // The initial greeting is set once in useState's initializer, which only
-  // runs on mount — if the component stays mounted across a language toggle
-  // (rather than remounting), that greeting stays frozen in whichever
-  // language was active at mount. Regenerate it on language change, but only
-  // while the chat still shows just the untouched greeting (a single
-  // message) — don't blow away an actual conversation for a language toggle.
+    if (contextAware) {
+      if (prevTerritoryId.current) {
+        contextHistoriesRef.current[prevTerritoryId.current] = messagesRef.current;
+      }
+      const saved = contextHistoriesRef.current[selectedTerritory.id];
+      setMessages(saved ?? [{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
+    }
+
+    prevTerritoryId.current = selectedTerritory.id;
+  }, [selectedTerritory?.id]);
+
+  // Language change: refresh greeting if chat is still at the untouched greeting
   useEffect(() => {
     setMessages(prev => (prev.length === 1
       ? [{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]
       : prev));
   }, [language]);
+
+  const toggleContext = () => {
+    if (contextAware) {
+      // Save context history, load free history
+      if (selectedTerritory?.id) {
+        contextHistoriesRef.current[selectedTerritory.id] = messagesRef.current;
+      }
+      const freeGreeting = [{ role: "bot", text: t.greetingDefault, sources: [] }];
+      setMessages(freeHistoryRef.current ?? freeGreeting);
+      setContextAware(false);
+    } else {
+      // Save free history, restore context history (same kingdom) or fresh greeting
+      freeHistoryRef.current = messagesRef.current;
+      if (selectedTerritory?.id) {
+        const saved = contextHistoriesRef.current[selectedTerritory.id];
+        setMessages(saved ?? [{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
+      }
+      setContextAware(true);
+    }
+  };
 
   async function handleSend() {
     if (!input.trim() || loading) return;
@@ -69,7 +100,8 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
     setLoading(true);
 
     try {
-      const reply = await askGemini(userMsg, selectedTerritory, currentYear);
+      const context = contextAware ? selectedTerritory : null;
+      const reply = await askGemini(userMsg, context, currentYear);
       setMessages(prev => [...prev, { role: "bot", text: reply.text, sources: reply.sources }]);
     } catch {
       setMessages(prev => [...prev, { role: "bot", text: "⚠️ Error: Could not get a response. Please try again.", sources: [] }]);
@@ -86,9 +118,21 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
   }
 
   function clearChat() {
-    prevTerritoryName.current = selectedTerritory?.name;
-    setMessages([{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]);
+    const greeting = (contextAware && selectedTerritory)
+      ? [{ role: "bot", text: getGreeting(selectedTerritory, currentYear), sources: [] }]
+      : [{ role: "bot", text: t.greetingDefault, sources: [] }];
+
+    if (contextAware && selectedTerritory?.id) {
+      delete contextHistoriesRef.current[selectedTerritory.id];
+    } else {
+      freeHistoryRef.current = null;
+    }
+    setMessages(greeting);
   }
+
+  const displayName = selectedTerritory
+    ? ((language === 'id' && selectedTerritory.nameId) ? selectedTerritory.nameId : selectedTerritory.name)
+    : null;
 
   return (
     <AnimatePresence>
@@ -108,12 +152,26 @@ export default function HistoryBot({ selectedTerritory, currentYear, isOpen, onC
               <span className="hbot-icon" aria-hidden="true">📜</span>
               <div>
                 <div className="hbot-title">{t.botTitle}</div>
-                {selectedTerritory && (
-                  <div className="hbot-subtitle">{selectedTerritory.name} · {currentYear} M</div>
-                )}
+                <div className="hbot-subtitle">
+                  {contextAware && selectedTerritory
+                    ? `${displayName} · ${currentYear} M`
+                    : (language === 'id' ? 'Obrolan Bebas' : 'Free Chat')}
+                </div>
               </div>
             </div>
             <div className="hbot-header-actions">
+              {selectedTerritory && (
+                <button
+                  className={`hbot-context-btn${contextAware ? ' active' : ''}`}
+                  onClick={toggleContext}
+                  title={contextAware
+                    ? (language === 'id' ? 'Beralih ke Obrolan Bebas' : 'Switch to Free Chat')
+                    : (language === 'id' ? 'Beralih ke Mode Konteks' : 'Switch to Context Mode')}
+                  aria-pressed={contextAware}
+                >
+                  {contextAware ? '📍' : '🌐'}
+                </button>
+              )}
               <button className="hbot-btn-icon" onClick={clearChat} title={t.clearChat} aria-label={t.clearChat}>
                 <span aria-hidden="true">↺</span>
               </button>
