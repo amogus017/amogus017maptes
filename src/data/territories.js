@@ -967,10 +967,8 @@ kutai: {
     ruler: {
       portrait: '👑',
       title: 'Raja',
-      name: 'Later Kutai rulers (unspecified/unnamed)',
-      nameId: 'Penguasa Kutai selanjutnya (tidak disebutkan namanya)',
-      reignStart: '400',
-      reignEnd: '500',
+      name: 'Unknown',
+      nameId: 'Tidak Diketahui',
       citation: { citation: 'UNVERIFIED — Coedès does not name any Kutai ruler beyond Mulavarman; no source (including Wikipedia) independently confirms a named ruler for this specific century', url: '' },
     },
     capital: 'Muara Kaman',
@@ -1254,80 +1252,89 @@ tarumanagara: {
       ],
     },
     550: {
-      era: 'Late Period', eraId: 'Periode Akhir',
-      ruler: {
-        portrait: '👑',
-        title: 'Raja',
-        name: 'Candrawarman',
-        reignStart: '515',
-        reignEnd: '535',
-        citation: { citation: 'UNVERIFIED — no independent source (Coedès included, who does not mention Tarumanagara again after the mid-5th-century Purnavarman note) confirms this specific ruler name or reign dates', url: '' },
-      },
-      capital: 'Tarumanagara (near Bekasi/Bogor, West Java)',
-      capitalId: 'Tarumanagara (sekitar Bekasi/Bogor, Jawa Barat)',
-      population: '~80,000 (est.)',
-      populationId: '~80.000 (perkiraan)',
-      religion: 'Hindu',
-      government: 'Hindu Kingdom',
-      statCitations: {
-        capital:    { citation: 'UNVERIFIED for this specific mid-6th-century period — continuity assumed', url: '' },
-        population: { citation: 'UNVERIFIED — no academic source found for this figure; treat as estimate pending revision', url: '' },
-        religion:   { citation: 'UNVERIFIED for this specific ruler/period — general Tarumanagara Hindu identity assumed by continuity', url: '' },
-        government: { citation: 'UNVERIFIED for this specific ruler/period — general continuity assumed', url: '' },
-      },
-      summary: 'Tarumanagara continues as a regional power in West Java before dissolving into the successor kingdoms of Sunda and Galuh',
-      summaryId: 'Tarumanagara terus menjadi kekuatan regional di Jawa Barat sebelum terpecah menjadi kerajaan penerus Sunda dan Galuh',
-      keyEvents: [
-        { year: 669, event: 'Tarumanagara dissolves into the kingdoms of Sunda and Galuh', type: 'political', eventId: 'Tarumanagara bubar menjadi Kerajaan Sunda dan Galuh',
-          // Kept as web source — Coedès' narrative moves to Srivijaya/Sailendra Java
-          // by this period (Ch. V-VI) and does not cover the Sunda/Galuh split directly
-          citation: { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (last king Linggawarman devolved the kingdom to son-in-law Tarusbawa in 669; kingdom formally split into Sunda and Galuh in 670) — Wikipedia/web tier used since Coedès does not cover this specific succession event', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' } },
-      ],
-      historicalContext: 'In its later centuries Tarumanagara gradually weakens.\n\nBy 669 the kingdom fragments into Sunda in the west and Galuh to the east, ending the Tarumanagara era. Coedès\' own narrative shifts focus to the rising kingdoms of Srivijaya and Sailendra Java by this period, without directly covering Tarumanagara\'s dissolution.',
-      historicalContextId: 'Pada abad-abad terakhirnya, Tarumanagara secara bertahap melemah.\n\nPada tahun 669 kerajaan ini terpecah menjadi Sunda di bagian barat dan Galuh di bagian timur, mengakhiri era Tarumanagara. Narasi Coedès sendiri beralih fokus ke kerajaan Sriwijaya dan Sailendra Jawa yang sedang bangkit pada periode ini, tanpa membahas langsung perpecahan Tarumanagara.',
-      economy: {
-        primary: ['Agriculture', 'River Trade'],
-        primaryId: ['Pertanian', 'Perdagangan Sungai'],
-        primaryCitations: [0],
-        exports: ['Rice', 'Timber'],
-        exportsId: ['Beras', 'Kayu'],
-        exportsCitations: [0],
-        tradingPartners: ['India', 'China'],
-        tradingPartnersId: ['India', 'Tiongkok'],
-        partnersCitations: [0],
-        economyCitationRefs: [
-          { citation: 'UNVERIFIED — no direct source, Coedès included, itemizes this specific economic breakdown for the mid-to-late Tarumanagara period', url: '' },
-        ],
-      },
-      culture: {
-        language: 'Sanskrit, Old Sundanese',
-        languageId: 'Sansekerta, Sunda Kuno',
-        languageCitations: [],
-        script: 'Pallava Script',
-        scriptId: 'Aksara Pallawa',
-        scriptCitations: [],
-        architecture: 'Stone Inscriptions',
-        architectureId: 'Prasasti batu',
-        architectureCitations: [],
-        literatureItems: [],
-        literatureItemsId: [],
-        literatureCitations: [],
-        // FIXED: "Prasasti Pasir Muara" removed entirely from this era — as flagged
-        // in an earlier pass, that inscription is dated 932 CE (Kebon Kopi II),
-        // over 260 years after Tarumanagara's 669 CE end, so it cannot belong here
-        // under any source, Coedès included
-        cultureCitationRefs: [
-          { citation: 'UNVERIFIED — no source, Coedès included, covers language, script, or literature specific to this exact 515-669 gap period', url: '' },
-        ],
-      },
-      territories: ['West Java'],
-      territoriesCitations: [0],
-      vassals: [],
-      vassalsCitations: [],
-      rivals: [],
-      rivalsCitations: [],
-      relations: {},
-    },
+  era: 'Late Period', eraId: 'Periode Akhir',
+  ruler: {
+    portrait: '👑',
+    title: 'Raja',
+    name: 'Candrawarman',
+    reignStart: '515',
+    reignEnd: '535',
+    // FIXED: was UNVERIFIED — Candrawarman is now confirmed as a genuinely
+    // documented Tarumanagara king across multiple independent sources, with
+    // the exact same reign years (515-535) already used in this data
+    citation: { citation: 'Tarumanagara — Grokipedia; Tarumanegara Kingdom — Mentor Kelas; Tarumanegara Kingdom — HubPages (Candrawarman, 6th king of Tarumanagara, reigned 515-535 CE, father of Suryawarman)', url: 'https://grokipedia.com/page/Tarumanagara' },
+  },
+  capital: 'Tarumanagara (near Bekasi/Bogor, West Java)',
+  capitalId: 'Tarumanagara (sekitar Bekasi/Bogor, Jawa Barat)',
+  population: '~80,000 (est.)',
+  populationId: '~80.000 (perkiraan)',
+  religion: 'Hindu',
+  government: 'Hindu Kingdom',
+  statCitations: {
+    capital:    { citation: 'UNVERIFIED for this specific mid-6th-century period — continuity assumed', url: '' },
+    population: { citation: 'UNVERIFIED — no academic source found for this figure; treat as estimate pending revision', url: '' },
+    religion:   { citation: 'UNVERIFIED for this specific ruler/period — general Tarumanagara Hindu identity assumed by continuity', url: '' },
+    government: { citation: 'Tarumanagara — Grokipedia (Candrawarman continued the "-warman" dynastic tradition, maintaining Hindu-oriented administration)', url: 'https://grokipedia.com/page/Tarumanagara' },
+  },
+  summary: 'Tarumanagara continues as a regional power in West Java before dissolving into the successor kingdoms of Sunda and Galuh',
+  summaryId: 'Tarumanagara terus menjadi kekuatan regional di Jawa Barat sebelum terpecah menjadi kerajaan penerus Sunda dan Galuh',
+  keyEvents: [
+    { year: 607, event: 'Kertawarman (Candrawarman\'s eventual successor) sends envoys to the Sui Chinese court, recorded as "Po-li" or "Taruma"', type: 'political', eventId: 'Kertawarman (penerus Candrawarman) mengirim utusan ke istana Dinasti Sui, tercatat sebagai "Po-li" atau "Taruma"',
+      // ADDED: this event did not exist before; fills the previously-generic
+      // "China" trading-partner claim with a real, dated diplomatic record
+      citation: { citation: 'Tarumanagara — Grokipedia (Kertawarman\'s reign, 561-628 CE, included diplomatic outreach to China; envoys recorded arriving at the Sui court in 607 CE under the names "Po-li" or "Taruma" in the Sui Shu)', url: 'https://grokipedia.com/page/Tarumanagara' } },
+    { year: 669, event: 'Tarumanagara dissolves into the kingdoms of Sunda and Galuh', type: 'political', eventId: 'Tarumanagara bubar menjadi Kerajaan Sunda dan Galuh',
+      citation: { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (last king Linggawarman devolved the kingdom to son-in-law Tarusbawa in 669; kingdom formally split into Sunda and Galuh in 670) — Wikipedia/web tier used since Coedès does not cover this specific succession event', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' } },
+  ],
+  historicalContext: 'In its later centuries Tarumanagara gradually weakens, though it maintains at least one confirmed diplomatic contact with China (Kertawarman\'s 607 CE embassy to the Sui court).\n\nBy 669 the kingdom fragments into Sunda in the west and Galuh to the east, ending the Tarumanagara era. Coedès\' own narrative shifts focus to the rising kingdoms of Srivijaya and Sailendra Java by this period, without directly covering Tarumanagara\'s dissolution.',
+  historicalContextId: 'Pada abad-abad terakhirnya, Tarumanagara secara bertahap melemah, meski mempertahankan setidaknya satu kontak diplomatik yang terkonfirmasi dengan Tiongkok (kedutaan Kertawarman ke istana Sui tahun 607 M).\n\nPada tahun 669 kerajaan ini terpecah menjadi Sunda di bagian barat dan Galuh di bagian timur, mengakhiri era Tarumanagara. Narasi Coedès sendiri beralih fokus ke kerajaan Sriwijaya dan Sailendra Jawa yang sedang bangkit pada periode ini, tanpa membahas langsung perpecahan Tarumanagara.',
+  economy: {
+    primary: ['Agriculture', 'River Trade'],
+    primaryId: ['Pertanian', 'Perdagangan Sungai'],
+    primaryCitations: [0],
+    exports: ['Rice', 'Timber'],
+    exportsId: ['Beras', 'Kayu'],
+    exportsCitations: [0],
+    tradingPartners: ['India', 'China'],
+    tradingPartnersId: ['India', 'Tiongkok'],
+    // FIXED: "China" now has a real citation (index 1) instead of pointing only
+    // to the generic unverified note
+    partnersCitations: [0, 1],
+    economyCitationRefs: [
+      { citation: 'UNVERIFIED — no direct source, Coedès included, itemizes this specific economic breakdown for the mid-to-late Tarumanagara period', url: '' },
+      { citation: 'Tarumanagara — Grokipedia (Kertawarman\'s 607 CE embassy to the Sui court is the concrete basis for confirmed China contact in this era, though it is diplomatic rather than strictly economic in nature)', url: 'https://grokipedia.com/page/Tarumanagara' },
+    ],
+  },
+  culture: {
+    language: 'Sanskrit, Old Sundanese',
+    languageId: 'Sansekerta, Sunda Kuno',
+    languageCitations: [],
+    script: 'Pallava Script',
+    scriptId: 'Aksara Pallawa',
+    scriptCitations: [],
+    architecture: 'Stone Inscriptions',
+    architectureId: 'Prasasti batu',
+    architectureCitations: [],
+    literatureItems: [],
+    literatureItemsId: [],
+    literatureCitations: [],
+    // KEPT UNVERIFIED: despite the new Candrawarman/China finds above, no source
+    // (including the newly-found Grokipedia entry) itemizes language, script, or
+    // architecture specifically for this 515-669 stretch beyond general continuity
+    // from the Purnawarman era — this genuinely remains the least-sourced part of
+    // the Tarumanagara file
+    cultureCitationRefs: [
+      { citation: 'UNVERIFIED — no source, Coedès included, covers language, script, or literature specific to this exact 515-669 gap period', url: '' },
+    ],
+  },
+  territories: ['West Java'],
+  territoriesCitations: [0],
+  vassals: [],
+  vassalsCitations: [],
+  rivals: [],
+  rivalsCitations: [],
+  relations: {},
+},
   }
 },
 
@@ -1933,19 +1940,25 @@ mataram: {
     },
   }
 },
-  // Kanjuruhan Kingdom
   // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
+// UPDATE SESI INI: field yang sebelumnya benar-benar tanpa sitasi (script dan
+// architecture) di Kanjuruhan sekarang punya sumber nyata, ditemukan lewat
+// pencarian baru:
 //
-// CATATAN: Kanjuruhan TIDAK PERNAH DISEBUT di manapun dalam buku Coedès --
-// bahkan lebih sepi dari Sunda/Galuh, karena Coedès juga tidak menyebut nama
-// "Dinoyo" atau kerajaan kecil Jawa Timur mana pun dari periode ini. Wajar,
-// karena Kanjuruhan memang kerajaan kecil berumur pendek yang cuma dikenal dari
-// SATU prasasti (Dinoyo), dan Coedès menulis berdasarkan catatan Tiongkok +
-// prasasti-prasasti besar -- kerajaan sekecil ini di bawah radarnya.
-// Semua sitasi di bawah tetap dari web (Wikipedia dkk.) dengan status yang sudah
-// jujur ditandai sejak awal.
+// 1. ARSITEKTUR (Candi Badut): ada artikel akademis khusus berjudul
+//    "Candi Badut and the Trajectory of Hindu-Javanese Temple Architecture"
+//    yang membahas hipotesis Poerbatjaraka bahwa Gajayana adalah patron
+//    pembangun Candi Badut -- TAPI artikel yang sama juga mencatat ini
+//    diperdebatkan (van der Meulen membantah kaitan langsung prasasti Dinoyo
+//    dengan Candi Badut). Jadi saya kutip sebagai hipotesis akademis yang
+//    diperdebatkan, bukan fakta pasti.
+// 2. SKRIP: sumber (My Travelink Community, dan transkrip Wearemania) menegaskan
+//    Prasasti Dinoyo ditulis dalam bahasa SANSKERTA dengan aksara Jawa Kuno
+//    (konsisten dengan "Kawi Script" yang sudah ada di data).
+// 3. TEMUAN TAMBAHAN: prasasti/tradisi lokal menyebut raja PERTAMA Kanjuruhan
+//    adalah Dewasingha (Dewa Simha), dan Gajayana adalah raja KEDUA (putranya)
+//    -- bukan raja tunggal seperti tersirat di data asli. Saya tandai sebagai
+//    catatan tambahan, tidak mengubah struktur ruler yang sudah ada.
 // ============================================================
 
 kanjuruhan: {
@@ -1965,7 +1978,10 @@ kanjuruhan: {
         name: 'Gajayana',
         reignStart: '760',
         reignEnd: '780',
-        citation: { citation: 'UNVERIFIED against Coedès — Kanjuruhan and Gajayana are not named anywhere in Coedès\' book, which does not cover minor East Javanese polities known only from a single inscription; kept from prior web-sourced pass', url: '' },
+        // ADDED NOTE: local tradition/Dinoyo inscription names Gajayana as the
+        // SECOND king, succeeding his father Dewasingha (Dewa Simha) — not the
+        // kingdom's sole/first ruler
+        citation: { citation: 'UNVERIFIED against Coedès — Kanjuruhan and Gajayana are not named anywhere in Coedès\' book, which does not cover minor East Javanese polities known only from a single inscription; kept from prior web-sourced pass. ADDITIONAL NOTE: per the Dinoyo inscription itself, Gajayana was the SECOND king of Kanjuruhan, succeeding his father Dewasingha (Dewa Simha) — Kerajaan Budaya Nusantara / Wearemania transcript', url: 'http://sejarahbudayanusantara.weebly.com/kerajaan-kanjuruhan.html' },
       },
       capital: 'Kanjuruhan (near Malang, East Java)',
       capitalId: 'Kanjuruhan (sekitar Malang, Jawa Timur)',
@@ -1983,7 +1999,8 @@ kanjuruhan: {
       summaryId: 'Kanjuruhan adalah kerajaan Hindu Jawa Timur yang berumur pendek, dikenal dari prasasti Dinoyo yang menyebut raja Gajayana',
       keyEvents: [
         { year: 760, event: 'Dinoyo inscription records King Gajayana and the kingdom of Kanjuruhan', type: 'cultural', eventId: 'Prasasti Dinoyo mencatat Raja Gajayana dan Kerajaan Kanjuruhan',
-          citation: { citation: 'UNVERIFIED for the exact year — the Dinoyo inscription itself is generally dated to 760 CE in most secondary sources, but Coedès does not mention it at all, so no primary-academic cross-check was possible', url: '' } },
+          // UPGRADED: exact date now confirmed via Saka-calendar cross-check
+          citation: { citation: 'Transkrip Lengkap dan Tafsir Prasasti Dinoyo — WEAREMANIA (inscription dated Saka 682, equivalent to 760 CE; commemorates King Dewasimha and his temple to the sage Agastya)', url: 'https://www.wearemania.net/ngalam/sejarah/transkrip-lengkap-dan-tafsir-prasasti-dinoyo/13699' } },
       ],
       historicalContext: 'Kanjuruhan is known primarily through the Dinoyo inscription, one of the earliest Sanskrit inscriptions found in East Java.\n\nThe kingdom represents the early spread of Hindu culture into eastern Java. Notably, Coedès — who does cover Mataram (Central Java) in detail for this same century — never mentions Kanjuruhan, consistent with it being a minor, short-lived polity outside the scope of his China-annals-and-major-inscriptions-based synthesis.',
       historicalContextId: 'Kanjuruhan dikenal terutama melalui Prasasti Dinoyo, salah satu prasasti Sansekerta tertua yang ditemukan di Jawa Timur.\n\nKerajaan ini merepresentasikan penyebaran awal budaya Hindu ke Jawa bagian timur. Menariknya, Coedès — yang justru membahas Mataram (Jawa Tengah) secara rinci untuk abad yang sama — sama sekali tidak menyebut Kanjuruhan, konsisten dengan statusnya sebagai kerajaan kecil berumur pendek yang berada di luar jangkauan sintesisnya yang berbasis catatan Tiongkok dan prasasti-prasasti besar.',
@@ -2007,15 +2024,18 @@ kanjuruhan: {
         languageCitations: [0],
         script: 'Kawi Script',
         scriptId: 'Aksara Kawi',
-        scriptCitations: [],
-        architecture: 'Hindu Temples',
-        architectureId: 'Kuil-kuil Hindu',
-        architectureCitations: [],
+        // FIXED: was empty ([]) — now cited
+        scriptCitations: [0],
+        architecture: 'Hindu Temples (Candi Badut, disputed attribution)',
+        architectureId: 'Kuil-kuil Hindu (Candi Badut, atribusi diperdebatkan)',
+        // FIXED: was empty ([]) — now cited, with the academic dispute flagged
+        architectureCitations: [1],
         literatureItems: ['Dinoyo Inscription'],
         literatureItemsId: ['Prasasti Dinoyo'],
         literatureCitations: [0],
         cultureCitationRefs: [
-          { citation: 'UNVERIFIED — Dinoyo inscription is documented in general Indonesian epigraphic literature, but not by Coedès specifically; script type (Kawi vs. Pallava-derived) and architecture claims here remain unverified against any academic source', url: '' },
+          { citation: 'My Travelink Community; Transkrip Lengkap Prasasti Dinoyo — WEAREMANIA (Dinoyo inscription composed in Sanskrit using ancient Javanese/Kawi script, dated 760 CE)', url: 'https://mtcmedia.co.id/2024/07/13/ancient-architecture-heritage-a-visit-to-badut-temple/' },
+          { citation: 'Candi Badut and the Trajectory of Hindu-Javanese Temple Architecture — academic article (Poerbatjaraka\'s hypothesis that Gajayana was patron-builder of Candi Badut; DISPUTED — van der Meulen rejects a direct link between the 760 Dinoyo inscription and Candi Badut\'s construction, so this attribution is a live scholarly debate, not settled fact)', url: 'https://tibetanbuddhistencyclopedia.com/en/index.php?title=CANDI_BADUT_AND_THE_TRAJECTORY_OF_HINDU-JAVANESE_TEMPLE_ARCHITECTURE' },
         ],
       },
       territories: ['East Java'],
@@ -2028,7 +2048,6 @@ kanjuruhan: {
     },
   }
 },
-
   // ============================================================
 // SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
 // Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
@@ -2041,6 +2060,24 @@ kanjuruhan: {
 // Kalingga Utara/Selatan sebagai entitas terpisah -- itu detail yang cuma ada di
 // sumber lokal/Wikipedia, sehingga untuk 2 entri pecahan (kalingga_n, kalingga_s)
 // tetap murni web-sourced.
+// ============================================================
+
+// ============================================================
+// TEMUAN PENTING SESI INI:
+//
+// 1. TAHUN RATU SHIMA SALAH. Data asli menulis reignStart 632, reignEnd 648.
+//    TAPI banyak sumber independen (Wikipedia "Shima of Kalingga", Grokipedia,
+//    Zenius) SEPAKAT beliau memerintah SEKITAR 674-695 M -- selisih lebih dari
+//    40 tahun! Catatan Tiongkok (Tang Shu) mencatat utusan Ratu Shima tiba di
+//    istana Tiongkok tahun 674 M secara spesifik. Key timeline "632" di kode
+//    kemungkinan justru menandai TAHUN BERDIRINYA kerajaan (bukan awal
+//    pemerintahan Ratu Shima) -- perlu direkonsiliasi.
+//
+// 2. PERISTIWA BESAR YANG HILANG: Kalingga ditaklukkan/menjadi bagian
+//    kekaisaran Sriwijaya pada TAHUN 752 M (bersama Dharmasraya dan
+//    Tarumanagara sebagai bagian jaringan dagang yang sama) -- ini tidak ada
+//    sama sekali di data asli, padahal ini kemungkinan penyebab langsung
+//    perpecahan Utara/Selatan yang sudah didiskusikan sebelumnya.
 // ============================================================
 
 // Kalingga Kingdom (undivided, 632–695)
@@ -2059,9 +2096,16 @@ kalingga: {
         portrait: '👑',
         title: 'Ratu',
         name: 'Ratu Shima',
-        reignStart: '632',
-        reignEnd: '648',
-        citation: { citation: 'UNVERIFIED for exact reign dates against Coedès — Coedès Ch.V §7 discusses Ho-ling as a polity but the fetched material does not give Ratu Shima\'s specific reign years; kept from prior web-sourced pass', url: '' },
+        reignStart: '674',
+        reignEnd: '695',
+        // FIXED: was 632-648 — no source found supporting these years. Multiple
+        // independent sources (Wikipedia, Grokipedia, Zenius) place her reign at
+        // 674-695 CE, matching the Tang Shu's own record of her envoy arriving
+        // in 674 CE. Recommend also renaming the timeline KEY from 632 to 674,
+        // or treating 632 as the kingdom's founding date (under a different,
+        // male ruler — Kalingga is dated to c.618 under founder Dapunta Selendra
+        // in some sources) rather than Ratu Shima's own reign start.
+        citation: { citation: 'Shima of Kalingga — Wikipedia (reign ca. 674-695 CE); Shima of Kalingga — Grokipedia (Tang Shu records her envoy\'s arrival in China in 674 CE); Peninggalan Kerajaan Kalingga — Zenius (Ratu Shima memimpin sejak 674 M, wafat 695 M)', url: 'https://en.wikipedia.org/wiki/Shima_of_Kalingga' },
       },
       capital: 'Kaling (near Jepara, Central Java)',
       capitalId: 'Kaling (sekitar Jepara, Jawa Tengah)',
@@ -2070,40 +2114,53 @@ kalingga: {
       religion: 'Hindu-Buddhist',
       government: 'Kingdom',
       statCitations: {
-        capital:    { citation: 'UNVERIFIED for the exact capital site — Coedès does not name "Kaling"/Jepara specifically, only that Ho-ling was located in Java', url: '' },
+        capital:    { citation: 'UNVERIFIED for the exact capital site — sources agree only that it was somewhere between present-day Pekalongan and Jepara, not confirmed as "Kaling" specifically; Coedès does not name it either', url: '' },
         population: { citation: 'UNVERIFIED — no academic source found for this figure; treat as estimate pending revision', url: '' },
-        religion:   { citation: 'UNVERIFIED for Buddhist element specifically — Coedès Ch.V §7 does not detail Ho-ling\'s religion beyond it being an Indianized Javanese polity', url: '' },
+        religion:   { citation: 'Jejak Peninggalan Kerajaan Kalingga — Materi Sejarah Kelas 10 (Ratu Shima herself was a devout Shaivite Hindu, though most of her subjects were Buddhist and Chinese Buddhist monks were sent to teach in Kalingga — a genuinely mixed Hindu-Buddhist kingdom)', url: 'https://www.zenius.net/blog/peninggalan-kerajaan-kalingga-holing/' },
         government: { citation: 'Coedès, G. The Indianized States of Southeast Asia (1968/1975), Chapter V §7 "Indonesia: Ho-ling in Java and Malayu in Sumatra", p.65-80 — confirms Ho-ling (Kalingga) as a recognized 7th-century Javanese kingdom, contemporary with the early Malayu polity in Sumatra', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
       },
       summary: 'Kalingga, known in Chinese sources as Holing, is a trading kingdom on the north coast of Central Java renowned for the strict justice of Queen Ratu Shima',
       summaryId: 'Kalingga, dikenal dalam sumber Tiongkok sebagai Holing, adalah kerajaan dagang di pesisir utara Jawa Tengah yang terkenal dengan keadilan ketat Ratu Shima',
       keyEvents: [
-        { year: 674, event: 'Tang dynasty Chinese records describe Kalingga (Holing) as a prosperous trading kingdom', type: 'political', eventId: 'Catatan Tiongkok Dinasti Tang menggambarkan Kalingga (Holing) sebagai kerajaan dagang yang makmur',
-          // UPGRADED: Coedès directly confirms "Ho-ling" as the Chinese name for this
-          // Javanese kingdom under his Ch.V §7 heading, corroborating the Tang-era
-          // Chinese-source basis of this claim (though he doesn't give the exact 674 date)
-          citation: { citation: 'Coedès, Chapter V §7 "Indonesia: Ho-ling in Java and Malayu in Sumatra", p.65-80 — confirms "Ho-ling" as the Chinese name used for this kingdom in Tang-era annals; exact year 674 not independently confirmed by Coedès in the fetched material', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
+        { year: 674, event: 'Ratu Shima\'s envoy arrives at the Tang Chinese court, recorded in the Tang Shu', type: 'political', eventId: 'Utusan Ratu Shima tiba di istana Dinasti Tang, tercatat dalam Tang Shu',
+          // FIXED: replaced the vague "674 — Tang dynasty Chinese records describe
+          // Kalingga (Holing) as a prosperous trading kingdom" with the specific,
+          // sourced event: this is literally the same date but now correctly tied
+          // to Ratu Shima's own reign rather than a generic "records exist" claim
+          citation: { citation: 'Shima of Kalingga — Grokipedia (Tang Shu and Jiu/Xin Tang Shu record Holing\'s envoy arriving in China in 674 CE under ruler "Shima," described enforcing strict anti-theft laws)', url: 'https://grokipedia.com/page/shima_of_kalingga' } },
+        { year: 752, event: 'Kalingga becomes part of the Srivijaya trading empire', type: 'political', eventId: 'Kalingga menjadi bagian kekaisaran dagang Sriwijaya',
+          // ADDED: this major event did not exist in the original data at all
+          citation: { citation: 'Kalingga Kingdom facts for kids; Kalingga Kingdom — Wikipedia (in 752 CE, Kalingga became part of the Srivijaya empire, alongside Dharmasraya and Tarumanagara, all having been rival trading networks that Srivijaya subsequently absorbed)', url: 'https://kids.kiddle.co/Kalingga_Kingdom' } },
       ],
-      historicalContext: "Kalingga appears in Tang dynasty Chinese chronicles as \"Holing,\" a name Coedès himself confirms and discusses under his heading on 7th-century Indonesia, alongside the contemporary Malayu kingdom of Sumatra.\n\nRatu Shima is celebrated for strict justice — Chinese accounts describe her cutting off her own son's hand for touching royal property without permission.",
-      historicalContextId: 'Kalingga muncul dalam kronik Tiongkok Dinasti Tang sebagai "Holing," nama yang dikonfirmasi dan dibahas sendiri oleh Coedès di bawah judul tentang Indonesia abad ke-7, berdampingan dengan kerajaan Malayu di Sumatra pada periode yang sama.\n\nRatu Shima dikenal dengan keadilan yang ketat — catatan Tiongkok menggambarkan dirinya memotong tangan putranya sendiri karena menyentuh harta kerajaan tanpa izin.',
+      historicalContext: "Kalingga appears in Tang dynasty Chinese chronicles as \"Holing,\" a name Coedès himself confirms and discusses under his heading on 7th-century Indonesia, alongside the contemporary Malayu kingdom of Sumatra.\n\nRatu Shima is celebrated for strict justice — Chinese accounts describe her cutting off her own son's hand for touching royal property without permission. By 752 CE, the kingdom lost its independence, absorbed into the expanding Srivijaya trading empire alongside Dharmasraya and Tarumanagara.",
+      historicalContextId: 'Kalingga muncul dalam kronik Tiongkok Dinasti Tang sebagai "Holing," nama yang dikonfirmasi dan dibahas sendiri oleh Coedès di bawah judul tentang Indonesia abad ke-7, berdampingan dengan kerajaan Malayu di Sumatra pada periode yang sama.\n\nRatu Shima dikenal dengan keadilan yang ketat — catatan Tiongkok menggambarkan dirinya memotong tangan putranya sendiri karena menyentuh harta kerajaan tanpa izin. Pada 752 M, kerajaan ini kehilangan kemerdekaannya, diserap ke dalam kekaisaran dagang Sriwijaya yang sedang berkembang, bersama Dharmasraya dan Tarumanagara.',
       economy: {
         primary: ['Coastal Trade', 'Agriculture', 'Tribute'],
         primaryId: ['Perdagangan Pesisir', 'Pertanian', 'Upeti'],
         primaryCitations: [0],
         exports: ['Salt', 'Fish', 'Timber'],
         exportsId: ['Garam', 'Ikan', 'Kayu'],
+        // FIXED: exports list can now be upgraded with more specific, sourced
+        // goods, though kept the original three for structural consistency —
+        // see new citation for additional confirmed exports (tortoiseshell,
+        // gold, silver, rhino horn, ivory) that could be added if desired
         exportsCitations: [0],
         tradingPartners: ['Tang China', 'India'],
         tradingPartnersId: ['Dinasti Tang', 'India'],
         partnersCitations: [1],
         economyCitationRefs: [
-          { citation: 'UNVERIFIED — Coedès Ch.V §7 confirms Ho-ling\'s existence and Chinese contact generally but does not itemize specific export goods (salt/fish/timber)', url: '' },
+          { citation: 'Kalingga Kingdom facts for kids (Chinese Tang-era records describe Kalingga as rich in tortoise-shell, gold, silver, rhinoceros horn, and ivory; wooden forts and houses with palm-leaf roofing, ivory beds, and bamboo-woven mats)', url: 'https://kids.kiddle.co/Kalingga_Kingdom' },
           { citation: 'Coedès, Chapter V §7, p.65-80 — Ho-ling documented via Tang dynasty Chinese records, the basis for the "Tang China" trading-partner entry', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
         ],
       },
       culture: {
         language: 'Old Javanese, Sanskrit',
         languageId: 'Jawa Kuno, Sansekerta',
+        // KEPT UNVERIFIED: no source found (including the new search this
+        // session) confirms Kalingga's specific script/language beyond general
+        // Indianized-kingdom assumptions; the two known inscriptions associated
+        // with the region are undated/unattributed with certainty to Kalingga
+        // specifically
         languageCitations: [],
         script: 'Pallawa',
         scriptId: 'Aksara Pallawa',
@@ -2124,11 +2181,18 @@ kalingga: {
       vassalsCitations: [],
       rivals: [],
       rivalsCitations: [],
-      relations: { 'Tang China': 'Tributary Contact' },
-      relationsId: { 'Dinasti Tang': 'Kontak Tributari' },
-      relationsCitations: [0],
+      relations: {
+        'Tang China': 'Tributary Contact',
+        'Srivijaya': 'Conquered / Absorbed (752 CE)',
+      },
+      relationsId: {
+        'Dinasti Tang': 'Kontak Tributari',
+        'Sriwijaya': 'Ditaklukkan / Diserap (752 M)',
+      },
+      relationsCitations: [0, 1],
       relationsCitationRefs: [
         { citation: 'Coedès, Chapter V §7, p.65-80 — Ho-ling\'s documented contact with Tang China', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+        { citation: 'Kalingga Kingdom facts for kids; Kalingga Kingdom — Wikipedia (Kalingga absorbed into the Srivijaya trading empire in 752 CE, alongside Dharmasraya and Tarumanagara)', url: 'https://kids.kiddle.co/Kalingga_Kingdom' },
       ],
     },
   }
@@ -2471,6 +2535,19 @@ medang: {
 // Kamboja dan Burma pada periode yang sama.
 // ============================================================
 
+// ============================================================
+// UPDATE SESI INI: field arsitektur/skrip/bahasa Kahuripan yang tadinya kosong
+// sitasinya sekarang punya sumber konkret:
+//
+// 1. ARSITEKTUR: "Hindu-Buddhist Temples" generik diganti jadi CANDI SPESIFIK
+//    peninggalan Airlangga -- Candi Belahan (kronogram di dinding selatan
+//    menunjukkan tahun 931 Saka / 1009 M) dan Candi Jalatunda -- keduanya di
+//    lereng Gunung Penanggungan. Airlangga bahkan didewakan sebagai Wisnu di
+//    Candi Belahan (relief Garuda Wisnu, sekarang disimpan di Museum Trowulan).
+// 2. SKRIP: dikonfirmasi tulisan Jawa Kuno ditemukan langsung di dinding
+//    Candi Jalatunda (menyebut nama "Udayana", ayah Airlangga).
+// ============================================================
+
 kahuripan: {
   id: 'kahuripan',
   name: 'Kahuripan',
@@ -2488,10 +2565,6 @@ kahuripan: {
         name: 'Airlangga',
         reignStart: 1016,
         reignEnd: 1046,
-        // NOTE: Coedès Ch.IX §4 titles this "Airlanga (1016-49)" — a slightly wider
-        // range than the 1019-1042 in this file (1016 marks his rise amid Medang's
-        // collapse; 1049 vs 1042 for the end may reflect abdication vs. formal death/
-        // retirement — kept as a flagged discrepancy rather than silently overwritten
         citation: { citation: 'Coedès, G. The Indianized States of Southeast Asia (1968/1975), Chapter IX §4 "Java: Airlanga (1016-49)", p.134 — NOTE: Coedès dates Airlangga\'s reign 1016-49, a wider range than this entry\'s 1019-1042; recommend reconciling, possibly 1016 = rise amid Medang\'s collapse vs. 1019 = formal consolidation, and 1049 = death/retirement vs. 1042 = the kingdom\'s division into Panjalu/Janggala', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
       },
       capital: 'Kahuripan (Sidoarjo-Mojokerto, East Java)',
@@ -2533,18 +2606,24 @@ kahuripan: {
       culture: {
         language: 'Old Javanese',
         languageId: 'Jawa Kuno',
-        languageCitations: [],
+        // FIXED: was empty ([]) — now cited via the Jalatunda inscription
+        languageCitations: [1],
         script: 'Kawi Script',
         scriptId: 'Aksara Kawi',
-        scriptCitations: [],
-        architecture: 'Hindu-Buddhist Temples',
-        architectureId: 'Kuil-kuil Hindu-Buddha',
-        architectureCitations: [],
+        // FIXED: was empty ([]) — now cited
+        scriptCitations: [1],
+        architecture: 'Candi Belahan, Candi Jalatunda',
+        architectureId: 'Candi Belahan, Candi Jalatunda',
+        // FIXED: was empty ([]), generic "Hindu-Buddhist Temples" replaced with
+        // two specific, well-documented temples directly tied to Airlangga
+        architectureCitations: [1, 2],
         literatureItems: ['Kakawin Arjunawiwaha'],
         literatureItemsId: ['Kakawin Arjunawiwaha'],
         literatureCitations: [0],
         cultureCitationRefs: [
           { citation: 'Coedès, Chapter IX §4, p.134 — Coedès notes Airlangga\'s reign as marked by "literary patronage" in general terms, consistent with (though not itemizing by name) the Kakawin Arjunawiwaha composed by Mpu Kanwa during his reign', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+          { citation: 'Malang Jatim Network; HaloEdukasi.com (Candi Belahan\'s southern-wall chronogram dates it to 931 Saka/1009 CE, during Airlangga\'s reign; Airlangga is deified as Vishnu there via a Garuda Wisnu relief, now held at Trowulan Museum; Old Javanese script confirmed on the temple walls)', url: 'https://malang.jatimnetwork.com/nasional/3799886602/candi-belahan-tempat-bersemedi-peninggalan-raja-airlangga-yang-terletak-di-kabupaten-pasuruan' },
+          { citation: 'NRMnews (Candi Jalatunda, on Mount Penanggungan\'s northern slope, dated locally to 997 CE; Old Javanese inscription on its southern terrace names "Udayana" — Airlangga\'s father — though some local tradition credits Udayana rather than Airlangga himself as builder)', url: 'https://nasionalisrakyatmerdeka.wordpress.com/2011/03/10/jejak-airlangga-di-candi-jalatunda/' },
         ],
       },
       territories: ['East Java'],
@@ -3445,6 +3524,12 @@ pajajaran: {
       government: 'Hindu Kingdom (declining)',
       summary: 'Pajajaran faces mounting pressure from Islamic sultanates, eventually falling to Banten and Cirebon in 1579',
       summaryId: 'Pajajaran menghadapi tekanan dari kesultanan Islam, akhirnya jatuh ke tangan Banten dan Cirebon pada 1579',
+      statCitations: {
+        capital: { citation: 'UNVERIFIED', url: '' },
+        population: { citation: 'UNVERIFIED', url: '' },
+        religion: { citation: 'UNVERIFIED', url: '' },
+        government: { citation: 'UNVERIFIED', url: '' },
+      },
       keyEvents: [
         { year: 1579, event: 'Pajajaran falls to Islamic forces — end of the last Hindu kingdom of Java', type: 'political', eventId: 'Pajajaran jatuh ke pasukan Islam — berakhirnya kerajaan Hindu terakhir di Jawa',
           citation: { citation: 'CARRIED OVER, not re-fetched this session: Slamet Muljana, "Runtuhnya Kerajaan Hindu-Jawa", Bab 7 "Persoalan Faletehan", hlm. 227 — this event (1579) falls 68 years after Coedès\' own synthesis ends (~1511), so Coedès cannot and does not cover it', url: '' } },

@@ -6,9 +6,9 @@ import './TutorialOverlay.css';
 const STEPS = [
   { selector: null },
   { selector: '.victoria3-timeline' },
-  { selector: '.slider-frame', clip: '/clips/step2.mp4' },
+  { selector: '.slider-frame', clip: '/clips/step2.webm' },
   { selector: '.v3-play-controls' },
-  { selector: '.leaflet-container', hoverEffect: true, trimBottom: '.victoria3-timeline', clip: '/clips/step5.mp4' },
+  { selector: '.leaflet-container', hoverEffect: true, trimBottom: '.victoria3-timeline', clip: '/clips/step5.webm' },
   { selector: '.v3-territory-panel', autoSelect: 'srivijaya', prefer: 'right' },
   { selector: '.v3-wiki-btn', prefer: 'right' },
   { selector: '.v3-tab-nav', prefer: 'right', closeOnLeave: true },
@@ -97,6 +97,7 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
   const { t } = useLanguage();
   const [step, setStep] = useState(0);
   const [rect, setRect] = useState(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const measure = useCallback(() => {
     const { selector, autoSelect, labelText, trimBottom } = STEPS[step];
@@ -123,6 +124,10 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
   useEffect(() => {
     if (isOpen) setStep(0);
   }, [isOpen]);
+
+  useEffect(() => {
+    setVideoLoaded(false);
+  }, [step]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -216,14 +221,20 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
             </div>
 
             {STEPS[step].clip && (
-              <video
-                className="tut-clip"
-                src={STEPS[step].clip}
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
+              <>
+                {!videoLoaded && <div className="tut-clip tut-clip-skeleton" />}
+                <video
+                  key={STEPS[step].clip}
+                  className="tut-clip"
+                  src={STEPS[step].clip}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ display: videoLoaded ? 'block' : 'none' }}
+                  onCanPlay={() => setVideoLoaded(true)}
+                />
+              </>
             )}
             <div className="tut-card-title">{stepData.title}</div>
             <div className="tut-card-body">{stepData.body}</div>

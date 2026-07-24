@@ -112,6 +112,23 @@
   margin-bottom: 10px;
 }
 
+.tut-clip-skeleton {
+  height: 140px;
+  background: linear-gradient(
+    90deg,
+    rgba(139, 69, 19, 0.07) 25%,
+    rgba(139, 69, 19, 0.15) 50%,
+    rgba(139, 69, 19, 0.07) 75%
+  );
+  background-size: 200% 100%;
+  animation: tut-shimmer 1.4s ease infinite;
+}
+
+@keyframes tut-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* Card title */
 .tut-card-title {
   font-family: 'Cinzel', serif;
