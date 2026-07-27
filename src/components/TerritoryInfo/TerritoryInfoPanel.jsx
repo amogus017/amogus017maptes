@@ -15,21 +15,9 @@ const TAB_IDS = [
   { id: 'relations',icon: '⚖️' },
 ];
 
-// Data-audit citations are tagged with a leading "UNVERIFIED" marker (see
-// territories.js) to flag claims the audit couldn't confirm against its
-// primary source. That internal audit note shouldn't leak to students
-// verbatim — isUnverifiedCitation() detects it, publicCitationText() below
-// swaps it for a student-facing sentence instead of deleting the citation
-// (which would misalign the static citation-index arrays in territories.js).
+
 const isUnverifiedCitation = (cit) => !!cit && typeof cit.citation === 'string' && cit.citation.startsWith('UNVERIFIED');
 
-// Many otherwise-valid citations also have internal audit commentary appended
-// after an em-dash (e.g. "...p.134 — corroborates the alliance/aid narrative,
-// matching the Wikipedia/Alchetron account already used") — research notes
-// for whoever verified the source, not reader-facing text. Some citations
-// legitimately use an em-dash within the real reference too (e.g. "Title —
-// Publisher"), so we only cut at an em-dash immediately followed by one of
-// these known commentary-opening phrases, not at any em-dash.
 const AUDIT_COMMENTARY_TRIGGERS = [
   'dates the', 'corroborates', 'confirms the', 'confirms Coedès', 'verifies the',
   'matches the', 'matching the', 'consistent with', 'kept as', 'kept from',
@@ -44,21 +32,13 @@ const AUDIT_COMMENTARY_TRIGGERS = [
   'falls outside coedès', 'carried over', 'not re-fetched', 'the sibling',
   'as already flagged',
 ];
-// A few notes are prefixed at the very start of the string (no em-dash to
-// anchor on at all), e.g. "CARRIED OVER, not re-fetched this session: ...".
-// Strip those before the dash-based pass below runs.
+
 const AUDIT_PREFIX_RE = /^CARRIED OVER, not re-fetched this session:\s*/i;
 const AUDIT_COMMENTARY_TRIGGER_RE = new RegExp(
   AUDIT_COMMENTARY_TRIGGERS.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'),
   'i'
 );
-// Find the rightmost " — " after which an audit-commentary trigger appears
-// anywhere in the remaining text (not just immediately after the dash) —
-// catches lead-ins like "— NOTE: Coedès does not mention Sunda..." where the
-// trigger phrase is a few words in, not right after the dash. Checking from
-// the right and returning on the first hit naturally prefers the smallest
-// possible cut, so a legitimate earlier dash (e.g. "Title — Publisher") is
-// left alone as long as the LAST segment is the one carrying commentary.
+
 const stripAuditCommentary = (rawText) => {
   const text = rawText.replace(AUDIT_PREFIX_RE, '');
   const dashRe = /\s+—\s+/g;
@@ -73,23 +53,11 @@ const stripAuditCommentary = (rawText) => {
   return text.trim();
 };
 
-// Beyond audit-process commentary, most citations also carry a legitimate,
-// informative annotation after the reference (e.g. "p.134 — diplomatic/trade
-// relations with the Cholas..."). That annotation is still English-only prose
-// with no Indonesian counterpart anywhere in territories.js, and translating
-// ~169 unique instances isn't practical — so in Indonesian mode we show only
-// the bare bibliographic reference, same convention as author names/titles
-// already being kept untranslated. Cuts right after the last page-number
-// (p.NNN / hlm.NNN) or closing-paren that's immediately followed by " — ",
-// so a legitimate "Title — Publisher (detail)" citation stays intact.
+
 const CITATION_ANNOTATION_RE = /((?:p\.\s?\d+(?:[-–—]\d+)?|hlm\.?\s?\d+(?:[-–—]\d+)?|\)))\s+—\s+.*$/i;
 const stripCitationAnnotation = (text) => text.replace(CITATION_ANNOTATION_RE, '$1').trim();
 
-// territories[]/vassals[]/rivals[] in territories.js have no *Id counterpart
-// (unlike every other bilingual field) — always English regardless of UI
-// language. Rather than add territoriesId/vassalsId/rivalsId arrays to all 65
-// timeline snapshots, translate the bounded set of distinct region/polity
-// names that actually appear across the whole dataset once, here.
+
 const REGION_NAME_ID = {
   'Bali': 'Bali',
   'Batanghari River Basin': 'Lembah Sungai Batanghari',
@@ -144,10 +112,7 @@ const REGION_NAME_ID = {
   'Yuan Mongols': 'Mongol Yuan',
 };
 
-// religion/government have no *Id counterpart anywhere in territories.js —
-// same problem and same fix as REGION_NAME_ID above: a small, bounded,
-// reused-across-snapshots set of values, translated once here instead of
-// adding religionId/governmentId to all 65 timeline snapshots individually.
+
 const RELIGION_ID = {
   'Buddhist (Mahayana)': 'Buddha (Mahayana)',
   'Buddhist (Mahayana) and Hindu': 'Buddha (Mahayana) dan Hindu',
@@ -185,24 +150,12 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
   };
   const locRegion = (name) => (language === 'id' && REGION_NAME_ID[name]) ? REGION_NAME_ID[name] : name;
   const UNDOCUMENTED = loc('Undocumented', 'Belum terdokumentasi');
-  // For a value whose only backing citation is flagged UNVERIFIED, show the
-  // honest placeholder instead of the specific-sounding claim — showing e.g.
-  // a precise population figure or named export with no real source behind
-  // it is more misleading than admitting the gap.
+
   const statValueOrPlaceholder = (statKey, displayValue) =>
     isUnverifiedCitation(territoryData?.statCitations?.[statKey]) ? UNDOCUMENTED : displayValue;
-  // Whole shared *CitationRefs list is unverified (used both standalone for
-  // summary/historicalContext, and as a fallback below for fields that point
-  // to it via an empty/missing index array — an "umbrella" citation covering
-  // a whole section, e.g. one UNVERIFIED note explicitly covering language +
-  // script + architecture + literature together with no per-field index).
+  
   const allRefsUnverified = (refsArray) => !!refsArray && refsArray.length > 0 && refsArray.every(isUnverifiedCitation);
-  // Same idea for list items (economy/culture) whose citation is looked up
-  // indirectly via an index array into a shared *CitationRefs list. If this
-  // item has no index of its own (citationsArray missing/empty at idx) but
-  // the shared list exists and is entirely unverified, it's still covered by
-  // that umbrella note — treat it as unverified too rather than leaving it
-  // alone just because it wasn't individually indexed.
+  
   const indexedValueOrPlaceholder = (displayValue, refsArray, citationsArray, idx) => {
     const specificIdx = citationsArray?.[idx];
     if (specificIdx === undefined) {
@@ -210,11 +163,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
     }
     return isUnverifiedCitation(refsArray?.[specificIdx]) ? UNDOCUMENTED : displayValue;
   };
-  // Culture fields (language/script/architecture) are a single value that can
-  // carry MULTIPLE citation indices (e.g. architectureCitations: [1,2,3]) —
-  // only placeholder it if every one of its citations is unverified; if at
-  // least one is real, the value is still at least partly grounded. Same
-  // umbrella fallback as above when the field's own index array is empty.
+
   const multiCitedValueOrPlaceholder = (displayValue, refsArray, citationIndices) => {
     if (!citationIndices || citationIndices.length === 0) {
       return allRefsUnverified(refsArray) ? UNDOCUMENTED : displayValue;
@@ -1108,8 +1057,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
         )}
       </AnimatePresence>
 
-      {/* Wiki Panel — rendered outside territory panel AnimatePresence
-          so it can animate independently */}
+      {/* Wiki Panel??? */}
       <WikiPanel
         wikiSlug={territoryData?.wikiSlug}
         idWikiSlug={territoryData?.idWikiSlug}
