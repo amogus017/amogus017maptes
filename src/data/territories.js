@@ -1,27 +1,3 @@
-// src/data/territories.js
-// Historical data for Southeast Asian territories
-
-// Srivijaya era content blocks — shared across multiple ruler-specific timeline
-// entries so each reign gets its own snapshot without duplicating era text.
-// ============================================================
-// CATATAN PENTING SEBELUM DIPAKAI:
-// 1. Tahun pendirian "650" di srivijayaFoundingEraBase TIDAK didukung sumber manapun.
-//    Semua sumber (Coedès 1968, Wikipedia, Grokipedia) menunjukkan Prasasti Kedukan
-//    Bukit -- bukti tertulis pendirian oleh Dapunta Hyang -- bertanggal 682-683 M.
-//    Rekomendasi: ganti 650 -> 682 sebelum sidang.
-// 2. Population figures (~500,000 / ~1.5 million) TIDAK ditemukan di sumber akademis
-//    manapun untuk periode ini -- sama seperti kasus ~2-3 juta di Maritime Dominance,
-//    ini kemungkinan angka perkiraan tanpa dasar historiografi. Saya beri citation
-//    "unverified" agar transparan, bukan citation palsu.
-// 3. "Champa" sebagai trading partner era Founding & Golden Age: tidak ditemukan
-//    sumber spesifik yang mengonfirmasi Champa sebagai mitra dagang langsung
-//    Sriwijaya (berbeda dgn Tang China, Arab, India yang solid). Ditandai unverified.
-// 4. "Sailendra" sebagai RIVAL di Golden Age perlu nuansa: sumber justru menunjukkan
-//    hubungan Sriwijaya-Sailendra AWALNYA ALIANSI erat lewat perkawinan dan patronase
-//    Buddha bersama (pembangunan Borobudur) -- bukan rivalitas sejak awal. Rivalitas
-//    baru muncul belakangan lewat dinasti Isyana/Mataram. Sudah saya tambahkan citation
-//    yang menjelaskan nuansa ini.
-// ============================================================
 
 const srivijayaFoundingEraBase = {
   era: 'Founding Era', eraId: 'Era Pendirian',
@@ -40,9 +16,6 @@ const srivijayaFoundingEraBase = {
   summaryId: 'Sriwijaya didirikan di tepi Sungai Musi, memulai kebangkitannya sebagai kekuatan maritim yang menguasai Sumatra',
   keyEvents: [
     { year: 682, event: 'Srivijaya founded by Dapunta Hyang (Kedukan Bukit inscription)', type: 'political', eventId: 'Sriwijaya didirikan oleh Dapunta Hyang (Prasasti Kedukan Bukit)',
-      // FIXED: year corrected from 650 to 682 (Coedès Ch.VI §1 dates the kingdom's
-      // beginnings to the end of the 7th century, matching the Kedukan Bukit
-      // inscription's own date of 682-683 CE)
       citation: { citation: 'Coedès, Chapter VI §1 "The Beginnings of the Kingdom of Srivijaya (End of the Seventh Century)", p.81 — dates the founding to the end of the 7th century, consistent with the Kedukan Bukit inscription (682-683 CE)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
     { year: 671, event: 'I Tsing visits — finds 1,000 Buddhist monks', type: 'cultural', eventId: 'I Tsing mengunjungi — menemukan 1.000 biksu Buddha',
       citation: { citation: 'Coedès, Chapter V §7 "Indonesia: Ho-ling in Java and Malayu in Sumatra", p.65-80 — I-tsing\'s account of studying Buddhism at Palembang before continuing to India', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } }
@@ -58,9 +31,6 @@ const srivijayaFoundingEraBase = {
     exportsCitations: [1, 1, 1],
     tradingPartners: ['Tang China', 'India'],
     tradingPartnersId: ['Dinasti Tang', 'India'],
-    // FIXED: "Champa" removed from trading partners — Coedès does not list Champa
-    // as a Srivijaya trade partner in this period; kept only the two Coedès-confirmed
-    // partners (Tang China via tributary missions, India via Buddhist exchange)
     partnersCitations: [0, 0],
     economyCitationRefs: [
       { citation: 'Coedès, Chapter VI §1, p.81 — early tributary/trade contact with Tang China', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
@@ -91,10 +61,6 @@ const srivijayaFoundingEraBase = {
   vassals: [],
   vassalsCitations: [],
   rivals: ['Melayu Kingdom'],
-  // FIXED: "Javanese Polities" removed as a Founding-era rival — Coedès Chapter V §7
-  // discusses Ho-ling (Java) and Malayu (Sumatra) as separate contemporary polities,
-  // not as documented rivals of Srivijaya in this specific founding period; keeping
-  // only Melayu, which Coedès does describe Srivijaya subduing early on.
   rivalsCitations: [0],
   relations: {
     'Tang China': 'Early Tributary Contact',
@@ -102,9 +68,6 @@ const srivijayaFoundingEraBase = {
   relationsId: {
     'Dinasti Tang': 'Awal Hubungan Tributari',
   },
-  // FIXED: "India: Buddhist Exchange" moved out of relations (kept as cultural note
-  // in statCitations.religion instead) since Coedès frames the India connection here
-  // as religious/scholarly rather than a formal political relation like the China one.
   relationsCitations: [0],
   relationsCitationRefs: [
     { citation: 'Coedès, Chapter VI §1, p.81 — early Srivijayan tributary contact with Tang China', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
@@ -130,8 +93,6 @@ const srivijayaGoldenAgeBase = {
     { year: 775, event: 'Ligor inscription — Srivijaya asserts Malay Peninsula control', type: 'political', eventId: 'Prasasti Ligor — Sriwijaya menegaskan kendali atas Semenanjung Melayu',
       citation: { citation: 'Coedès, Chapter VII §4 "The Malay Peninsula", p.97 — Ligor inscription (775 CE) recording Srivijaya/Sailendra control over the peninsula', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
     { year: 813, event: 'Sailendra dynasty active in Java and Sumatra, joint Buddhist patronage begins', type: 'cultural', eventId: 'Dinasti Sailendra aktif di Jawa dan Sumatra, patronase Buddha bersama dimulai',
-      // FIXED: replaced the vague "800 — Extensive Buddhist temple construction"
-      // (previously sourced only to Grokipedia) with a Coedès-dated, Coedès-titled event
       citation: { citation: 'Coedès, Chapter VII §5 "The Sailendras in Java and Sumatra from 813 to 863", p.97', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } }
   ],
   historicalContext: 'Srivijaya consolidates its grip on the Strait of Malacca and Sunda Strait.\n\nIt becomes the dominant entrepot for trade between China and the Indian Ocean world.',
@@ -145,10 +106,6 @@ const srivijayaGoldenAgeBase = {
     exportsCitations: [1, 1, 1, 1],
     tradingPartners: ['Tang China', 'India'],
     tradingPartnersId: ['Dinasti Tang', 'India'],
-    // FIXED: "Abbasid Caliphate" and "Champa" removed — Coedès' TOC/text for this
-    // period (Ch. VII-VIII) does not list either as confirmed trade partners; the
-    // Arab embassy (718 CE) is a Wikipedia-sourced claim from an earlier pass, kept
-    // out here since it falls outside what Coedès himself documents for this era
     partnersCitations: [0, 2],
     economyCitationRefs: [
       { citation: 'Coedès, Chapter VIII §4, p.110 — San-fo-ch\'i/Srivijaya\'s continued tributary trade relationship with Tang-era China', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
@@ -170,33 +127,16 @@ const srivijayaGoldenAgeBase = {
     literatureId: 'Prasasti Ligor, Catatan Diplomatik',
     literatureItems: ['Ligor Inscription'],
     literatureItemsId: ['Prasasti Ligor'],
-    // FIXED: "Buddhist Sutras" removed from literature — as flagged in an earlier
-    // pass, no source (Coedès included) shows Srivijaya authoring its own sutras;
-    // Coedès instead documents Palembang as a place where FOREIGN scholars (I-tsing)
-    // came to STUDY existing Buddhist texts, and the Ligor inscription as the
-    // primary indigenous inscriptional record of this era
     literatureCitations: [0],
     cultureCitationRefs: [
       { citation: 'Coedès, Chapter VII §4, p.97 — Ligor inscription (775 CE) as the primary indigenous political/religious record of this era', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
     ],
   },
   territories: ['Sumatra', 'Malay Peninsula'],
-  // FIXED: "Western Java" and "Southern Thailand" removed — Coedès' chapter divisions
-  // (VII §4 "Malay Peninsula", §5 "Sailendras in Java AND Sumatra") describe Java as a
-  // separate Sailendra sphere connected to but not simply absorbed into Srivijaya's
-  // territory in this period; kept only Sumatra and the Malay Peninsula, which the
-  // Ligor inscription directly documents as under Srivijaya/Sailendra control
   territoriesCitations: [0, 0],
   vassals: ['Kedah'],
-  // FIXED: "Jambi" and "Chaiya" removed from vassals in this specific Golden Age
-  // entry — Coedès locates the Ligor inscription's control claim specifically over
-  // Kedah/the peninsula in 775 CE; Jambi and Chaiya's status at this exact point
-  // is not directly confirmed by the same source, so only Kedah is kept here
   vassalsCitations: [0],
   rivals: [],
-  // FIXED: "Sailendra" removed as a rival — per the earlier correction already in
-  // this file's history, Coedès Ch. VII §5 frames Srivijaya-Sailendra relations in
-  // this period as alliance/overlap (joint patronage, intermarriage), not rivalry
   rivalsCitations: [],
   relations: {
     'Tang China': 'Active Tributary Partner',
@@ -230,11 +170,6 @@ const srivijayaMaritimeDominanceBase = {
   summaryId: 'Kekuatan maritim dominan yang mengendalikan jalur perdagangan Selat Malaka',
   keyEvents: [
     { year: 1003, event: 'Srivijaya begins active diplomatic/tributary relations with the Chola dynasty of Tanjore', type: 'political', eventId: 'Sriwijaya memulai hubungan diplomatik/tributari aktif dengan Dinasti Chola dari Tanjore',
-      // FIXED: replaced the unverifiable "900 — Peak naval supremacy" and
-      // "925 — Trade monopoly established" (which had no real Coedès page match
-      // despite an earlier, incorrect citation claiming pp.84-85/130-131) with
-      // Coedès' ACTUAL documented turning point for this era: the start of
-      // Chola-Srivijaya relations, precisely dated and titled in his own TOC
       citation: { citation: 'Coedès, Chapter IX §3 "Srivijaya and Its Relations with the Cholas of Tanjore (1003-30)", p.134', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
   ],
   historicalContext: 'Srivijaya controls the vital maritime trade routes between India and China.\n\nA major center of Buddhist learning attracting scholars from across Asia.',
@@ -248,9 +183,6 @@ const srivijayaMaritimeDominanceBase = {
     exportsCitations: [1, 1, 1, 1],
     tradingPartners: ['Tang/Song China', 'Chola India'],
     tradingPartnersId: ['Dinasti Tang/Song', 'India Chola'],
-    // FIXED: "Arab Merchants" and "Java" removed — not directly confirmed by
-    // Coedès for this specific period in the fetched TOC/text; kept only the two
-    // relationships Coedès titles explicit sections around (China, Chola India)
     partnersCitations: [0, 2],
     economyCitationRefs: [
       { citation: 'Coedès, Chapter VIII §4, p.110', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
@@ -272,27 +204,16 @@ const srivijayaMaritimeDominanceBase = {
     literatureId: 'Catatan Diplomatik dan Tributari',
     literatureItems: ['Diplomatic and Tributary Records'],
     literatureItemsId: ['Catatan Diplomatik dan Tributari'],
-    // FIXED: "Buddhist Sutras" and "Maritime Records" removed for the same reason
-    // as the Golden Age block — no source shows Srivijaya authoring sutras;
-    // replaced with what Coedès actually documents for this period: diplomatic/
-    // tributary correspondence with China and the Cholas
     literatureCitations: [0],
     cultureCitationRefs: [
       { citation: 'Coedès, Chapter VIII §4 and Chapter IX §3, p.110, 134', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
     ],
   },
   territories: ['Sumatra', 'Malay Peninsula'],
-  // FIXED: "Western Java" and "Southern Thailand" removed for the same reason as
-  // the Golden Age entry above — not directly confirmed by Coedès as Srivijaya's
-  // own territory (as opposed to Sailendra Java, a separate but allied polity)
   territoriesCitations: [0, 0],
   vassals: ['Kedah'],
   vassalsCitations: [0],
   rivals: ['Chola Dynasty'],
-  // FIXED: "Javanese Kingdoms" removed as a rival for this specific period — no
-  // Coedès section for 900-1000 documents open Java-Srivijaya conflict; kept only
-  // the Chola relationship, which Coedès does title explicitly (and which turns
-  // hostile only later, in 1025 — see Decline block)
   rivalsCitations: [0],
   relations: {
     'Song China': 'Tributary Trade Partner',
@@ -328,16 +249,10 @@ const srivijayaDeclineBase = {
     { year: 1025, event: 'Chola raid devastates Palembang', type: 'military', eventId: 'Serangan Chola menghancurkan Palembang',
       citation: { citation: 'Coedès, Chapter IX §3 "Srivijaya and Its Relations with the Cholas of Tanjore (1003-30)", p.134', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
     { year: 1068, event: 'Chola forces aid Srivijaya in recovering rebellious Kedah (alliance, not attack)', type: 'political', eventId: 'Pasukan Chola membantu Sriwijaya merebut kembali Kedah yang memberontak (aliansi, bukan serangan)',
-      // CONFIRMED by Coedès directly — his own TOC section IX §5 "Srivijaya and the
-      // Cholas (1067-69)" matches exactly the alliance narrative already established
-      // in this file from web sources; now backed by the primary academic source too
       citation: { citation: 'Coedès, Chapter IX §5 "Srivijaya and the Cholas (1067-69)", p.134 — corroborates the alliance/aid narrative for this period, matching the Wikipedia/Alchetron account already used', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
     { year: 1183, event: 'Srivijaya (Palembang) weakens further, power shifting to Malayu (Jambi)', type: 'political', eventId: 'Sriwijaya (Palembang) semakin melemah, kekuasaan beralih ke Malayu (Jambi)',
-      // ADDED: new event from Coedès Ch.XI §3, not in the original data at all —
-      // fills the gap between 1068 and the eventual dismemberment
       citation: { citation: 'Coedès, Chapter XI §3 "The Weakening of Srivijaya (Palembang) to the Benefit of Malayu (Jambi)", p.169', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
     { year: 1225, event: 'Srivijaya on the eve of its final dismemberment', type: 'political', eventId: 'Sriwijaya di ambang perpecahan terakhirnya',
-      // ADDED: new event from Coedès Ch.XI §7
       citation: { citation: 'Coedès, Chapter XI §7 "Srivijaya on the Eve of Its Dismemberment (1225-70)", p.169', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
   ],
   historicalContext: 'After the devastating Chola raids of 1025, Srivijaya never fully recovers.\n\nPower gradually shifts from Palembang to Malayu (Jambi), and by the 1220s-1270s the kingdom faces final dismemberment.',
@@ -351,8 +266,6 @@ const srivijayaDeclineBase = {
     exportsCitations: [1, 1],
     tradingPartners: ['Song China', 'Malayu (Jambi)'],
     tradingPartnersId: ['Dinasti Song', 'Malayu (Jambi)'],
-    // FIXED: "Regional States" (vague) replaced with "Malayu (Jambi)" specifically,
-    // matching Coedès Ch.XI §3's documented shift of power to that specific polity
     partnersCitations: [2, 3],
     economyCitationRefs: [
       { citation: 'Coedès, Chapter IX §3, p.134 — post-1025 diminished trade capacity', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
@@ -381,16 +294,10 @@ const srivijayaDeclineBase = {
     ],
   },
   territories: ['Southern Sumatra'],
-  // FIXED: "Parts of Malay Peninsula" removed — Coedès Ch.XI §3/§7 describes
-  // Srivijaya's control contracting to the Palembang/southern Sumatra core as
-  // power shifted to Malayu/Jambi, not a retained peninsula holding
   territoriesCitations: [0],
   vassals: ['Jambi (rising in power, eventually eclipsing Palembang)'],
   vassalsCitations: [0],
   rivals: ['Chola Dynasty'],
-  // FIXED: "Javanese Kingdoms" removed — not documented by Coedès as a Decline-era
-  // rival in the fetched chapters; Jambi/Malayu's rise (an internal shift, not really
-  // a foreign "rival") is instead reflected in the vassals/relations fields
   rivalsCitations: [0],
   relations: {
     'Chola (1025)': 'Hostile — capital sacked, king captured',
@@ -409,24 +316,6 @@ const srivijayaDeclineBase = {
     { citation: 'Coedès, Chapter XI §3, p.169 — power shift to Malayu/Jambi by the end of the 12th century', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
   ],
 };
-
-// ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Majapahit punya CAKUPAN COEDÈS TERKUAT dari semua kerajaan Jawa
-// Timur, terbagi rapi ke tiga bagian yang persis cocok dengan tiga era block
-// yang sudah ada di file (Founding/Golden Age/Decline):
-//   Bab XII §6 (hlm. 189)   -- "...the Foundation of the Kingdom of Majapahit"
-//   Bab XIII §8 (hlm. 218-234) -- "Java: The Kingdom of Majapahit to the
-//                                  Accession of Hayam Wuruk (1350)"
-//   Bab XIV §3 (hlm. 235-246) -- "Java: From the Accession of Hayam Wuruk
-//                                  (Rajasanagara) in 1350 to the End of the
-//                                  Kingdom of Majapahit around 1520"
-// PENTING: Bab XIV §3 menyebut Majapahit berakhir "around 1520" -- BUKAN 1478
-// atau 1527 seperti yang sudah diperdebatkan di pass sebelumnya. Ini opsi
-// KETIGA yang perlu ditambahkan ke diskusi, bukan menggantikan dua lainnya.
-// ============================================================
 
 // Majapahit era content blocks — shared across multiple ruler-specific timeline
 // entries so each reign gets its own snapshot without duplicating era text.
@@ -447,8 +336,6 @@ const majapahitFoundingEraBase = {
   summaryId: 'Raden Wijaya mendirikan Majapahit dengan memanfaatkan invasi Mongol untuk menghancurkan Jayakatwang dari Kediri, membalas dendam atas mertuanya Kertanagara',
   keyEvents: [
     { year: 1293, event: 'Raden Wijaya founds Majapahit after defeating both Jayakatwang and the Yuan Mongol fleet', type: 'political', eventId: 'Raden Wijaya mendirikan Majapahit setelah mengalahkan Jayakatwang dan armada Mongol Yuan',
-      // UPGRADED: Coedès Ch.XII §6's own title directly covers "the Mongol Expedition
-      // of 1293; and the Foundation of the Kingdom of Majapahit" as one continuous event
       citation: { citation: 'Coedès, Chapter XII §6 "...the Mongol Expedition of 1293; and the Foundation of the Kingdom of Majapahit", p.189 — confirms 1293 as the exact year of both the Mongol expedition and Majapahit\'s founding, matching Raden Wijaya\'s exploitation of the Mongol fleet against Jayakatwang', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
   ],
   historicalContext: "Raden Wijaya brilliantly exploits the Yuan Mongol invasion fleet sent to punish Kertanagara, an episode Coedès narrates directly under his Ch.XII §6 heading connecting Singhasari's fall, the Mongol expedition, and Majapahit's founding as one story.\n\nAllying with the Mongols to defeat Jayakatwang first, he then turns on the exhausted Mongol forces and drives them from Java, founding Majapahit in the process.",
@@ -527,13 +414,8 @@ const majapahitGoldenAgeBase = {
   summaryId: 'Di bawah Hayam Wuruk dan mahapatih Gajah Mada, Majapahit mencapai wilayah terluas, mendominasi kepulauan Nusantara',
   keyEvents: [
     { year: 1336, event: "Gajah Mada swears the Palapa Oath — vowing to unify the archipelago", type: 'political', eventId: 'Gajah Mada bersumpah Sumpah Palapa — bersumpah untuk menyatukan kepulauan',
-      // KEPT from prior pass: genuinely disputed year (1334 or 1336), and not
-      // isolated by name in Coedès' fetched Ch.XIV §3 material either
       citation: { citation: 'UNVERIFIED against Coedès directly — his Ch.XIV §3 covers the Hayam Wuruk era generally (from 1350) without naming the Palapa Oath specifically in the fetched material; the year itself remains disputed elsewhere (1334 or 1336) per Wikipedia/Grokipedia', url: '' } },
     { year: 1357, event: 'Battle of Bubat — Sunda princess incident strains Majapahit–Sunda relations', type: 'military', eventId: 'Perang Bubat — insiden putri Sunda merenggangkan hubungan Majapahit–Sunda',
-      // UPGRADED: already established in the Sunda/Galuh files this session —
-      // Coedès Ch.XIII §8 (not XIV, since Bubat falls just before/around Hayam
-      // Wuruk's formal accession framing) covers this from the Majapahit side
       citation: { citation: 'Coedès, Chapter XIII §8 "Java: The Kingdom of Majapahit to the Accession of Hayam Wuruk (1350)", p.218-234 — the same citation already used in the sibling Sunda and Galuh files for this event, narrated from Majapahit\'s side; corroborated by Battle of Bubat — Wikipedia/Grokipedia (dated 1279 Saka/1357 CE)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
     { year: 1365, event: 'Nagarakretagama composed — describes Majapahit\'s vast territories', type: 'cultural', eventId: 'Nagarakretagama digubah — menggambarkan wilayah Majapahit yang luas',
       citation: { citation: 'A Brief History of the Term "Nusantara" — Medium (Nagarakretagama composed 1365, describing 98 tributaries) — kept as web source; Coedès Ch.XIV §3 covers this general era but the fetched material does not isolate the Nagarakretagama\'s composition year specifically', url: 'https://medium.com/@sixtybolts/a-brief-history-of-the-term-nusantara-cc67b61ce3c0' } },
@@ -682,21 +564,6 @@ const majapahitDeclineBase = {
 // Anusapati, and (early) Wisnuwardhana reigns, all of which fall inside the
 // map's 1222–1254 "Tumapel" boundary window before the polity is displayed
 // as "Singasari".
-// ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Sama seperti Kediri, transisi Tumapel juga langsung disinggung
-// Coedès di judul bab yang sama:
-//   Bab XI §8 (hlm. 169) -- "Java: The End of the Kingdom of Kadiri (1222) and
-//                            the Beginning of the Kingdom of Singhasari (up to 1268)"
-// TAPI Coedès sendiri TIDAK memakai nama "Tumapel" -- dia langsung menyebut
-// hasil kemenangan Ken Arok sebagai awal "Kingdom of Singhasari". "Tumapel"
-// adalah nama wilayah/kadipaten asal Ken Arok sebelum ia naik takhta, dipakai
-// di historiografi modern untuk periode transisi 1222-1254 sebelum polity ini
-// disebut "Singasari" secara penuh -- sama seperti Panjalu/Janggala vs "Kadiri".
-// ============================================================
-
 const tumapelFoundingEraBase = {
   era: 'Ken Arok Era', eraId: 'Era Ken Arok',
   capital: 'Tumapel (Singasari, Malang, East Java)',
@@ -865,20 +732,6 @@ export const territoriesData = {
     }
   },
 
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Untuk Kutai, teks Coedès yang relevan justru berhasil di-fetch
-// LANGSUNG (bagian ini ada di awal buku, Bab II "Indianization", sebelum titik
-// mentok ~halaman 40), jadi ini kutipan asli, bukan cuma judul bab dari daftar isi.
-// Coedès HANYA membahas Kutai sekilas sebagai bukti awal Indianisasi Nusantara
-// (satu kalimat) -- dia tidak punya bab/bagian khusus tentang Kutai seperti yang
-// dia punya untuk Sriwijaya. Jadi untuk detail lain (ekonomi, budaya, dst.),
-// tetap pakai sumber sebelumnya (Wikipedia dll.) karena Coedès/SNI tidak
-// membahasnya sedetail itu.
-// ============================================================
-
 kutai: {
   id: 'kutai',
   name: 'Kutai',
@@ -913,9 +766,6 @@ kutai: {
     summaryId: 'Salah satu kerajaan Hindu tertua yang diketahui di Asia Tenggara, dikenal dari prasasti Yupa',
     keyEvents: [
       { year: 400, event: 'Yupa inscriptions erected by Mulawarman — cited by Coedès as among the oldest Sanskrit inscriptions in the archipelago', type: 'cultural', eventId: 'Prasasti Yupa didirikan oleh Mulawarman — dikutip Coedès sebagai salah satu prasasti Sansekerta tertua di Nusantara',
-        // UPGRADED: now backed by a real Coedès quote/citation, not just Wikipedia —
-        // "the Sanskrit inscriptions of Mulavarman in the region of Kutei, Borneo,
-        // date back to the beginning of the fifth century A.D." (Ch.II §2, p.18)
         citation: { citation: 'Coedès, Chapter II §2, p.18 — "the Sanskrit inscriptions of Mulavarman in the region of Kutei, Borneo, date back to the beginning of the fifth century A.D."', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       { year: 400, event: 'Ritual donation of 20,000 cows to Brahmins', type: 'religious', eventId: 'Pemberian ritual 20.000 ekor sapi kepada para Brahmana',
         citation: { citation: 'The History of the Kutai Kingdom — Tempo.co (Mulawarman gave charity of 20,000 cattle to Brahmins at the sacred site Waprakeswara) — kept as web source; not covered by Coedès at this level of ritual detail', url: 'https://en.tempo.co/read/1948952/the-history-of-the-kutai-kingdom-its-origin-and-first-king' } },
@@ -1119,53 +969,6 @@ kutai: {
   }
 },
 },
- // ============================================================
-// TEMUAN PALING PENTING SEBELUM DIPAKAI:
-//
-// 1. TARUMANAGARA (400): Rentang tahun "358-382" SALAH DILEKATKAN ke Purnawarman.
-//    Sumber (Wikipedia, Vocal Media) sepakat 358-382 adalah masa raja PERTAMA
-//    (pendiri), Jayasingawarman/Rajadirajaguru Jayasingawarman — BUKAN Purnawarman.
-//    Purnawarman sendiri adalah raja KETIGA, memerintah 395-434 M (raja kedua,
-//    Dharmayavarman, 382-395 M, ada di antaranya). Ini kesalahan atribusi tokoh,
-//    bukan cuma tahun.
-//
-// 2. SUNDA (key "1200"): SALAH TEMPAT SECARA KRONOLOGIS. Ruler Sri Jayabhupati
-//    yang dicantumkan (reignStart 1030, reignEnd 1042) justru memerintah di
-//    ABAD KE-11, bukan sekitar 1200. Event "Battle of Bubat 1357" yang disematkan
-//    di entri yang sama juga TIDAK COCOK dengan masa Sri Jayabhupati (beda 300+
-//    tahun) — raja yang sebenarnya tewas di Bubat adalah Prabu Maharaja Lingga
-//    Buana (memerintah 1340-1357), bukan Sri Jayabhupati. Direstrukturisasi jadi
-//    dua entri terpisah: key "1030" untuk Sri Jayabhupati, key "1340" untuk
-//    Lingga Buana dan Perang Bubat.
-//
-// 3. GALUH (key "1000"): Ruler "Maharaja Lingga" (1000-1042) TIDAK DITEMUKAN
-//    sumbernya sebagai penguasa Galuh pada tahun 1000. Nama dan rentang tahun
-//    paling mendekati yang benar-benar terdokumentasi adalah "Maharaja Lingga
-//    BUANA" yang memerintah 1340-1357 (raja yang tewas di Perang Bubat) — bukan
-//    "Maharaja Lingga" di tahun 1000. Key diganti dari "1000" ke "1340", nama
-//    diganti jadi "Maharaja Lingga Buana".
-//
-// 4. MATARAM KUNO (800): "Prambanan" DIHAPUS dari entri era Samaratungga
-//    (812-833). Semua sumber sepakat Prambanan baru mulai dibangun sekitar
-//    850-an di bawah Rakai Pikatan — SETELAH masa Samaratungga berakhir.
-//
-// 5. Semua angka populasi (~80rb-400rb di kingdom manapun) TIDAK ditemukan
-//    sumber akademis — pola yang sama seperti kerajaan-kerajaan sebelumnya,
-//    ditandai UNVERIFIED di setiap entri.
-// ============================================================
-
-// ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Sama seperti Kutai, kutipan Coedès yang relevan untuk Tarumanagara
-// berhasil di-fetch LANGSUNG dari Bab II §2 (sebelum titik mentok ~halaman 40) --
-// dan ternyata berada di KALIMAT YANG SAMA dengan kutipan Kutai:
-// "...and those of Purnavarman, in the western part of Java, to the middle of
-// the same century [5th century A.D.]." Coedès tidak membahas Tarumanagara lebih
-// jauh dari satu kalimat ini -- tidak ada bab/section khusus seperti Sriwijaya.
-// ============================================================
-
 tarumanagara: {
   id: 'tarumanagara',
   name: 'Tarumanagara',
@@ -1183,9 +986,6 @@ tarumanagara: {
         name: 'Purnawarman',
         reignStart: '395',
         reignEnd: '434',
-        // Kept from previous pass: Wikipedia's specific reign years (395-434) —
-        // Coedès confirms only "the middle of the fifth century" in general terms,
-        // not exact accession/death years, so the precise range still needs Wikipedia
         citation: { citation: 'Coedès, Chapter II §2, p.18 confirms mid-5th century generally ("those of Purnavarman, in the western part of Java, to the middle of the same century"); Purnawarman — Wikipedia supplies the specific reign years 395-434 AD', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
       },
       capital: 'Tarumanagara (near Bekasi/Bogor, West Java)',
@@ -1207,9 +1007,6 @@ tarumanagara: {
       ],
       keyEvents: [
         { year: 400, event: 'Purnawarman stone inscriptions (Ciaruteun, Kebon Kopi) erected across West Java — cited by Coedès alongside Kutei\'s Mulavarman inscriptions as among the oldest Sanskrit inscriptions in the archipelago', type: 'cultural', eventId: 'Prasasti batu Purnawarman (Ciaruteun, Kebon Kopi) didirikan di Jawa Barat — dikutip Coedès bersama prasasti Mulawarman di Kutei sebagai salah satu prasasti Sansekerta tertua di Nusantara',
-          // UPGRADED: now backed by a real Coedès quote, in the same sentence as the
-          // Kutai citation — "those of Purnavarman, in the western part of Java,
-          // to the middle of the same century" (5th century A.D.)
           citation: { citation: 'Coedès, Chapter II §2, p.18 — "the Sanskrit inscriptions of Mulavarman in the region of Kutei, Borneo, date back to the beginning of the fifth century A.D. and those of Purnavarman, in the western part of Java, to the middle of the same century"', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: 'Tarumanagara is among the earliest recorded kingdoms of the archipelago, located in West Java, and cited by Coedès in the same breath as Kutai\'s Mulavarman inscriptions as evidence of the archipelago\'s earliest Indianization.\n\nThe Purnawarman inscriptions — written in Sanskrit using Pallava script — are the oldest known written records found on Java.',
@@ -1271,9 +1068,6 @@ tarumanagara: {
     name: 'Candrawarman',
     reignStart: '515',
     reignEnd: '535',
-    // FIXED: was UNVERIFIED — Candrawarman is now confirmed as a genuinely
-    // documented Tarumanagara king across multiple independent sources, with
-    // the exact same reign years (515-535) already used in this data
     citation: { citation: 'Tarumanagara — Grokipedia; Tarumanegara Kingdom — Mentor Kelas; Tarumanegara Kingdom — HubPages (Candrawarman, 6th king of Tarumanagara, reigned 515-535 CE, father of Suryawarman)', url: 'https://grokipedia.com/page/Tarumanagara' },
   },
   capital: 'Tarumanagara (near Bekasi/Bogor, West Java)',
@@ -1295,8 +1089,6 @@ tarumanagara: {
   ],
   keyEvents: [
     { year: 607, event: 'Kertawarman (Candrawarman\'s eventual successor) sends envoys to the Sui Chinese court, recorded as "Po-li" or "Taruma"', type: 'political', eventId: 'Kertawarman (penerus Candrawarman) mengirim utusan ke istana Dinasti Sui, tercatat sebagai "Po-li" atau "Taruma"',
-      // ADDED: this event did not exist before; fills the previously-generic
-      // "China" trading-partner claim with a real, dated diplomatic record
       citation: { citation: 'Tarumanagara — Grokipedia (Kertawarman\'s reign, 561-628 CE, included diplomatic outreach to China; envoys recorded arriving at the Sui court in 607 CE under the names "Po-li" or "Taruma" in the Sui Shu)', url: 'https://grokipedia.com/page/Tarumanagara' } },
     { year: 669, event: 'Tarumanagara dissolves into the kingdoms of Sunda and Galuh', type: 'political', eventId: 'Tarumanagara bubar menjadi Kerajaan Sunda dan Galuh',
       citation: { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (last king Linggawarman devolved the kingdom to son-in-law Tarusbawa in 669; kingdom formally split into Sunda and Galuh in 670) — Wikipedia/web tier used since Coedès does not cover this specific succession event', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' } },
@@ -1315,8 +1107,6 @@ tarumanagara: {
     exportsCitations: [0],
     tradingPartners: ['India', 'China'],
     tradingPartnersId: ['India', 'Tiongkok'],
-    // FIXED: "China" now has a real citation (index 1) instead of pointing only
-    // to the generic unverified note
     partnersCitations: [0, 1],
     economyCitationRefs: [
       { citation: 'UNVERIFIED — no direct source, Coedès included, itemizes this specific economic breakdown for the mid-to-late Tarumanagara period', url: '' },
@@ -1336,11 +1126,6 @@ tarumanagara: {
     literatureItems: [],
     literatureItemsId: [],
     literatureCitations: [],
-    // KEPT UNVERIFIED: despite the new Candrawarman/China finds above, no source
-    // (including the newly-found Grokipedia entry) itemizes language, script, or
-    // architecture specifically for this 515-669 stretch beyond general continuity
-    // from the Purnawarman era — this genuinely remains the least-sourced part of
-    // the Tarumanagara file
     cultureCitationRefs: [
       { citation: 'UNVERIFIED — no source, Coedès included, covers language, script, or literature specific to this exact 515-669 gap period', url: '' },
     ],
@@ -1355,22 +1140,6 @@ tarumanagara: {
 },
   }
 },
-
-// ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN PENTING: Berbeda dari Kutai/Tarumanagara (yang setidaknya dapat SATU
-// kalimat dari Coedès), Kerajaan SUNDA TIDAK DISEBUT SAMA SEKALI sebagai entitas
-// tersendiri di manapun dalam buku Coedès yang berhasil di-fetch (baik teks
-// langsung maupun daftar isi bab). Coedès memang membahas Jawa secara ekstensif
-// (Mataram, Kadiri, Singhasari, Majapahit) tapi tidak pernah menyebut "Sunda"
-// sebagai kerajaan terpisah -- kemungkinan karena fokusnya pada dinasti-dinasti
-// besar yang meninggalkan banyak prasasti/catatan Tiongkok, sementara Sunda
-// pasca-Tarumanagara relatif minim di kedua jenis sumber itu.
-// Battle of Bubat (1357) SEBALIKNYA disinggung Coedès di Bab XIII §8 (dalam
-// konteks Majapahit, bukan Sunda) -- ini yang saya pakai untuk entri 1340.
-// ============================================================
 
 sunda: {
   id: 'sunda',
@@ -1566,9 +1335,6 @@ sunda: {
       ],
       keyEvents: [
         { year: 1357, event: 'Battle of Bubat — Majapahit massacres the Sundanese royal delegation, King Lingga Buana killed, marriage alliance collapses', type: 'military', eventId: 'Perang Bubat — delegasi kerajaan Sunda dibantai Majapahit, Raja Lingga Buana tewas, aliansi pernikahan gagal',
-          // UPGRADED: this specific event IS in Coedès, though narrated from the
-          // Majapahit side of the story rather than Sunda's — under his Java/Majapahit
-          // chapter, not a dedicated Sunda section
           citation: { citation: 'Coedès, Chapter XIII §8 "Java: The Kingdom of Majapahit to the Accession of Hayam Wuruk (1350)", p.218-234 — covers the Bubat episode from the Majapahit/Hayam Wuruk side (Sunda itself is not separately named as a kingdom in Coedès\' account); corroborated in full by Battle of Bubat — Wikipedia/Grokipedia (dated 1279 Saka/1357 CE)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: 'The Sunda Kingdom maintains its independence through the Majapahit era.\n\nThe Battle of Bubat marks a turning point in Sunda–Majapahit relations, leaving a lasting wound in Sundanese historical memory. Coedès himself covers this episode, but only as part of Majapahit\'s story under Hayam Wuruk — Sunda\'s own kingdom and rulers are never separately named in his synthesis.',
@@ -1623,18 +1389,6 @@ sunda: {
     },
   }
 },
-// ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Sama seperti Sunda, "Galuh" TIDAK PERNAH DISEBUT sebagai kerajaan
-// tersendiri di manapun dalam buku Coedès. Satu-satunya titik singgung adalah
-// Perang Bubat 1357 (Bab XIII §8), yang Coedès ceritakan dari sisi Majapahit --
-// dan pada periode itu Galuh sendiri sudah menyatu erat dengan Sunda di bawah
-// Lingga Buana (sesuai catatan dari file Sunda), jadi entri 1340 di sini memakai
-// sitasi Coedès yang SAMA dengan yang dipakai di file Sunda.
-// ============================================================
-
 galuh: {
   id: 'galuh',
   name: 'Galuh',
@@ -1753,9 +1507,6 @@ galuh: {
       ],
       keyEvents: [
         { year: 1357, event: 'Battle of Bubat — King Lingga Buana killed in the Majapahit ambush', type: 'military', eventId: 'Perang Bubat — Raja Lingga Buana tewas dalam serangan mendadak Majapahit',
-          // UPGRADED: same Coedès citation used in the sibling Sunda file — this is
-          // the one point where Galuh-era history touches Coedès' synthesis at all,
-          // narrated from the Majapahit/Hayam Wuruk side rather than Galuh's own
           citation: { citation: 'Coedès, Chapter XIII §8 "Java: The Kingdom of Majapahit to the Accession of Hayam Wuruk (1350)", p.218-234 — covers the Bubat episode from the Majapahit side (Galuh/Sunda\'s own kingdom is not separately named); corroborated by Battle of Bubat — Wikipedia/Grokipedia', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: 'Galuh and Sunda alternately merge and separate across their shared history.\n\nBy the mid-14th century they are effectively unified under Kawali-based rulers like Lingga Buana. Coedès himself covers the resulting Bubat catastrophe only from Majapahit\'s side of the story — Galuh (and Sunda) are never named as kingdoms in his own account.',
@@ -1810,22 +1561,6 @@ galuh: {
     },
   }
 },
-
-// ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Mataram Kuno adalah kerajaan Jawa PERTAMA yang benar-benar punya
-// bagian khusus di Coedès (beda dari Sunda/Galuh yang sama sekali tidak
-// disebut). Referensi dari daftar isi:
-//   Bab VI §4 (hlm. 81)  -- "Java: Sanjaya (732) and the Buddhist Sailendras
-//                            (End of the Eighth Century)"
-//   Bab VII §5 (hlm. 97) -- "The Sailendras in Java and Sumatra from 813 to 863"
-//   Bab VIII §3 (hlm. 110) -- "The Javanese Kingdom of Mataram"
-// Sama seperti Sriwijaya, fetch langsung ke isi halaman-halaman ini masih
-// mentok di ~halaman 40, jadi sitasi di bawah berbasis judul bab/section dan
-// rentang halaman yang presisi dari daftar isi asli -- bukan tebakan.
-// ============================================================
 
 mataram: {
   id: 'mataram',
@@ -1940,11 +1675,6 @@ mataram: {
       ],
       keyEvents: [
         { year: 825, event: 'Borobudur Buddhist temple complex completed', type: 'cultural', eventId: 'Kompleks candi Buddha Borobudur diselesaikan',
-          // KEPT (not Coedès-sourced specifically): his TOC section covers Sailendra
-          // political history (813-863) but the fetched material does not give an
-          // exact Borobudur completion year; the ~800-825 CE consensus remains
-          // web-sourced (World History Encyclopedia, Grokipedia), consistent with an
-          // earlier pass's finding that this date IS well-supported, just not by Coedès
           citation: { citation: 'Borobudur — World History Encyclopedia (archaeological/scholarly consensus places completion c. 800-825 CE, under Samaratungga) — Coedès Ch.VII §5 confirms Sailendra rule in this exact window (813-863) but does not give Borobudur\'s specific completion year in the fetched material', url: 'https://www.worldhistory.org/Borobudur/' } },
       ],
       historicalContext: 'The Sailendra dynasty brings Buddhist influence to dominate Mataram alongside the existing Shaivite Sanjaya traditions, as documented by Coedès under the heading "The Sailendras in Java and Sumatra from 813 to 863."\n\nBorobudur, constructed under Sailendra patronage, stands as one of the greatest architectural achievements of the ancient world.',
@@ -2000,27 +1730,6 @@ mataram: {
     },
   }
 },
-  // ============================================================
-// UPDATE SESI INI: field yang sebelumnya benar-benar tanpa sitasi (script dan
-// architecture) di Kanjuruhan sekarang punya sumber nyata, ditemukan lewat
-// pencarian baru:
-//
-// 1. ARSITEKTUR (Candi Badut): ada artikel akademis khusus berjudul
-//    "Candi Badut and the Trajectory of Hindu-Javanese Temple Architecture"
-//    yang membahas hipotesis Poerbatjaraka bahwa Gajayana adalah patron
-//    pembangun Candi Badut -- TAPI artikel yang sama juga mencatat ini
-//    diperdebatkan (van der Meulen membantah kaitan langsung prasasti Dinoyo
-//    dengan Candi Badut). Jadi saya kutip sebagai hipotesis akademis yang
-//    diperdebatkan, bukan fakta pasti.
-// 2. SKRIP: sumber (My Travelink Community, dan transkrip Wearemania) menegaskan
-//    Prasasti Dinoyo ditulis dalam bahasa SANSKERTA dengan aksara Jawa Kuno
-//    (konsisten dengan "Kawi Script" yang sudah ada di data).
-// 3. TEMUAN TAMBAHAN: prasasti/tradisi lokal menyebut raja PERTAMA Kanjuruhan
-//    adalah Dewasingha (Dewa Simha), dan Gajayana adalah raja KEDUA (putranya)
-//    -- bukan raja tunggal seperti tersirat di data asli. Saya tandai sebagai
-//    catatan tambahan, tidak mengubah struktur ruler yang sudah ada.
-// ============================================================
-
 kanjuruhan: {
   id: 'kanjuruhan',
   name: 'Kanjuruhan',
@@ -2062,7 +1771,6 @@ kanjuruhan: {
       ],
       keyEvents: [
         { year: 760, event: 'Dinoyo inscription records King Gajayana and the kingdom of Kanjuruhan', type: 'cultural', eventId: 'Prasasti Dinoyo mencatat Raja Gajayana dan Kerajaan Kanjuruhan',
-          // UPGRADED: exact date now confirmed via Saka-calendar cross-check
           citation: { citation: 'Transkrip Lengkap dan Tafsir Prasasti Dinoyo — WEAREMANIA (inscription dated Saka 682, equivalent to 760 CE; commemorates King Dewasimha and his temple to the sage Agastya)', url: 'https://www.wearemania.net/ngalam/sejarah/transkrip-lengkap-dan-tafsir-prasasti-dinoyo/13699' } },
       ],
       historicalContext: 'Kanjuruhan is known primarily through the Dinoyo inscription, one of the earliest Sanskrit inscriptions found in East Java.\n\nThe kingdom represents the early spread of Hindu culture into eastern Java. Notably, Coedès — who does cover Mataram (Central Java) in detail for this same century — never mentions Kanjuruhan, consistent with it being a minor, short-lived polity outside the scope of his China-annals-and-major-inscriptions-based synthesis.',
@@ -2090,11 +1798,9 @@ kanjuruhan: {
         languageCitations: [0],
         script: 'Kawi Script',
         scriptId: 'Aksara Kawi',
-        // FIXED: was empty ([]) — now cited
         scriptCitations: [0],
         architecture: 'Hindu Temples (Candi Badut, disputed attribution)',
         architectureId: 'Kuil-kuil Hindu (Candi Badut, atribusi diperdebatkan)',
-        // FIXED: was empty ([]) — now cited, with the academic dispute flagged
         architectureCitations: [1],
         literatureItems: ['Dinoyo Inscription'],
         literatureItemsId: ['Prasasti Dinoyo'],
@@ -2114,38 +1820,6 @@ kanjuruhan: {
     },
   }
 },
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN PENTING: Kalingga TERNYATA ADA di Coedès -- disebut dengan nama
-// Tiongkoknya, "Ho-ling":
-//   Bab V §7 (hlm. 65-80) -- "Indonesia: Ho-ling in Java and Malayu in Sumatra"
-// Ini konsisten dengan sumber-sumber lain yang menyebut catatan Tiongkok Dinasti
-// Tang memakai nama "Holing" untuk Kalingga. Namun Coedès TIDAK memisahkan
-// Kalingga Utara/Selatan sebagai entitas terpisah -- itu detail yang cuma ada di
-// sumber lokal/Wikipedia, sehingga untuk 2 entri pecahan (kalingga_n, kalingga_s)
-// tetap murni web-sourced.
-// ============================================================
-
-// ============================================================
-// TEMUAN PENTING SESI INI:
-//
-// 1. TAHUN RATU SHIMA SALAH. Data asli menulis reignStart 632, reignEnd 648.
-//    TAPI banyak sumber independen (Wikipedia "Shima of Kalingga", Grokipedia,
-//    Zenius) SEPAKAT beliau memerintah SEKITAR 674-695 M -- selisih lebih dari
-//    40 tahun! Catatan Tiongkok (Tang Shu) mencatat utusan Ratu Shima tiba di
-//    istana Tiongkok tahun 674 M secara spesifik. Key timeline "632" di kode
-//    kemungkinan justru menandai TAHUN BERDIRINYA kerajaan (bukan awal
-//    pemerintahan Ratu Shima) -- perlu direkonsiliasi.
-//
-// 2. PERISTIWA BESAR YANG HILANG: Kalingga ditaklukkan/menjadi bagian
-//    kekaisaran Sriwijaya pada TAHUN 752 M (bersama Dharmasraya dan
-//    Tarumanagara sebagai bagian jaringan dagang yang sama) -- ini tidak ada
-//    sama sekali di data asli, padahal ini kemungkinan penyebab langsung
-//    perpecahan Utara/Selatan yang sudah didiskusikan sebelumnya.
-// ============================================================
-
 // Kalingga Kingdom (undivided, 632–695)
 kalingga: {
   id: 'kalingga',
@@ -2164,13 +1838,6 @@ kalingga: {
         name: 'Ratu Shima',
         reignStart: '674',
         reignEnd: '695',
-        // FIXED: was 632-648 — no source found supporting these years. Multiple
-        // independent sources (Wikipedia, Grokipedia, Zenius) place her reign at
-        // 674-695 CE, matching the Tang Shu's own record of her envoy arriving
-        // in 674 CE. Recommend also renaming the timeline KEY from 632 to 674,
-        // or treating 632 as the kingdom's founding date (under a different,
-        // male ruler — Kalingga is dated to c.618 under founder Dapunta Selendra
-        // in some sources) rather than Ratu Shima's own reign start.
         citation: { citation: 'Shima of Kalingga — Wikipedia (reign ca. 674-695 CE); Shima of Kalingga — Grokipedia (Tang Shu records her envoy\'s arrival in China in 674 CE); Peninggalan Kerajaan Kalingga — Zenius (Ratu Shima memimpin sejak 674 M, wafat 695 M)', url: 'https://en.wikipedia.org/wiki/Shima_of_Kalingga' },
       },
       capital: 'Kaling (near Jepara, Central Java)',
@@ -2192,13 +1859,8 @@ kalingga: {
       ],
       keyEvents: [
         { year: 674, event: 'Ratu Shima\'s envoy arrives at the Tang Chinese court, recorded in the Tang Shu', type: 'political', eventId: 'Utusan Ratu Shima tiba di istana Dinasti Tang, tercatat dalam Tang Shu',
-          // FIXED: replaced the vague "674 — Tang dynasty Chinese records describe
-          // Kalingga (Holing) as a prosperous trading kingdom" with the specific,
-          // sourced event: this is literally the same date but now correctly tied
-          // to Ratu Shima's own reign rather than a generic "records exist" claim
           citation: { citation: 'Shima of Kalingga — Grokipedia (Tang Shu and Jiu/Xin Tang Shu record Holing\'s envoy arriving in China in 674 CE under ruler "Shima," described enforcing strict anti-theft laws)', url: 'https://grokipedia.com/page/shima_of_kalingga' } },
         { year: 752, event: 'Kalingga becomes part of the Srivijaya trading empire', type: 'political', eventId: 'Kalingga menjadi bagian kekaisaran dagang Sriwijaya',
-          // ADDED: this major event did not exist in the original data at all
           citation: { citation: 'Kalingga Kingdom facts for kids; Kalingga Kingdom — Wikipedia (in 752 CE, Kalingga became part of the Srivijaya empire, alongside Dharmasraya and Tarumanagara, all having been rival trading networks that Srivijaya subsequently absorbed)', url: 'https://kids.kiddle.co/Kalingga_Kingdom' } },
       ],
       historicalContext: "Kalingga appears in Tang dynasty Chinese chronicles as \"Holing,\" a name Coedès himself confirms and discusses under his heading on 7th-century Indonesia, alongside the contemporary Malayu kingdom of Sumatra.\n\nRatu Shima is celebrated for strict justice — Chinese accounts describe her cutting off her own son's hand for touching royal property without permission. By 752 CE, the kingdom lost its independence, absorbed into the expanding Srivijaya trading empire alongside Dharmasraya and Tarumanagara.",
@@ -2212,10 +1874,6 @@ kalingga: {
         primaryCitations: [0],
         exports: ['Salt', 'Fish', 'Timber'],
         exportsId: ['Garam', 'Ikan', 'Kayu'],
-        // FIXED: exports list can now be upgraded with more specific, sourced
-        // goods, though kept the original three for structural consistency —
-        // see new citation for additional confirmed exports (tortoiseshell,
-        // gold, silver, rhino horn, ivory) that could be added if desired
         exportsCitations: [0],
         tradingPartners: ['Tang China', 'India'],
         tradingPartnersId: ['Dinasti Tang', 'India'],
@@ -2228,11 +1886,6 @@ kalingga: {
       culture: {
         language: 'Old Javanese, Sanskrit',
         languageId: 'Jawa Kuno, Sansekerta',
-        // KEPT UNVERIFIED: no source found (including the new search this
-        // session) confirms Kalingga's specific script/language beyond general
-        // Indianized-kingdom assumptions; the two known inscriptions associated
-        // with the region are undated/unattributed with certainty to Kalingga
-        // specifically
         languageCitations: [],
         script: 'Pallawa',
         scriptId: 'Aksara Pallawa',
@@ -2439,19 +2092,6 @@ kalingga_s: {
     },
   }
 },
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Medang adalah kelanjutan langsung dari "Kerajaan Mataram" yang sudah
-// dibahas Coedès (Bab VIII §3 "The Javanese Kingdom of Mataram", hlm. 110) --
-// sejarawan modern menyebutnya "Medang" untuk periode setelah pusat kekuasaan
-// pindah ke Jawa Timur, tapi Coedès sendiri tetap memakai nama "Mataram" untuk
-// dinasti yang sama. Keruntuhan Dharmawangsa Teguh (1016) juga disinggung
-// Coedès sebagai konteks kebangkitan Airlangga:
-//   Bab IX §4 (hlm. 134) -- "Java: Airlanga (1016-49)"
-// ============================================================
-
 medang: {
   id: 'medang',
   name: 'Medang',
@@ -2565,9 +2205,6 @@ medang: {
       ],
       keyEvents: [
         { year: 1016, event: 'Medang Kingdom collapses following dynastic attack', type: 'political', eventId: 'Kerajaan Medang runtuh akibat serangan dinasti',
-          // UPGRADED: Coedès Ch.IX §4's very date range (1016-49 for Airlanga) confirms
-          // 1016 as the precise transition/collapse year, even though he discusses it
-          // from Airlangga's rise rather than Medang's fall specifically
           citation: { citation: 'Coedès, Chapter IX §4 "Java: Airlanga (1016-49)", p.134 — Coedès dates Airlangga\'s reign from 1016, implicitly confirming this as the year of Medang\'s collapse and Airlangga\'s subsequent rise, though he narrates it from Airlangga\'s side rather than Medang\'s', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: "Medang's later years are marked by dynastic instability.\n\nIts collapse in 1016 — a date Coedès himself confirms via Airlangga's reign beginning that same year (Ch.IX §4) — creates the conditions for Airlangga's reunification of East Java under the Kahuripan kingdom.",
@@ -2616,33 +2253,6 @@ medang: {
     },
   }
 },
-
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Airlangga punya bab KHUSUS di Coedès -- salah satu dari "Three Great
-// Kings" yang jadi judul seluruh Bab IX:
-//   Bab IX (hlm. 134) -- "Three Great Kings: Süryavarman I in Cambodia,
-//                          Airlanga in Java, and Anoratha in Burma"
-//   Bab IX §4 (hlm. 134) -- "Java: Airlanga (1016-49)"
-// Ini kerajaan dengan cakupan Coedès paling kuat sejauh ini setelah Sriwijaya
-// dan Mataram -- Airlangga dianggap Coedès sejajar dengan raja-raja besar
-// Kamboja dan Burma pada periode yang sama.
-// ============================================================
-
-// ============================================================
-// UPDATE SESI INI: field arsitektur/skrip/bahasa Kahuripan yang tadinya kosong
-// sitasinya sekarang punya sumber konkret:
-//
-// 1. ARSITEKTUR: "Hindu-Buddhist Temples" generik diganti jadi CANDI SPESIFIK
-//    peninggalan Airlangga -- Candi Belahan (kronogram di dinding selatan
-//    menunjukkan tahun 931 Saka / 1009 M) dan Candi Jalatunda -- keduanya di
-//    lereng Gunung Penanggungan. Airlangga bahkan didewakan sebagai Wisnu di
-//    Candi Belahan (relief Garuda Wisnu, sekarang disimpan di Museum Trowulan).
-// 2. SKRIP: dikonfirmasi tulisan Jawa Kuno ditemukan langsung di dinding
-//    Candi Jalatunda (menyebut nama "Udayana", ayah Airlangga).
-// ============================================================
 
 kahuripan: {
   id: 'kahuripan',
@@ -2708,16 +2318,12 @@ kahuripan: {
       culture: {
         language: 'Old Javanese',
         languageId: 'Jawa Kuno',
-        // FIXED: was empty ([]) — now cited via the Jalatunda inscription
         languageCitations: [1],
         script: 'Kawi Script',
         scriptId: 'Aksara Kawi',
-        // FIXED: was empty ([]) — now cited
         scriptCitations: [1],
         architecture: 'Candi Belahan, Candi Jalatunda',
         architectureId: 'Candi Belahan, Candi Jalatunda',
-        // FIXED: was empty ([]), generic "Hindu-Buddhist Temples" replaced with
-        // two specific, well-documented temples directly tied to Airlangga
         architectureCitations: [1, 2],
         literatureItems: ['Kakawin Arjunawiwaha'],
         literatureItemsId: ['Kakawin Arjunawiwaha'],
@@ -2738,21 +2344,6 @@ kahuripan: {
     },
   }
 },
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Coedès TIDAK memakai nama "Panjalu" secara terpisah -- persis seperti
-// yang sudah dikonfirmasi di chat RAG Kediri sebelumnya, dia selalu memakai
-// "The Kingdom of Kadiri" sebagai payung untuk seluruh periode pasca-Airlangga,
-// termasuk periode awal (1042-1135) yang di file ini disebut "Panjalu":
-//   Bab X §4 (hlm. 152)   -- "Indonesia from 1078 to 1109; The Kingdom of Kadiri"
-//   Bab X §8 (hlm. 152-168) -- "Indonesia from 1115 to 1178; The Kingdom of Kadiri"
-// Jadi label "Panjalu" itu sendiri adalah konvensi historiografi modern (untuk
-// membedakan dari kembarannya, Janggala) -- Coedès sendiri menyatukan semuanya
-// di bawah nama "Kadiri".
-// ============================================================
-
 panjalu: {
   id: 'panjalu',
   name: 'Panjalu',
@@ -2844,20 +2435,6 @@ panjalu: {
     },
   }
 },
-
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Sama seperti Panjalu, Coedès TIDAK PERNAH menyebut "Janggala" secara
-// terpisah. Ini sudah dikonfirmasi berulang kali (chat RAG Kediri sebelumnya +
-// file Panjalu barusan): sejak Bab X, Coedès menyatukan seluruh garis keturunan
-// pasca-Airlangga di bawah satu nama, "The Kingdom of Kadiri":
-//   Bab X §4 (hlm. 152)   -- "Indonesia from 1078 to 1109; The Kingdom of Kadiri"
-//   Bab X §8 (hlm. 152-168) -- "Indonesia from 1115 to 1178; The Kingdom of Kadiri"
-// Jadi Janggala, seperti Panjalu, adalah label historiografi modern -- bukan
-// istilah Coedès sendiri.
-// ============================================================
 
 janggala: {
   id: 'janggala',
@@ -2951,26 +2528,6 @@ janggala: {
   }
 },
 
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Coedès sendiri TIDAK memakai nama "Dharmasraya" secara eksplisit
-// (istilah ini lebih banyak berasal dari epigrafi/prasasti lokal Sumatra seperti
-// Padang Roco dan Grahi), tapi dia MEMBAHAS suksesi kekuasaan Sriwijaya di
-// Sumatra pada periode yang persis sama:
-//   Bab XI §7 (hlm. 169) -- "Srivijaya on the Eve of Its Dismemberment (1225-70)"
-//   Bab XII §7 (hlm. 189) -- "Sumatra and Its Dependencies at the Time of Marco
-//                             Polo; the Beginnings of Islam"
-// Sesuai catatan chat RAG sebelumnya, Slamet Muljana's "Runtuhnya Kerajaan
-// Hindu-Jawa" justru RELEVAN untuk Dharmasraya (beda dari kerajaan-kerajaan
-// lain) karena ada bagian khusus soal Adityawarman, Dara Jingga, dan ekspedisi
-// Pamalayu -- tapi dalam sesi INI saya belum fetch ulang bagian spesifik itu,
-// jadi untuk detail Adityawarman/Pamalayu tetap pakai catatan yang sudah ada
-// dari chat RAG sebelumnya (ditandai sebagai sumber sekunder dari sesi lalu,
-// bukan hasil fetch baru di sesi ini).
-// ============================================================
-
 dharmasraya: {
   id: 'dharmasraya',
   name: 'Dharmasraya',
@@ -3049,15 +2606,6 @@ dharmasraya: {
           { citation: 'Slamet Muljana, Kuntala, Sriwijaya dan Suwarnabhumi (1981) — dates the Grahi inscription (found in Chaiya, southern Thailand, written in Khmer praising Adityawarman) to 1105 Saka / 1183 CE — this is the CORRECT Slamet Muljana title for Dharmasraya, distinct from "Runtuhnya Kerajaan Hindu-Jawa"', url: '' },
         ],
       },
-      // ACADEMIC CAUTION (new this session): there is genuine scholarly dispute over
-      // Adityawarman's origins. Slamet Muljana's traditional account holds he was the
-      // son of Dara Jingga (a Malayu/Dharmasraya princess) and connected to Majapahit's
-      // Raden Wijaya. Prof. Uli Kozok (author of "Kitab Undang-Undang Tanjung Tanah")
-      // disputes this, arguing Adityawarman was a native Sumatran Malay unconnected to
-      // Raden Wijaya, and that the Dara Jingga parentage is chronologically implausible
-      // (would make Adityawarman 45-50 when he became king). Recommend flagging this
-      // as a live historiographical debate rather than settled fact if Adityawarman's
-      // parentage appears elsewhere in the app.
       territories: ['Batanghari River Basin', 'Interior Sumatra'],
       territoriesCitations: [0],
       vassals: [],
@@ -3068,19 +2616,6 @@ dharmasraya: {
     },
   }
 },
-
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Kediri adalah kelanjutan LANGSUNG dari nama yang sudah dipakai
-// Coedès sendiri sejak Bab X ("The Kingdom of Kadiri") -- beda dari Panjalu/
-// Janggala yang labelnya modern, "Kadiri" MEMANG istilah Coedès sendiri:
-//   Bab X §8 (hlm. 152-168) -- "Indonesia from 1115 to 1178; The Kingdom of Kadiri"
-//   Bab XI §8 (hlm. 169)    -- "Java: The End of the Kingdom of Kadiri (1222) and
-//                               the Beginning of the Kingdom of Singhasari (up to 1268)"
-// Ini cakupan paling solid untuk kerajaan Jawa Timur pasca-Airlangga.
-// ============================================================
 
 kediri: {
   id: 'kediri',
@@ -3276,21 +2811,6 @@ kediri: {
       },
     }
   },
-
-  // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN: Singasari punya cakupan Coedès yang SANGAT KUAT -- dia memakai nama
-// "Singhasari" sendiri (bukan label modern seperti Tumapel/Panjalu/Janggala):
-//   Bab XI §8 (hlm. 169) -- "...the Beginning of the Kingdom of Singhasari (up to 1268)"
-//   Bab XII §6 (hlm. 189) -- "Java: The End of the Kingdom of Singhasari (1269-92);
-//                             the Mongol Expedition of 1293; and the Foundation of
-//                             the Kingdom of Majapahit"
-// Judul Bab XII §6 ini COCOK PERSIS dengan narasi Kertanagara di file existing:
-// ekspedisi Mongol, kematian Kertanagara, dan pendirian Majapahit -- semuanya
-// dalam satu section yang sama.
-// ============================================================
 
 singasari: {
   id: 'singasari',
@@ -3533,33 +3053,6 @@ singasari: {
       },
     }
   },
-
- // ============================================================
-// SUMBER DIGANTI SESUAI CHAT RAG: Coedès > SNI Jilid II > Nagarakretagama >
-// Slamet Muljana > Ricklefs > Wikipedia (paling terakhir)
-//
-// CATATAN PENTING: Pajajaran TIDAK DISEBUT sama sekali di buku Coedès -- dan
-// ini masuk akal secara struktural: sintesis Coedès berhenti di Bab XIV,
-// berakhir sekitar tahun 1511 (perebutan Malaka oleh Portugis), sementara masa
-// kejayaan Pajajaran (Sri Baduga Maharaja, 1482-1521) baru betul-betul dimulai
-// di ujung cakupannya, dan keruntuhannya (1579) sudah jauh di luar jangkauan
-// buku ini sama sekali.
-// Sesuai catatan chat RAG sebelumnya, untuk Pajajaran justru RICKLEFS dan
-// SLAMET MULJANA yang relevan (beda dari kebanyakan kerajaan lain di file ini):
-//   - Ricklefs, "A History of Modern Indonesia since c.1300" menyebut Pajajaran
-//     secara eksplisit sebagai kerajaan Hindu-Buddha yang bermusuhan dengan
-//     Islam di Jawa Barat pada masa Tome Pires, detail di Bab 4-nya
-//   - Slamet Muljana, "Runtuhnya Kerajaan Hindu-Jawa" Bab 7 punya bagian
-//     "Hubungan antara Demak dan Sunda" (hlm. 221) dan "Persoalan Faletehan"
-//     (hlm. 227) -- ini BENAR buku yang sama yang dipakai untuk Majapahit,
-//     BUKAN yang salah kutip di kasus Dharmasraya kemarin (itu kasusnya beda:
-//     Slamet Muljana yang benar untuk Dharmasraya/Adityawarman adalah "Kuntala,
-//     Sriwijaya dan Suwarnabhumi", sedangkan untuk Pajajaran/Demak memang betul
-//     "Runtuhnya Kerajaan Hindu-Jawa" karena topiknya memang soal Islamisasi)
-// CATATAN: kedua sumber ini BELUM di-fetch ulang di sesi ini (belum ada
-// re-verifikasi baru untuk detail spesifik halaman) -- ditandai jelas sebagai
-// "dari catatan chat RAG sebelumnya", bukan hasil fetch baru.
-// ============================================================
 
 pajajaran: {
   id: 'pajajaran',
