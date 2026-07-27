@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MapContainer, GeoJSON, TileLayer, useMap } from 'react-leaflet';
-import { getEmpiresForYear, getTerritoryInfo } from '../../data/boundaries';
+import { getEmpiresForYear, getTerritoryInfo, EMPIRES } from '../../data/boundaries';
 import { getTerritoryData } from '../../data/territories';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import 'leaflet/dist/leaflet.css';
@@ -247,9 +247,20 @@ class MyMap extends Component {
     render() {
         const { activeEmpires, currentYear } = this.state;
         const { t, language } = this.context || {};
+        const { showMinor, onToggleMinor } = this.props;
+        const visibleEmpires = showMinor
+            ? activeEmpires
+            : activeEmpires.filter(e => !EMPIRES[e.id]?.minor);
 
         return (
             <div className="map-wrapper">
+                <button
+                    className={`minor-toggle-btn${showMinor ? ' minor-toggle-btn--active' : ''}`}
+                    onClick={onToggleMinor}
+                    title={showMinor ? 'Show curriculum only' : 'Show all kingdoms'}
+                >
+                    <span>{showMinor ? '🗺️' : '📚'}</span>
+                </button>
                 <MapContainer
                     style={{ height: '100%', width: '100%' }}
                     zoom={5}
@@ -278,7 +289,7 @@ class MyMap extends Component {
   className="green-land-overlay"
 />
 
-                    {activeEmpires.map((empire, index) => (
+                    {visibleEmpires.map((empire, index) => (
                         <GeoJSON
                             key={`${empire.id}-${currentYear}-${index}`}
                             data={empire.boundary}
@@ -289,13 +300,13 @@ class MyMap extends Component {
                     ))}
 
                     <TerritoryLabels
-                        empires={activeEmpires}
+                        empires={visibleEmpires}
                         currentYear={currentYear}
                     />
 
                     <EventMarkers currentYear={currentYear} onEventClick={this.props.onEventClick} />
 
-                    {activeEmpires.length > 0 ? (
+                    {visibleEmpires.length > 0 ? (
                         <div className="legend-events-stack">
                             <button
                                 className="legend-collapse-btn"
@@ -309,7 +320,7 @@ class MyMap extends Component {
                             <div className={`legend-collapse-body${this.state.legendCollapsed ? ' collapsed' : ''}`}>
                             <div className="empire-legend" role="region" aria-label={t?.legendAriaLabel ?? 'Active kingdoms'}>
                                 <h4>{t?.legendTitle(currentYear) ?? `Active Empires (${currentYear})`}</h4>
-                                {activeEmpires.map((empire) => {
+                                {visibleEmpires.map((empire) => {
                                     const info = getTerritoryInfo(empire.id, currentYear);
                                     return (
                                         <div key={empire.id} className="legend-item">
@@ -321,7 +332,7 @@ class MyMap extends Component {
                             </div>
 
                             {(() => {
-                                const territoryEvents = activeEmpires.flatMap((empire) => {
+                                const territoryEvents = visibleEmpires.flatMap((empire) => {
                                     const data = getTerritoryData(empire.id, currentYear);
                                     if (!data?.keyEvents) return [];
                                     return data.keyEvents
@@ -352,6 +363,7 @@ class MyMap extends Component {
                     ) : null}
                     <ZoomControl position="topleft" />
                 </MapContainer>
+
             </div>
         );
     }

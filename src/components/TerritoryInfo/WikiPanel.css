@@ -160,6 +160,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .wiki-open-btn {
@@ -556,7 +557,24 @@
 }
 
 @media (max-width: 600px) {
+  .wiki-panel-header {
+    padding: 12px 12px;
+  }
   .wiki-territory-name {
-    max-width: 160px;
+    max-width: 120px;
+  }
+  .wiki-label {
+    display: none;
+  }
+  .wiki-header-actions {
+    gap: 5px;
+  }
+  .wiki-open-btn,
+  .wiki-close-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .wiki-lang-btn {
+    padding: 4px 7px;
   }
 }

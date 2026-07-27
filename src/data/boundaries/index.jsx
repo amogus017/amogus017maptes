@@ -45,6 +45,7 @@ export const EMPIRES = {
     endYear: 1482,
     geojson: null,
     featureName: 'sunda',
+    minor: true,
   },
   galuh: {
     id: 'galuh',
@@ -54,6 +55,7 @@ export const EMPIRES = {
     endYear: 1482,
     geojson: null,
     featureName: 'galuh',
+    minor: true,
   },
   mataram: {
     id: 'mataram',
@@ -72,6 +74,7 @@ export const EMPIRES = {
     endYear: 763,
     geojson: null,
     featureName: 'kanjuruhan',
+    minor: true,
   },
   kalingga: {
     id: 'kalingga',
@@ -108,6 +111,7 @@ export const EMPIRES = {
     endYear: 1016,
     geojson: null,
     featureName: 'medang',
+    minor: true,
   },
   kahuripan: {
     id: 'kahuripan',
@@ -117,6 +121,7 @@ export const EMPIRES = {
     endYear: 1042,
     geojson: null,
     featureName: 'kahuripan',
+    minor: true,
   },
   panjalu: {
     id: 'panjalu',
@@ -126,6 +131,7 @@ export const EMPIRES = {
     endYear: 1135,
     geojson: null,
     featureName: 'panjalu',
+    minor: true,
   },
   janggala: {
     id: 'janggala',
@@ -135,6 +141,7 @@ export const EMPIRES = {
     endYear: 1185,
     geojson: null,
     featureName: 'janggala',
+    minor: true,
   },
   dharmasraya: {
     id: 'dharmasraya',
@@ -144,6 +151,7 @@ export const EMPIRES = {
     endYear: 1288,
     geojson: null,
     featureName: 'dharmasraya',
+    minor: true,
   },
   kediri: {
     id: 'kediri',
@@ -180,15 +188,6 @@ export const EMPIRES = {
     endYear: 1527,
     geojson: null,
     featureName: 'majapahit',
-  },
-  pajajaran: {
-    id: 'pajajaran',
-    name: 'Pajajaran',
-    color: '#556B2F',
-    startYear: 1482,
-    endYear: 1579,
-    geojson: null,
-    featureName: 'pajajaran',
   },
 };
 

@@ -18,6 +18,7 @@ function AppContent() {
   const [selectedTerritory, setSelectedTerritory] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isBotOpen, setIsBotOpen] = useState(false);
+  const [showMinor, setShowMinor] = useState(false);
   const [isMapReady, setIsMapReady] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const [activeEventWiki, setActiveEventWiki] = useState(null);
@@ -90,6 +91,8 @@ function AppContent() {
         currentYear={currentYear}
         onTerritoryClick={handleTerritoryClick}
         onEventClick={(event) => setActiveEventWiki({ slug: event.wikiSlug, idSlug: event.idWikiSlug, name: event.title, nameId: event.titleId })}
+        showMinor={showMinor}
+        onToggleMinor={() => setShowMinor(p => !p)}
       />}
 
       <Timeline onYearChange={handleYearChange} currentYear={currentYear} isPanelOpen={isPanelOpen} isBotOpen={isBotOpen} />
