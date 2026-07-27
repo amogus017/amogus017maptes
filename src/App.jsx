@@ -13,7 +13,7 @@ import WikiPanel from "./components/TerritoryInfo/WikiPanel";
 import './App.css';
 
 function AppContent() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentYear, setCurrentYear] = useState(732);
   const [selectedTerritory, setSelectedTerritory] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -128,6 +128,7 @@ function AppContent() {
         isOpen={!!activeEventWiki}
         onClose={() => setActiveEventWiki(null)}
         side="right"
+        defaultLanguage={language}
       />
 
       <TutorialOverlay

@@ -6,9 +6,9 @@ import './TutorialOverlay.css';
 const STEPS = [
   { selector: null },
   { selector: '.victoria3-timeline' },
-  { selector: '.slider-frame', clip: '/clips/step2.webm' },
+  { selector: '.slider-frame', clip: '/clips/step2.webm', clipMobile: '/clips/step2m.webm' },
   { selector: '.v3-play-controls' },
-  { selector: '.leaflet-container', hoverEffect: true, trimBottom: '.victoria3-timeline', clip: '/clips/step5.webm' },
+  { selector: '.leaflet-container', hoverEffect: true, trimBottom: '.victoria3-timeline', clip: '/clips/step5.webm', clipMobile: '/clips/step5m.webm' },
   { selector: '.v3-territory-panel', autoSelect: 'srivijaya', prefer: 'right' },
   { selector: '.v3-wiki-btn', prefer: 'right' },
   { selector: '.v3-tab-nav', prefer: 'right', closeOnLeave: true },
@@ -98,6 +98,7 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
   const [step, setStep] = useState(0);
   const [rect, setRect] = useState(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
 
   const measure = useCallback(() => {
     const { selector, autoSelect, labelText, trimBottom } = STEPS[step];
@@ -122,7 +123,20 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
   }, [step, onAutoSelect]);
 
   useEffect(() => {
-    if (isOpen) setStep(0);
+    if (isOpen) {
+      setIsFirstVisit(!localStorage.getItem('atlas_tutorial_seen'));
+      setStep(0);
+
+      const isMobile = window.innerWidth <= 768;
+      STEPS.forEach(s => {
+        const src = (isMobile && s.clipMobile) ? s.clipMobile : s.clip;
+        if (!src) return;
+        const v = document.createElement('video');
+        v.src = src;
+        v.preload = 'auto';
+        v.muted = true;
+      });
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -147,8 +161,9 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
   useEffect(() => {
     if (!isOpen) return;
     const leave = () => { if (STEPS[step].closeOnLeave) onClosePanel?.(); };
+    const canSkip = !isFirstVisit || step >= 5;
     const onKey = (e) => {
-      if (e.key === 'Escape') { leave(); onClose(); }
+      if (e.key === 'Escape') { if (!canSkip) return; leave(); onClose(); }
       else if (e.key === 'ArrowRight' || e.key === 'Enter') {
         leave();
         setStep(s => { if (s < LAST) return s + 1; onClose(); return s; });
@@ -159,7 +174,7 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [isOpen, onClose, step, onClosePanel]);
+  }, [isOpen, onClose, step, onClosePanel, isFirstVisit]);
 
   const leave = () => { if (STEPS[step].closeOnLeave) onClosePanel?.(); };
   const next = () => { leave(); setStep(s => s < LAST ? s + 1 : (onClose(), s)); };
@@ -220,29 +235,35 @@ export default function TutorialOverlay({ isOpen, onClose, onAutoSelect, onClose
               ))}
             </div>
 
-            {STEPS[step].clip && (
-              <>
-                {!videoLoaded && <div className="tut-clip tut-clip-skeleton" />}
-                <video
-                  key={STEPS[step].clip}
-                  className="tut-clip"
-                  src={STEPS[step].clip}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  style={{ display: videoLoaded ? 'block' : 'none' }}
-                  onCanPlay={() => setVideoLoaded(true)}
-                />
-              </>
-            )}
+            {STEPS[step].clip && (() => {
+              const isMobileClip = window.innerWidth <= 768 && !!STEPS[step].clipMobile;
+              const clip = isMobileClip ? STEPS[step].clipMobile : STEPS[step].clip;
+              return (
+                <>
+                  {!videoLoaded && <div className={`tut-clip tut-clip-skeleton${isMobileClip ? ' tut-clip--portrait' : ''}`} />}
+                  <video
+                    key={clip}
+                    className={`tut-clip${isMobileClip ? ' tut-clip--portrait' : ''}`}
+                    src={clip}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{ display: videoLoaded ? 'block' : 'none' }}
+                    onCanPlay={() => setVideoLoaded(true)}
+                  />
+                </>
+              );
+            })()}
             <div className="tut-card-title">{stepData.title}</div>
             <div className="tut-card-body">{stepData.body}</div>
 
             <div className="tut-card-actions">
-              <button className="tut-btn tut-btn--ghost" onClick={handleClose}>
-                {t.tutorial.skip}
-              </button>
+              {(!isFirstVisit || step >= 4) && (
+                <button className="tut-btn tut-btn--ghost" onClick={handleClose}>
+                  {t.tutorial.skip}
+                </button>
+              )}
               <div className="tut-btn-group">
                 {step > 0 && (
                   <button className="tut-btn tut-btn--outline" onClick={prev}>

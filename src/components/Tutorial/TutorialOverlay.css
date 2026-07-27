@@ -112,6 +112,13 @@
   margin-bottom: 10px;
 }
 
+/* Portrait override for mobile-recorded clips */
+.tut-clip--portrait {
+  object-fit: contain;
+  max-height: 320px;
+  background: rgba(139, 69, 19, 0.04);
+}
+
 .tut-clip-skeleton {
   height: 140px;
   background: linear-gradient(

@@ -168,7 +168,7 @@ class MyMap extends Component {
     state = {
         currentYear:    1350,
         activeEmpires:  [],
-        legendCollapsed: false,
+        legendCollapsed: window.innerWidth <= 768,
     }
 
     // Stable per-empire ref callbacks — keyed by empire.id so the same

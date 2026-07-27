@@ -713,6 +713,9 @@ const tumapelFoundingEraBase = {
   },
   summary: 'Ken Arok founds Tumapel after defeating Kediri at the Battle of Ganter, establishing the Rajasa dynasty that would rule through Singasari and Majapahit',
   summaryId: 'Ken Arok mendirikan Tumapel setelah mengalahkan Kediri dalam Pertempuran Ganter, membangun Dinasti Rajasa yang akan memerintah melalui Singasari dan Majapahit',
+  summaryCitationRefs: [
+    { citation: 'Coedès, Chapter XI §8, p.169 — NOTE: Coedès calls the new polity "Singhasari" immediately, never "Tumapel," as already flagged in this entry\'s other fields', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+  ],
   keyEvents: [
     { year: 1222, event: 'Ken Arok defeats Kertajaya of Kediri at the Battle of Ganter', type: 'military', eventId: 'Ken Arok mengalahkan Kertajaya dari Kediri dalam Pertempuran Ganter',
       citation: { citation: 'Coedès, Chapter XI §8 "Java: The End of the Kingdom of Kadiri (1222) and the Beginning of the Kingdom of Singhasari (up to 1268)", p.169', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
@@ -721,6 +724,9 @@ const tumapelFoundingEraBase = {
   ],
   historicalContext: "Ken Arok is a legendary figure who rises from low origins to overthrow Kediri and establish this new kingdom — which Coedès himself immediately calls \"Singhasari,\" not \"Tumapel.\"\n\nHis brief reign establishes the Rajasa dynasty that would rule through Singasari and ultimately Majapahit.",
   historicalContextId: 'Ken Arok adalah tokoh legendaris yang bangkit dari asal-usul rendah untuk menggulingkan Kediri dan mendirikan kerajaan baru ini — yang oleh Coedès sendiri langsung disebut "Singhasari," bukan "Tumapel."\n\nMasa pemerintahannya yang singkat meletakkan dasar Dinasti Rajasa yang akan memerintah melalui Singasari dan akhirnya Majapahit.',
+  historicalContextCitationRefs: [
+    { citation: 'Coedès, Chapter XI §8, p.169', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+  ],
   economy: {
     primary: ['Agriculture', 'Tribute', 'River Trade'],
     primaryId: ['Pertanian', 'Upeti', 'Perdagangan Sungai'],
@@ -1196,6 +1202,9 @@ tarumanagara: {
       },
       summary: 'Tarumanagara flourishes under Purnawarman, documented through stone inscriptions as one of the earliest Hindu kingdoms of Java',
       summaryId: 'Tarumanagara berkembang di bawah Purnawarman, terdokumentasi melalui prasasti batu sebagai salah satu kerajaan Hindu tertua di Jawa',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter II §2, p.18 — "...those of Purnavarman, in the western part of Java, to the middle of the same century" (basis for Tarumanagara as one of the earliest recorded Hindu kingdoms)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 400, event: 'Purnawarman stone inscriptions (Ciaruteun, Kebon Kopi) erected across West Java — cited by Coedès alongside Kutei\'s Mulavarman inscriptions as among the oldest Sanskrit inscriptions in the archipelago', type: 'cultural', eventId: 'Prasasti batu Purnawarman (Ciaruteun, Kebon Kopi) didirikan di Jawa Barat — dikutip Coedès bersama prasasti Mulawarman di Kutei sebagai salah satu prasasti Sansekerta tertua di Nusantara',
           // UPGRADED: now backed by a real Coedès quote, in the same sentence as the
@@ -1205,6 +1214,9 @@ tarumanagara: {
       ],
       historicalContext: 'Tarumanagara is among the earliest recorded kingdoms of the archipelago, located in West Java, and cited by Coedès in the same breath as Kutai\'s Mulavarman inscriptions as evidence of the archipelago\'s earliest Indianization.\n\nThe Purnawarman inscriptions — written in Sanskrit using Pallava script — are the oldest known written records found on Java.',
       historicalContextId: 'Tarumanagara termasuk salah satu kerajaan tertua yang tercatat di kepulauan ini, berlokasi di Jawa Barat, dan dikutip Coedès dalam kalimat yang sama dengan prasasti Mulawarman di Kutai sebagai bukti Indianisasi tertua di Nusantara.\n\nPrasasti Purnawarman — ditulis dalam bahasa Sansekerta menggunakan aksara Pallawa — merupakan catatan tertulis tertua yang diketahui ditemukan di Jawa.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter II §2, p.18; Purnawarman — Wikipedia (inscriptions written in Sanskrit using Pallava script)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade', 'Tribute'],
         primaryId: ['Pertanian', 'Perdagangan Sungai', 'Upeti'],
@@ -1278,6 +1290,9 @@ tarumanagara: {
   },
   summary: 'Tarumanagara continues as a regional power in West Java before dissolving into the successor kingdoms of Sunda and Galuh',
   summaryId: 'Tarumanagara terus menjadi kekuatan regional di Jawa Barat sebelum terpecah menjadi kerajaan penerus Sunda dan Galuh',
+  summaryCitationRefs: [
+    { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (Tarumanagara\'s dissolution into Sunda and Galuh, 669-670 CE); Tarumanagara — Grokipedia (Candrawarman, Kertawarman\'s 607 CE China embassy, as evidence of continued regional activity before the split)', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' },
+  ],
   keyEvents: [
     { year: 607, event: 'Kertawarman (Candrawarman\'s eventual successor) sends envoys to the Sui Chinese court, recorded as "Po-li" or "Taruma"', type: 'political', eventId: 'Kertawarman (penerus Candrawarman) mengirim utusan ke istana Dinasti Sui, tercatat sebagai "Po-li" atau "Taruma"',
       // ADDED: this event did not exist before; fills the previously-generic
@@ -1288,6 +1303,9 @@ tarumanagara: {
   ],
   historicalContext: 'In its later centuries Tarumanagara gradually weakens, though it maintains at least one confirmed diplomatic contact with China (Kertawarman\'s 607 CE embassy to the Sui court).\n\nBy 669 the kingdom fragments into Sunda in the west and Galuh to the east, ending the Tarumanagara era. Coedès\' own narrative shifts focus to the rising kingdoms of Srivijaya and Sailendra Java by this period, without directly covering Tarumanagara\'s dissolution.',
   historicalContextId: 'Pada abad-abad terakhirnya, Tarumanagara secara bertahap melemah, meski mempertahankan setidaknya satu kontak diplomatik yang terkonfirmasi dengan Tiongkok (kedutaan Kertawarman ke istana Sui tahun 607 M).\n\nPada tahun 669 kerajaan ini terpecah menjadi Sunda di bagian barat dan Galuh di bagian timur, mengakhiri era Tarumanagara. Narasi Coedès sendiri beralih fokus ke kerajaan Sriwijaya dan Sailendra Jawa yang sedang bangkit pada periode ini, tanpa membahas langsung perpecahan Tarumanagara.',
+  historicalContextCitationRefs: [
+    { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia; Tarumanagara — Grokipedia (both sources cover the kingdom\'s later weakening and eventual 669-670 CE dissolution)', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' },
+  ],
   economy: {
     primary: ['Agriculture', 'River Trade'],
     primaryId: ['Pertanian', 'Perdagangan Sungai'],
@@ -1387,12 +1405,18 @@ sunda: {
       },
       summary: 'Sunda emerges as a successor state to Tarumanagara, controlling the western region of Java',
       summaryId: 'Sunda muncul sebagai negara penerus Tarumanagara, menguasai wilayah barat Jawa',
+      summaryCitationRefs: [
+        { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (Tarusbawa renamed Tarumanagara to "Kingdom of Sunda" in 670 CE)', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' },
+      ],
       keyEvents: [
         { year: 670, event: 'Sunda established as successor kingdom in western Java', type: 'political', eventId: 'Sunda didirikan sebagai kerajaan penerus di Jawa Barat',
           citation: { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (Tarusbawa renamed Tarumanagara to "Kingdom of Sunda" in 670 CE) — Coedès does not cover this event; Wikipedia/web tier used directly', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' } },
       ],
       historicalContext: 'Following the dissolution of Tarumanagara in 669, Sunda controls the western portion of Java while Galuh holds the eastern.\n\nNote: Sunda as a kingdom is not mentioned anywhere in Coedès\' synthesis — his coverage of Java in this period jumps directly to Sanjaya\'s Mataram (732 CE, Chapter VI §4), leaving Sunda and Galuh as a documented gap in his account.',
       historicalContextId: 'Setelah bubarnya Tarumanagara pada tahun 669, Sunda menguasai bagian barat Jawa sementara Galuh menguasai bagian timur.\n\nCatatan: Sunda sebagai kerajaan tidak disebut sama sekali dalam sintesis Coedès — cakupannya tentang Jawa di periode ini langsung melompat ke Mataram Sanjaya (732 M, Bab VI §4), menjadikan Sunda dan Galuh celah yang jelas dalam catatannya.',
+      historicalContextCitationRefs: [
+        { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia — NOTE: Coedès does not mention Sunda at all in his synthesis, as already flagged in this entry\'s other fields', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' },
+      ],
       economy: {
         primary: ['Agriculture', 'Coastal Trade', 'River Trade'],
         primaryId: ['Pertanian', 'Perdagangan Pesisir', 'Perdagangan Sungai'],
@@ -1461,12 +1485,18 @@ sunda: {
       },
       summary: 'Sri Jayabhupati rules Sunda in the 11th century, documented through the Sanghyang Tapak inscription which shows stylistic ties to the East Javanese Dharmawangsa court',
       summaryId: 'Sri Jayabhupati memerintah Sunda pada abad ke-11, terdokumentasi melalui Prasasti Sanghyang Tapak yang menunjukkan kemiripan gaya dengan istana Dharmawangsa di Jawa Timur',
+      summaryCitationRefs: [
+        { citation: 'Sunda Kingdom — Wikipedia (Sanghyang Tapak inscription, 1030 CE, as the primary documentary basis for Sri Jayabhupati\'s reign)', url: 'https://en.wikipedia.org/wiki/Sunda_Kingdom' },
+      ],
       keyEvents: [
         { year: 1030, event: 'Sanghyang Tapak inscription commissioned, establishing a protected sacred area', type: 'religious', eventId: 'Prasasti Sanghyang Tapak dibuat, menetapkan wilayah suci yang dilindungi',
           citation: { citation: 'Sunda Kingdom — Wikipedia (Jayabupati inscription, 40 lines on 4 stones, dated 1030 CE) — not covered by Coedès', url: 'https://en.wikipedia.org/wiki/Sunda_Kingdom' } },
       ],
       historicalContext: 'Sri Jayabhupati\'s reign is documented through the Sanghyang Tapak inscription, whose script style shows notable similarity to the East Javanese court of Dharmawangsa.\n\nCoedès\' own Chapter IX for this period (first three-quarters of the 11th century) covers Cambodia, Java (Airlanga\'s Kahuripan), and Burma — Sunda is absent from his synthesis entirely.',
       historicalContextId: 'Masa pemerintahan Sri Jayabhupati terdokumentasi melalui Prasasti Sanghyang Tapak, yang gaya aksaranya menunjukkan kemiripan dengan istana Dharmawangsa di Jawa Timur.\n\nBab IX Coedès sendiri untuk periode ini (tiga perempat pertama abad ke-11) membahas Kamboja, Jawa (Kahuripan Airlangga), dan Burma — Sunda sama sekali tidak ada dalam sintesisnya.',
+      historicalContextCitationRefs: [
+        { citation: 'Sunda Kingdom — Wikipedia — NOTE: Coedès\' own Ch.IX for this century covers Cambodia/Java(Airlanga)/Burma, not Sunda, as already flagged elsewhere in this entry', url: 'https://en.wikipedia.org/wiki/Sunda_Kingdom' },
+      ],
       economy: {
         primary: ['Agriculture', 'Coastal Trade', 'Forest Products'],
         primaryId: ['Pertanian', 'Perdagangan Pesisir', 'Hasil Hutan'],
@@ -1531,6 +1561,9 @@ sunda: {
       },
       summary: 'Sunda persists as an independent Hindu-Buddhist kingdom amid the rise of Majapahit, ending in the diplomatic catastrophe of the Battle of Bubat',
       summaryId: 'Sunda bertahan sebagai kerajaan Hindu-Buddha merdeka di tengah kebangkitan Majapahit, berakhir dalam bencana diplomatik Perang Bubat',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter XIII §8, p.218-234; Battle of Bubat — Wikipedia/Grokipedia (1357 CE)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1357, event: 'Battle of Bubat — Majapahit massacres the Sundanese royal delegation, King Lingga Buana killed, marriage alliance collapses', type: 'military', eventId: 'Perang Bubat — delegasi kerajaan Sunda dibantai Majapahit, Raja Lingga Buana tewas, aliansi pernikahan gagal',
           // UPGRADED: this specific event IS in Coedès, though narrated from the
@@ -1540,6 +1573,9 @@ sunda: {
       ],
       historicalContext: 'The Sunda Kingdom maintains its independence through the Majapahit era.\n\nThe Battle of Bubat marks a turning point in Sunda–Majapahit relations, leaving a lasting wound in Sundanese historical memory. Coedès himself covers this episode, but only as part of Majapahit\'s story under Hayam Wuruk — Sunda\'s own kingdom and rulers are never separately named in his synthesis.',
       historicalContextId: 'Kerajaan Sunda mempertahankan kemerdekaannya sepanjang era Majapahit.\n\nPerang Bubat menandai titik balik dalam hubungan Sunda–Majapahit, meninggalkan luka mendalam dalam memori sejarah Sunda. Coedès sendiri membahas episode ini, tapi hanya sebagai bagian dari kisah Majapahit di bawah Hayam Wuruk — kerajaan dan raja-raja Sunda sendiri tidak pernah disebut terpisah dalam sintesisnya.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter XIII §8, p.218-234 (Bubat narrated from Majapahit\'s side); Battle of Bubat — Wikipedia/Grokipedia for the Sunda-side detail', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'Coastal Trade', 'Forest Products'],
         primaryId: ['Pertanian', 'Perdagangan Pesisir', 'Hasil Hutan'],
@@ -1632,12 +1668,18 @@ galuh: {
       },
       summary: 'Galuh established by Wretikandayun as the eastern successor state to Tarumanagara, controlling the eastern half of West Java',
       summaryId: 'Galuh didirikan oleh Wretikandayun sebagai negara penerus timur Tarumanagara, menguasai bagian timur Jawa Barat',
+      summaryCitationRefs: [
+        { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (Wretikandayun\'s founding of Galuh, 670 CE)', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' },
+      ],
       keyEvents: [
         { year: 670, event: 'Galuh founded as an independent kingdom by Wretikandayun after the split of Tarumanagara', type: 'political', eventId: 'Galuh didirikan sebagai kerajaan merdeka oleh Wretikandayun setelah pemisahan Tarumanagara',
           citation: { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia (Wretikandayun, backed by Kalingga, split Tarumanagara\'s remnant territory into Sunda and Galuh in 670 CE) — not covered by Coedès', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' } },
       ],
       historicalContext: 'Galuh emerges as the eastern successor state to Tarumanagara alongside its western counterpart Sunda.\n\nAs with Sunda, Coedès\' synthesis does not mention Galuh anywhere — his Java narrative for this century covers only Sanjaya\'s Mataram (from 732 CE), leaving both West Javanese successor kingdoms outside his account.',
       historicalContextId: 'Galuh muncul sebagai negara penerus timur Tarumanagara berdampingan dengan Sunda di sebelah barat.\n\nSeperti halnya Sunda, sintesis Coedès tidak menyebut Galuh sama sekali — narasi Jawanya untuk abad ini hanya mencakup Mataram Sanjaya (sejak 732 M), menyisakan kedua kerajaan penerus Jawa Barat ini di luar catatannya.',
+      historicalContextCitationRefs: [
+        { citation: 'Kingdom of Sunda and Galuh — New World Encyclopedia — NOTE: Coedès does not mention Galuh at all, as already flagged in this entry\'s other fields', url: 'https://www.newworldencyclopedia.org/entry/Kingdom_of_Sunda_and_Galuh' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade', 'Tribute'],
         primaryId: ['Pertanian', 'Perdagangan Sungai', 'Upeti'],
@@ -1706,6 +1748,9 @@ galuh: {
       },
       summary: 'Galuh (by this period reunified with or closely tied to Sunda under Lingga Buana) meets catastrophe at the Battle of Bubat against Majapahit',
       summaryId: 'Galuh (pada periode ini telah bersatu kembali dengan atau terkait erat dengan Sunda di bawah Lingga Buana) mengalami bencana dalam Perang Bubat melawan Majapahit',
+      summaryCitationRefs: [
+        { citation: 'Sri Baduga Maharaja — Great Sunda; Coedès, Chapter XIII §8, p.218-234 (Bubat episode)', url: 'https://greatsunda.wordpress.com/tag/sri-baduga-maharaja/' },
+      ],
       keyEvents: [
         { year: 1357, event: 'Battle of Bubat — King Lingga Buana killed in the Majapahit ambush', type: 'military', eventId: 'Perang Bubat — Raja Lingga Buana tewas dalam serangan mendadak Majapahit',
           // UPGRADED: same Coedès citation used in the sibling Sunda file — this is
@@ -1715,6 +1760,9 @@ galuh: {
       ],
       historicalContext: 'Galuh and Sunda alternately merge and separate across their shared history.\n\nBy the mid-14th century they are effectively unified under Kawali-based rulers like Lingga Buana. Coedès himself covers the resulting Bubat catastrophe only from Majapahit\'s side of the story — Galuh (and Sunda) are never named as kingdoms in his own account.',
       historicalContextId: 'Galuh dan Sunda silih berganti menyatu dan berpisah sepanjang sejarah bersama mereka.\n\nPada pertengahan abad ke-14 keduanya secara efektif bersatu di bawah penguasa berbasis Kawali seperti Lingga Buana. Coedès sendiri hanya membahas bencana Bubat yang terjadi dari sisi cerita Majapahit — Galuh (dan Sunda) tidak pernah disebut sebagai kerajaan dalam catatannya sendiri.',
+      historicalContextCitationRefs: [
+        { citation: 'Sri Baduga Maharaja — Great Sunda; Coedès, Chapter XIII §8, p.218-234', url: 'https://greatsunda.wordpress.com/tag/sri-baduga-maharaja/' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade'],
         primaryId: ['Pertanian', 'Perdagangan Sungai'],
@@ -1812,12 +1860,18 @@ mataram: {
       },
       summary: 'Mataram Kuno founded by Sanjaya in Central Java as a Shaivite Hindu kingdom, establishing dominance over the fertile Kedu Plain',
       summaryId: 'Mataram Kuno didirikan oleh Sanjaya di Jawa Tengah sebagai kerajaan Hindu Saiwa, menegakkan dominasi di Dataran Kedu yang subur',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter VI §4 "Java: Sanjaya (732) and the Buddhist Sailendras", p.81 — Canggal inscription as the founding record', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 732, event: "Canggal inscription records Sanjaya's establishment of the kingdom", type: 'political', eventId: 'Prasasti Canggal mencatat pendirian kerajaan oleh Sanjaya',
           citation: { citation: 'Coedès, Chapter VI §4 "Java: Sanjaya (732) and the Buddhist Sailendras", p.81 — the Canggal inscription (654 Saka/732 CE) as the founding record of Mataram under Sanjaya', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: "The Canggal inscription of 732 CE is the earliest direct record of the Mataram kingdom, as Coedès himself dates it, describing Sanjaya's establishment of a Shaivite Hindu polity in Central Java.\n\nThe Kedu Plain provides fertile agricultural land underpinning the kingdom's wealth.",
       historicalContextId: 'Prasasti Canggal tahun 732 M merupakan catatan langsung tertua tentang kerajaan Mataram, sesuai penanggalan Coedès sendiri, yang menggambarkan pendirian kerajaan Hindu Saiwa oleh Sanjaya di Jawa Tengah.\n\nDataran Kedu menyediakan lahan pertanian subur yang menopang kekayaan kerajaan.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter VI §4, p.81', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'Wet Rice Cultivation', 'Tribute'],
         primaryId: ['Pertanian', 'Budidaya Padi Sawah', 'Upeti'],
@@ -1881,6 +1935,9 @@ mataram: {
       },
       summary: 'The Sailendra dynasty rises to prominence, commissioning Borobudur — one of the greatest Buddhist monuments in the world',
       summaryId: 'Dinasti Sailendra bangkit menonjol, menugaskan pembangunan Borobudur — salah satu monumen Buddha terbesar di dunia',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter VII §5 "The Sailendras in Java and Sumatra from 813 to 863", p.97; Borobudur — World History Encyclopedia (completion c.800-825 CE)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 825, event: 'Borobudur Buddhist temple complex completed', type: 'cultural', eventId: 'Kompleks candi Buddha Borobudur diselesaikan',
           // KEPT (not Coedès-sourced specifically): his TOC section covers Sailendra
@@ -1892,6 +1949,9 @@ mataram: {
       ],
       historicalContext: 'The Sailendra dynasty brings Buddhist influence to dominate Mataram alongside the existing Shaivite Sanjaya traditions, as documented by Coedès under the heading "The Sailendras in Java and Sumatra from 813 to 863."\n\nBorobudur, constructed under Sailendra patronage, stands as one of the greatest architectural achievements of the ancient world.',
       historicalContextId: 'Dinasti Sailendra membawa pengaruh Buddha untuk mendominasi Mataram berdampingan dengan tradisi Saiwa Sanjaya yang sudah ada, sebagaimana didokumentasikan Coedès di bawah judul "The Sailendras in Java and Sumatra from 813 to 863."\n\nBorobudur, yang dibangun di bawah perlindungan Sailendra, merupakan salah satu pencapaian arsitektur terbesar dunia kuno.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter VII §5, p.97; Chapter VIII §3, p.110', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'Wet Rice Cultivation', 'Tribute'],
         primaryId: ['Pertanian', 'Budidaya Padi Sawah', 'Upeti'],
@@ -1997,6 +2057,9 @@ kanjuruhan: {
       },
       summary: 'Kanjuruhan is a short-lived Hindu kingdom of East Java, known from the Dinoyo inscription referencing king Gajayana',
       summaryId: 'Kanjuruhan adalah kerajaan Hindu Jawa Timur yang berumur pendek, dikenal dari prasasti Dinoyo yang menyebut raja Gajayana',
+      summaryCitationRefs: [
+        { citation: 'Transkrip Lengkap dan Tafsir Prasasti Dinoyo — WEAREMANIA (inscription dated Saka 682/760 CE); Coedès does NOT mention Kanjuruhan at all, as already flagged elsewhere in this entry', url: 'https://www.wearemania.net/ngalam/sejarah/transkrip-lengkap-dan-tafsir-prasasti-dinoyo/13699' },
+      ],
       keyEvents: [
         { year: 760, event: 'Dinoyo inscription records King Gajayana and the kingdom of Kanjuruhan', type: 'cultural', eventId: 'Prasasti Dinoyo mencatat Raja Gajayana dan Kerajaan Kanjuruhan',
           // UPGRADED: exact date now confirmed via Saka-calendar cross-check
@@ -2004,6 +2067,9 @@ kanjuruhan: {
       ],
       historicalContext: 'Kanjuruhan is known primarily through the Dinoyo inscription, one of the earliest Sanskrit inscriptions found in East Java.\n\nThe kingdom represents the early spread of Hindu culture into eastern Java. Notably, Coedès — who does cover Mataram (Central Java) in detail for this same century — never mentions Kanjuruhan, consistent with it being a minor, short-lived polity outside the scope of his China-annals-and-major-inscriptions-based synthesis.',
       historicalContextId: 'Kanjuruhan dikenal terutama melalui Prasasti Dinoyo, salah satu prasasti Sansekerta tertua yang ditemukan di Jawa Timur.\n\nKerajaan ini merepresentasikan penyebaran awal budaya Hindu ke Jawa bagian timur. Menariknya, Coedès — yang justru membahas Mataram (Jawa Tengah) secara rinci untuk abad yang sama — sama sekali tidak menyebut Kanjuruhan, konsisten dengan statusnya sebagai kerajaan kecil berumur pendek yang berada di luar jangkauan sintesisnya yang berbasis catatan Tiongkok dan prasasti-prasasti besar.',
+      historicalContextCitationRefs: [
+        { citation: 'Transkrip Lengkap dan Tafsir Prasasti Dinoyo — WEAREMANIA; Candi Badut and the Trajectory of Hindu-Javanese Temple Architecture — academic article (disputed Gajayana-Candi Badut link)', url: 'https://www.wearemania.net/ngalam/sejarah/transkrip-lengkap-dan-tafsir-prasasti-dinoyo/13699' },
+      ],
       economy: {
         primary: ['Agriculture', 'Tribute'],
         primaryId: ['Pertanian', 'Upeti'],
@@ -2121,6 +2187,9 @@ kalingga: {
       },
       summary: 'Kalingga, known in Chinese sources as Holing, is a trading kingdom on the north coast of Central Java renowned for the strict justice of Queen Ratu Shima',
       summaryId: 'Kalingga, dikenal dalam sumber Tiongkok sebagai Holing, adalah kerajaan dagang di pesisir utara Jawa Tengah yang terkenal dengan keadilan ketat Ratu Shima',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter V §7, p.65-80 ("Ho-ling"); Shima of Kalingga — Wikipedia/Grokipedia (reign 674-695 CE, Tang Shu envoy record)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 674, event: 'Ratu Shima\'s envoy arrives at the Tang Chinese court, recorded in the Tang Shu', type: 'political', eventId: 'Utusan Ratu Shima tiba di istana Dinasti Tang, tercatat dalam Tang Shu',
           // FIXED: replaced the vague "674 — Tang dynasty Chinese records describe
@@ -2134,6 +2203,9 @@ kalingga: {
       ],
       historicalContext: "Kalingga appears in Tang dynasty Chinese chronicles as \"Holing,\" a name Coedès himself confirms and discusses under his heading on 7th-century Indonesia, alongside the contemporary Malayu kingdom of Sumatra.\n\nRatu Shima is celebrated for strict justice — Chinese accounts describe her cutting off her own son's hand for touching royal property without permission. By 752 CE, the kingdom lost its independence, absorbed into the expanding Srivijaya trading empire alongside Dharmasraya and Tarumanagara.",
       historicalContextId: 'Kalingga muncul dalam kronik Tiongkok Dinasti Tang sebagai "Holing," nama yang dikonfirmasi dan dibahas sendiri oleh Coedès di bawah judul tentang Indonesia abad ke-7, berdampingan dengan kerajaan Malayu di Sumatra pada periode yang sama.\n\nRatu Shima dikenal dengan keadilan yang ketat — catatan Tiongkok menggambarkan dirinya memotong tangan putranya sendiri karena menyentuh harta kerajaan tanpa izin. Pada 752 M, kerajaan ini kehilangan kemerdekaannya, diserap ke dalam kekaisaran dagang Sriwijaya yang sedang berkembang, bersama Dharmasraya dan Tarumanagara.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter V §7, p.65-80; Kalingga Kingdom facts for kids (752 CE absorption into Srivijaya)', url: 'https://kids.kiddle.co/Kalingga_Kingdom' },
+      ],
       economy: {
         primary: ['Coastal Trade', 'Agriculture', 'Tribute'],
         primaryId: ['Perdagangan Pesisir', 'Pertanian', 'Upeti'],
@@ -2232,9 +2304,15 @@ kalingga_n: {
       },
       summary: 'Northern Kalingga emerges after the split of the Kalingga kingdom, maintaining the coastal region of Central Java',
       summaryId: 'Kalingga Utara muncul setelah pemisahan kerajaan Kalingga, mempertahankan wilayah pesisir Jawa Tengah',
+      summaryCitationRefs: [
+        { citation: 'UNVERIFIED — the Utara/Selatan split itself is not corroborated by Coedès or any epigraphic source found; this summary rests on disputed local tradition, as already flagged in this entry\'s other fields', url: '' },
+      ],
       keyEvents: [],
       historicalContext: "After the dissolution of unified Kalingga, the northern territories form a separate polity. IMPORTANT CAVEAT: this split is not documented by Coedès (whose Ch.V §7 treats Ho-ling as one kingdom) or by any epigraphic source found so far — it should be treated as a claim resting on later/local tradition rather than contemporary record, pending independent verification.\n\nDetails of Northern Kalingga's internal history remain limited in surviving records.",
       historicalContextId: 'Setelah bubarnya Kalingga yang bersatu, wilayah utara membentuk kerajaan tersendiri. CATATAN PENTING: pemisahan ini tidak didokumentasikan oleh Coedès (yang di Bab V §7 memperlakukan Ho-ling sebagai satu kerajaan) atau sumber epigrafis manapun yang ditemukan sejauh ini — sebaiknya diperlakukan sebagai klaim yang bersandar pada tradisi lokal/kemudian, bukan catatan sezaman, sampai diverifikasi independen.\n\nRincian sejarah internal Kalingga Utara masih sangat terbatas dalam catatan yang ada.',
+      historicalContextCitationRefs: [
+        { citation: 'UNVERIFIED — same caveat as summaryCitationRefs above', url: '' },
+      ],
       economy: {
         primary: ['Coastal Trade', 'Agriculture'],
         primaryId: ['Perdagangan Pesisir', 'Pertanian'],
@@ -2311,9 +2389,15 @@ kalingga_s: {
       },
       summary: 'Southern Kalingga forms after the split of the Kalingga kingdom, controlling the inland and southern territories of Central Java',
       summaryId: 'Kalingga Selatan terbentuk setelah pemisahan kerajaan Kalingga, menguasai wilayah pedalaman dan selatan Jawa Tengah',
+      summaryCitationRefs: [
+        { citation: 'UNVERIFIED — same caveat as Kalingga Utara: the split is not corroborated by any source found', url: '' },
+      ],
       keyEvents: [],
       historicalContext: "The southern territories of Kalingga form a separate polity after the kingdom's dissolution around 695, per local tradition — a claim not corroborated by Coedès, whose Ch.V §7 treats Ho-ling as an undivided 7th-century kingdom.\n\nSouthern Kalingga eventually becomes absorbed into the emerging Mataram kingdom by 732 — this absorption date coincides with Coedès' own dating of Sanjaya's Mataram founding (Ch.VI §4), lending it some independent plausibility even though the specific 'Southern Kalingga' label is not his.",
       historicalContextId: 'Wilayah selatan Kalingga membentuk kerajaan tersendiri setelah bubarnya kerajaan sekitar tahun 695, menurut tradisi lokal — klaim yang tidak dikonfirmasi Coedès, yang di Bab V §7 memperlakukan Ho-ling sebagai kerajaan utuh abad ke-7.\n\nKalingga Selatan akhirnya diserap ke dalam kerajaan Mataram yang sedang berkembang pada tahun 732 — tahun penyerapan ini kebetulan berimpit dengan penanggalan Coedès sendiri untuk pendirian Mataram oleh Sanjaya (Bab VI §4), memberi sedikit plausibilitas independen meski label "Kalingga Selatan" itu sendiri bukan miliknya.',
+      historicalContextCitationRefs: [
+        { citation: 'UNVERIFIED — though the 732 CE absorption date into Mataram does coincide with Coedès\' own dating of Sanjaya\'s founding (Ch.VI §4), lending partial independent plausibility even though "Southern Kalingga" itself is not his term', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'Inland Trade'],
         primaryId: ['Pertanian', 'Perdagangan Darat'],
@@ -2401,12 +2485,18 @@ medang: {
       },
       summary: 'Mpu Sindok relocates the center of Javanese power from Central Java to East Java, founding Medang after a volcanic catastrophe',
       summaryId: 'Mpu Sindok memindahkan pusat kekuasaan Jawa dari Jawa Tengah ke Jawa Timur, mendirikan Medang setelah bencana gunung berapi',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter VIII §3 "The Javanese Kingdom of Mataram", p.110 — NOTE: Coedès calls this the continuation of "Mataram," not "Medang" (a modern label), as already flagged in this entry\'s other fields', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 929, event: 'Mpu Sindok moves the capital from Central Java to East Java', type: 'political', eventId: 'Mpu Sindok memindahkan ibu kota dari Jawa Tengah ke Jawa Timur',
           citation: { citation: 'Coedès, Chapter VIII §3 "The Javanese Kingdom of Mataram", p.110 — covers the continuation of the Mataram dynasty\'s political history into the East Javanese period under this same heading, though the fetched material does not isolate the exact 929 relocation date or the volcanic-catastrophe cause specifically', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: 'Following a catastrophic volcanic eruption around 929 CE that devastated Central Java, Mpu Sindok relocates the court to East Java.\n\nThis shift marks a pivotal turning point in Javanese political history. Note: Coedès himself treats this as a continuation of the same "Mataram" dynasty (Ch.VIII §3) rather than a distinctly-named new kingdom — "Medang" is the modern historiographical label for this relocated phase.',
       historicalContextId: 'Setelah letusan gunung berapi dahsyat sekitar tahun 929 M yang menghancurkan Jawa Tengah, Mpu Sindok memindahkan istana ke Jawa Timur.\n\nPerpindahan ini menandai titik balik penting dalam sejarah politik Jawa. Catatan: Coedès sendiri memperlakukan ini sebagai kelanjutan dinasti "Mataram" yang sama (Bab VIII §3), bukan kerajaan baru dengan nama tersendiri — "Medang" adalah label historiografi modern untuk fase yang sudah berpindah ini.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter VIII §3, p.110', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade', 'Tribute'],
         primaryId: ['Pertanian', 'Perdagangan Sungai', 'Upeti'],
@@ -2470,6 +2560,9 @@ medang: {
       },
       summary: 'Medang continues to dominate East Java before internal conflict leads to its collapse and the rise of Kahuripan under Airlangga',
       summaryId: 'Medang terus mendominasi Jawa Timur sebelum konflik internal menyebabkan keruntuhannya dan kebangkitan Kahuripan di bawah Airlangga',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter IX §4 "Java: Airlanga (1016-49)", p.134 — 1016 as the implicit collapse/transition year', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1016, event: 'Medang Kingdom collapses following dynastic attack', type: 'political', eventId: 'Kerajaan Medang runtuh akibat serangan dinasti',
           // UPGRADED: Coedès Ch.IX §4's very date range (1016-49 for Airlanga) confirms
@@ -2479,6 +2572,9 @@ medang: {
       ],
       historicalContext: "Medang's later years are marked by dynastic instability.\n\nIts collapse in 1016 — a date Coedès himself confirms via Airlangga's reign beginning that same year (Ch.IX §4) — creates the conditions for Airlangga's reunification of East Java under the Kahuripan kingdom.",
       historicalContextId: 'Tahun-tahun terakhir Medang ditandai dengan ketidakstabilan dinasti.\n\nKeruntuhannya pada tahun 1016 — tahun yang dikonfirmasi Coedès sendiri lewat awal masa pemerintahan Airlangga di tahun yang sama (Bab IX §4) — menciptakan kondisi bagi Airlangga untuk menyatukan kembali Jawa Timur di bawah kerajaan Kahuripan.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter IX §4, p.134', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade'],
         primaryId: ['Pertanian', 'Perdagangan Sungai'],
@@ -2581,6 +2677,9 @@ kahuripan: {
       },
       summary: 'Airlangga reunifies East Java following the collapse of Medang, building Kahuripan into a prosperous and stable kingdom before dividing it between his two sons',
       summaryId: 'Airlangga menyatukan kembali Jawa Timur setelah runtuhnya Medang, membangun Kahuripan menjadi kerajaan yang makmur sebelum membaginya antara kedua putranya',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter IX (title) "Three Great Kings: Süryavarman I in Cambodia, Airlanga in Java, and Anoratha in Burma", p.134; Chapter IX §4, p.134', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1019, event: 'Airlangga begins reunification of East Java', type: 'political', eventId: 'Airlangga memulai penyatuan kembali Jawa Timur',
           citation: { citation: 'Coedès, Chapter IX §4 "Java: Airlanga (1016-49)", p.134 — Coedès dates the start of Airlangga\'s effective reign to 1016 (following Medang\'s collapse), 3 years earlier than this entry\'s 1019; recommend using 1016 to align with the primary source', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
@@ -2589,6 +2688,9 @@ kahuripan: {
       ],
       historicalContext: "Airlangga — of Balinese royal descent — rises to restore order in East Java after the collapse of Medang. Coedès himself ranks him among the three greatest kings of 11th-century Southeast Asia, alongside Suryavarman I of Cambodia and Anoratha of Burma.\n\nHis reign is notable for prosperity, religious tolerance, and literary patronage. At the end of his life he divides the kingdom between his two sons, creating the rival states of Panjalu and Janggala.",
       historicalContextId: 'Airlangga — keturunan bangsawan Bali — bangkit untuk memulihkan ketertiban di Jawa Timur setelah runtuhnya Medang. Coedès sendiri menempatkannya sejajar dengan tiga raja terbesar Asia Tenggara abad ke-11, bersama Suryawarman I dari Kamboja dan Anoratha dari Burma.\n\nMasa pemerintahannya terkenal dengan kemakmuran, toleransi beragama, dan perlindungan sastra. Di akhir hidupnya, ia membagi kerajaan antara dua putranya, menciptakan negara-negara saingan Panjalu dan Janggala.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter IX (title) and §4, p.134; Malang Jatim Network / NRMnews (Candi Belahan, Candi Jalatunda as physical evidence of Airlangga\'s reign)', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade', 'Port Revenues'],
         primaryId: ['Pertanian', 'Perdagangan Sungai', 'Pendapatan Pelabuhan'],
@@ -2684,12 +2786,18 @@ panjalu: {
       },
       summary: 'Panjalu is established when Airlangga divides his kingdom, controlling the western portion of East Java',
       summaryId: 'Panjalu didirikan ketika Airlangga membagi kerajaannya, menguasai bagian barat Jawa Timur',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter X §4 "Indonesia from 1078 to 1109; The Kingdom of Kadiri", p.152 — NOTE: Coedès never names "Panjalu" separately, as already flagged in this entry\'s other fields', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1042, event: 'Panjalu established after Airlangga divides Kahuripan', type: 'political', eventId: 'Panjalu didirikan setelah Airlangga membagi Kahuripan',
           citation: { citation: 'UNVERIFIED for the exact 1042 division date against Coedès — his Ch.IX §4 dates Airlangga\'s full reign to 1016-49 without isolating the division year in the fetched material; the Panjalu/Janggala split itself is also not named as such by Coedès, who moves directly to discussing "Kadiri" as a whole from Ch.X onward', url: '' } },
       ],
       historicalContext: "Panjalu (later called Kediri) is one of two kingdoms created from the division of Airlangga's Kahuripan.\n\nRivalry with Janggala dominates its early decades before Panjalu eventually absorbs its rival. IMPORTANT: Coedès himself never names \"Panjalu\" as distinct from \"Janggala\" — from Ch.X onward he refers to this entire lineage simply as \"The Kingdom of Kadiri,\" treating the Panjalu/Janggala division as an internal detail rather than two separate polities worth naming individually.",
       historicalContextId: 'Panjalu (kemudian disebut Kediri) adalah salah satu dari dua kerajaan yang dibentuk dari pembagian Kahuripan oleh Airlangga.\n\nPersaingan dengan Janggala mendominasi dasawarsa-dasawarsa awalnya sebelum Panjalu akhirnya menyerap saingannya. PENTING: Coedès sendiri tidak pernah menyebut "Panjalu" terpisah dari "Janggala" — sejak Bab X ia menyebut seluruh garis keturunan ini cukup sebagai "Kerajaan Kadiri," memperlakukan pembagian Panjalu/Janggala sebagai detail internal, bukan dua kerajaan terpisah yang layak disebut satu per satu.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter X §4, p.152', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade', 'Tribute'],
         primaryId: ['Pertanian', 'Perdagangan Sungai', 'Upeti'],
@@ -2784,12 +2892,18 @@ janggala: {
       },
       summary: 'Janggala is established alongside Panjalu when Airlangga divides his kingdom, controlling the eastern and coastal portion of East Java',
       summaryId: 'Janggala didirikan bersama Panjalu ketika Airlangga membagi kerajaannya, menguasai bagian timur dan pesisir Jawa Timur',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter X §4, p.152 — NOTE: Coedès never names "Janggala" either, as already flagged in this entry\'s other fields', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1042, event: 'Janggala established after Airlangga divides Kahuripan', type: 'political', eventId: 'Janggala didirikan setelah Airlangga membagi Kahuripan',
           citation: { citation: 'UNVERIFIED for the exact 1042 division date and for "Janggala" as a named entity against Coedès — see the same caveat already flagged in the sibling Panjalu file: Coedès does not isolate this division date or name either resulting kingdom separately', url: '' } },
       ],
       historicalContext: "Janggala controls the eastern and coastal territories of what was Kahuripan, while Panjalu holds the western inland areas.\n\nThe two kingdoms maintain a rivalry until Janggala is eventually absorbed by Panjalu / Kediri. IMPORTANT: as with Panjalu, Coedès never names \"Janggala\" as a distinct kingdom — his Ch.X onward treats this entire lineage as one polity, \"The Kingdom of Kadiri,\" without separately narrating a Janggala-Panjalu split.",
       historicalContextId: 'Janggala menguasai wilayah timur dan pesisir bekas Kahuripan, sementara Panjalu menguasai wilayah barat pedalaman.\n\nKedua kerajaan mempertahankan persaingan hingga Janggala akhirnya diserap oleh Panjalu / Kediri. PENTING: seperti halnya Panjalu, Coedès tidak pernah menyebut "Janggala" sebagai kerajaan terpisah — sejak Bab X ia memperlakukan seluruh garis keturunan ini sebagai satu kesatuan, "Kerajaan Kadiri," tanpa menceritakan perpecahan Janggala-Panjalu secara terpisah.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter X §4, p.152', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'Coastal Trade', 'Tribute'],
         primaryId: ['Pertanian', 'Perdagangan Pesisir', 'Upeti'],
@@ -2890,12 +3004,18 @@ dharmasraya: {
       },
       summary: 'Dharmasraya emerges as a successor state to Srivijaya in the Batanghari River valley of Sumatra, inheriting its Buddhist traditions and trade networks',
       summaryId: 'Dharmasraya muncul sebagai negara penerus Sriwijaya di lembah Sungai Batanghari Sumatra, mewarisi tradisi Buddha dan jaringan perdagangannya',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter XI §3/§7, Chapter XII §7 (general Srivijaya-to-Sumatran-successor-state process) — NOTE: "Dharmasraya" itself is not Coedès\' term, as already flagged in this entry\'s other fields', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1088, event: 'Dharmasraya emerges as the dominant Sumatran kingdom after Srivijaya\'s decline', type: 'political', eventId: 'Dharmasraya muncul sebagai kerajaan Sumatra yang dominan setelah kemunduran Sriwijaya',
           citation: { citation: 'UNVERIFIED for the exact 1088 date against Coedès — his own account of Srivijaya/Malayu\'s decline and successor states spans Ch.XI §3 (weakening, benefiting Malayu/Jambi) through Ch.XI §7 (dismemberment, 1225-70) and Ch.XII §7 (Sumatra at the time of Marco Polo, ~1290s); the specific 1088 emergence date for "Dharmasraya" by name is not isolated in the fetched material', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: "As Srivijaya's power wanes after the Chola raids, Dharmasraya rises to fill the vacuum in Sumatra's interior. Coedès himself traces this general process — power shifting from Palembang to Malayu/Jambi (Ch.XI §3), then further dismemberment by 1225-70 (Ch.XI §7), and finally Sumatran polities under Islamic influence by Marco Polo's time (Ch.XII §7) — without naming \"Dharmasraya\" specifically; that name comes from Sumatran epigraphy (Padang Roco, Grahi inscriptions).\n\nLocated along the Batanghari River, it inherits Srivijaya's Mahayana Buddhist culture and maintains the region's gold and forest trade.",
       historicalContextId: 'Saat kekuatan Sriwijaya melemah setelah serangan Chola, Dharmasraya bangkit untuk mengisi kekosongan di pedalaman Sumatra. Coedès sendiri menelusuri proses umum ini — kekuasaan beralih dari Palembang ke Malayu/Jambi (Bab XI §3), lalu perpecahan lebih lanjut pada 1225-70 (Bab XI §7), dan akhirnya kerajaan-kerajaan Sumatra di bawah pengaruh Islam pada masa Marco Polo (Bab XII §7) — tanpa menyebut "Dharmasraya" secara spesifik; nama itu berasal dari epigrafi Sumatra (Prasasti Padang Roco, Grahi).\n\nBerlokasi di sepanjang Sungai Batanghari, ia mewarisi budaya Buddha Mahayana Sriwijaya dan mempertahankan perdagangan emas dan hasil hutan di wilayah tersebut.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter XI §3/§7, Chapter XII §7; Slamet Muljana, Kuntala, Sriwijaya dan Suwarnabhumi (1981) for the Adityawarman/Grahi-inscription detail', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['River Trade', 'Gold', 'Forest Products'],
         primaryId: ['Perdagangan Sungai', 'Emas', 'Hasil Hutan'],
@@ -2994,12 +3114,18 @@ kediri: {
       },
       summary: 'Kediri reaches its golden age under Jayabaya, famed for prophetic writings and a flourishing of Old Javanese Kakawin literature',
       summaryId: 'Kediri mencapai masa keemasannya di bawah Jayabaya, terkenal dengan ramalan-ramalannya dan perkembangan sastra Kakawin Jawa Kuno',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter X §8 "Indonesia from 1115 to 1178; The Kingdom of Kadiri", p.152-168', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1157, event: 'Kakawin Bharatayuddha composed — major Old Javanese literary work under Jayabaya', type: 'cultural', eventId: 'Kakawin Bharatayuddha digubah — karya sastra Jawa Kuno utama di bawah Jayabaya',
           citation: { citation: 'UNVERIFIED for the exact 1157 date against Coedès — his Ch.X §8 covers Kadiri\'s general cultural flourishing (1115-1178) but the fetched material does not isolate the Bharatayuddha\'s specific composition year', url: '' } },
       ],
       historicalContext: "Kediri (successor to Panjalu — itself just Coedès' earlier-period label for the same Kadiri lineage) becomes the dominant power of East Java under Jayabaya, within Coedès' own dated chapter on \"The Kingdom of Kadiri\" (1115-1178).\n\nJayabaya's reign is celebrated for literary patronage and for the Jayabaya Prophecies — predictions about Java's future that remained influential for centuries.",
       historicalContextId: 'Kediri (penerus Panjalu — yang sebenarnya cuma label periode awal Coedès untuk garis keturunan Kadiri yang sama) menjadi kekuatan dominan di Jawa Timur di bawah Jayabaya, dalam cakupan bab Coedès sendiri tentang "The Kingdom of Kadiri" (1115-1178).\n\nMasa pemerintahan Jayabaya dirayakan karena perlindungan sastra dan Ramalan Jayabaya — prediksi tentang masa depan Jawa yang tetap berpengaruh selama berabad-abad.',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter X §8, p.152-168', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade', 'Tribute'],
         primaryId: ['Pertanian', 'Perdagangan Sungai', 'Upeti'],
@@ -3062,12 +3188,18 @@ kediri: {
       },
       summary: "Kediri declines under its last ruler Kertajaya, whose conflict with the Brahmin clergy allows Ken Arok of Tumapel to overthrow the kingdom in 1222",
       summaryId: 'Kediri mengalami kemunduran di bawah penguasa terakhirnya Kertajaya, yang konfliknya dengan kaum Brahmana memungkinkan Ken Arok dari Tumapel menggulingkan kerajaan pada 1222',
+      summaryCitationRefs: [
+        { citation: 'Coedès, Chapter XI §8 "Java: The End of the Kingdom of Kadiri (1222) and the Beginning of the Kingdom of Singhasari (up to 1268)", p.169', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       keyEvents: [
         { year: 1222, event: 'Kertajaya defeated by Ken Arok of Tumapel at the Battle of Ganter — end of Kediri', type: 'military', eventId: 'Kertajaya dikalahkan Ken Arok dari Tumapel dalam Pertempuran Ganter — berakhirnya Kediri',
           citation: { citation: 'Coedès, Chapter XI §8 "Java: The End of the Kingdom of Kadiri (1222) and the Beginning of the Kingdom of Singhasari (up to 1268)", p.169 — Coedès\' own chapter title directly confirms 1222 as Kadiri\'s end and the start of Singhasari', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' } },
       ],
       historicalContext: "King Kertajaya's demands that Brahmins worship him as a god alienate the religious establishment.\n\nThe Brahmins ally with Ken Arok of Tumapel, whose victory at the Battle of Ganter in 1222 ends the Kediri kingdom — a transition Coedès himself titles directly: \"The End of the Kingdom of Kadiri (1222) and the Beginning of the Kingdom of Singhasari.\"",
       historicalContextId: 'Tuntutan Raja Kertajaya agar para Brahmana menyembahnya sebagai dewa mengasingkan establishment keagamaan.\n\nPara Brahmana bersekutu dengan Ken Arok dari Tumapel, yang kemenangannya dalam Pertempuran Ganter pada 1222 mengakhiri kerajaan Kediri — transisi yang judul babnya sendiri ditulis langsung oleh Coedès: "Berakhirnya Kerajaan Kadiri (1222) dan Dimulainya Kerajaan Singhasari."',
+      historicalContextCitationRefs: [
+        { citation: 'Coedès, Chapter XI §8, p.169', url: 'https://cdn.angkordatabase.asia/libs/docs/The-Indianized-States-of-Southeast-Asia-by-George-Coedes-z-lib.org.pdf' },
+      ],
       economy: {
         primary: ['Agriculture', 'River Trade'],
         primaryId: ['Pertanian', 'Perdagangan Sungai'],
@@ -3460,6 +3592,9 @@ pajajaran: {
       },
       summary: 'Pajajaran flourishes as the last great Hindu kingdom of West Java under Sri Baduga Maharaja, maintaining independence from the rising Islamic sultanates',
       summaryId: 'Pajajaran berkembang sebagai kerajaan Hindu terakhir yang besar di Jawa Barat di bawah Sri Baduga Maharaja, mempertahankan kemerdekaan dari kesultanan Islam yang sedang bangkit',
+      summaryCitationRefs: [
+        { citation: 'UNVERIFIED against Coedès — falls outside his ~1511 CE coverage window; CARRIED OVER Ricklefs Ch.4 / Slamet Muljana "Runtuhnya Kerajaan Hindu-Jawa" Bab 7 citations, not re-fetched this session, as already flagged in this entry\'s other fields', url: '' },
+      ],
       keyEvents: [
         { year: 1482, event: 'Pajajaran consolidated as the dominant West Java kingdom', type: 'political', eventId: 'Pajajaran dikonsolidasikan sebagai kerajaan dominan Jawa Barat',
           citation: { citation: 'UNVERIFIED against Coedès — falls after his book\'s effective coverage window; kept from web sourcing pending a fresh Ricklefs/Slamet Muljana fetch', url: '' } },
@@ -3468,6 +3603,9 @@ pajajaran: {
       ],
       historicalContext: 'Pajajaran represents the final phase of the long Sunda-Galuh tradition of Hindu kingdoms in West Java.\n\nUnder Sri Baduga Maharaja (also known as Prabu Siliwangi) the kingdom prospers and becomes deeply embedded in Sundanese cultural memory as a golden age. IMPORTANT: this entire era falls outside Coedès\' synthesis, which effectively ends around 1511 — per the earlier RAG-chat session, Ricklefs (his Ch.4, discussing Tome Pires\' account of Pajajaran as the Hindu-Buddhist kingdom hostile to Islam) and Slamet Muljana\'s "Runtuhnya Kerajaan Hindu-Jawa" (Bab 7) are the academically relevant sources here — NOT re-fetched fresh this session, so treat the specific page citations below as carried over rather than newly verified.',
       historicalContextId: 'Pajajaran merepresentasikan fase terakhir dari tradisi panjang kerajaan-kerajaan Hindu Sunda-Galuh di Jawa Barat.\n\nDi bawah Sri Baduga Maharaja (juga dikenal sebagai Prabu Siliwangi) kerajaan ini makmur dan tertanam kuat dalam memori budaya Sunda sebagai masa keemasan. PENTING: seluruh era ini berada di luar cakupan sintesis Coedès, yang efektif berakhir sekitar 1511 — sesuai sesi chat RAG sebelumnya, Ricklefs (Bab 4-nya, membahas catatan Tome Pires soal Pajajaran sebagai kerajaan Hindu-Buddha yang bermusuhan dengan Islam) dan "Runtuhnya Kerajaan Hindu-Jawa" karya Slamet Muljana (Bab 7) adalah sumber akademis yang relevan di sini — BELUM di-fetch ulang di sesi ini, jadi anggap sitasi halaman spesifik di bawah sebagai bawaan dari sesi lalu, bukan verifikasi baru.',
+      historicalContextCitationRefs: [
+        { citation: 'UNVERIFIED — same caveat as summaryCitationRefs above', url: '' },
+      ],
       economy: {
         primary: ['Agriculture', 'Coastal Trade', 'Forest Products'],
         primaryId: ['Pertanian', 'Perdagangan Pesisir', 'Hasil Hutan'],
@@ -3524,6 +3662,9 @@ pajajaran: {
       government: 'Hindu Kingdom (declining)',
       summary: 'Pajajaran faces mounting pressure from Islamic sultanates, eventually falling to Banten and Cirebon in 1579',
       summaryId: 'Pajajaran menghadapi tekanan dari kesultanan Islam, akhirnya jatuh ke tangan Banten dan Cirebon pada 1579',
+      summaryCitationRefs: [
+        { citation: 'CARRIED OVER, not re-fetched this session: Slamet Muljana, "Runtuhnya Kerajaan Hindu-Jawa", Bab 7 "Persoalan Faletehan", hlm. 227 (1579 fall of Pajajaran)', url: '' },
+      ],
       statCitations: {
         capital: { citation: 'UNVERIFIED', url: '' },
         population: { citation: 'UNVERIFIED', url: '' },
@@ -3536,6 +3677,9 @@ pajajaran: {
       ],
       historicalContext: 'The expanding Islamic sultanates of Banten and Cirebon systematically isolate and weaken Pajajaran.\n\nThe fall of the capital in 1579 marks the end of Hindu political power in Java, completing the Islamisation of the island. This entire episode falls outside Coedès\' book, whose synthesis ends around 1511 with the Portuguese seizure of Malacca.',
       historicalContextId: 'Kesultanan-kesultanan Islam yang berkembang di Banten dan Cirebon secara sistematis mengisolasi dan melemahkan Pajajaran.\n\nJatuhnya ibu kota pada tahun 1579 menandai berakhirnya kekuasaan politik Hindu di Jawa, menyelesaikan Islamisasi pulau tersebut. Seluruh episode ini berada di luar buku Coedès, yang sintesisnya berakhir sekitar 1511 dengan perebutan Malaka oleh Portugis.',
+      historicalContextCitationRefs: [
+        { citation: 'CARRIED OVER, not re-fetched this session: Slamet Muljana, Bab 7, hlm. 227 — this episode also falls outside Coedès\' ~1511 CE coverage window', url: '' },
+      ],
       economy: {
         primary: ['Agriculture', 'Reduced Trade'],
         primaryId: ['Pertanian', 'Perdagangan Terbatas'],

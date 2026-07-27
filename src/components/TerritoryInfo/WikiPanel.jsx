@@ -31,6 +31,8 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defau
   const [language, setLanguage] = useState(defaultLanguage);
   const [resolvedSlug, setResolvedSlug] = useState(null);
   const contentRef = useRef(null);
+  const defaultLanguageRef = useRef(defaultLanguage);
+  defaultLanguageRef.current = defaultLanguage;
 
   const lang = LANGUAGES[language];
 
@@ -86,9 +88,11 @@ const WikiPanel = ({ wikiSlug, idWikiSlug, territoryName, isOpen, onClose, defau
     fetchWiki();
   }, [wikiSlug, idWikiSlug, isOpen, language]);
 
-  // Clear content when panel closes
+  // Sync language to app language on open; clear content on close
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
+      setLanguage(defaultLanguageRef.current);
+    } else {
       setWikiContent(null);
       setError(null);
       setResolvedSlug(null);

@@ -42,14 +42,35 @@ const AUDIT_COMMENTARY_TRIGGERS = [
   'does not cover', 'does not discuss', 'does not itemize', 'does not confirm',
   'so wikipedia', 'so web source', 'not covered by coedès', 'falls within coedès',
   'falls outside coedès', 'carried over', 'not re-fetched', 'the sibling',
+  'as already flagged',
 ];
-const AUDIT_COMMENTARY_RE = new RegExp(
-  `\\s+—\\s+(?:${AUDIT_COMMENTARY_TRIGGERS.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
+// A few notes are prefixed at the very start of the string (no em-dash to
+// anchor on at all), e.g. "CARRIED OVER, not re-fetched this session: ...".
+// Strip those before the dash-based pass below runs.
+const AUDIT_PREFIX_RE = /^CARRIED OVER, not re-fetched this session:\s*/i;
+const AUDIT_COMMENTARY_TRIGGER_RE = new RegExp(
+  AUDIT_COMMENTARY_TRIGGERS.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'),
   'i'
 );
-const stripAuditCommentary = (text) => {
-  const match = text.match(AUDIT_COMMENTARY_RE);
-  return match ? text.slice(0, match.index).trim() : text;
+// Find the rightmost " — " after which an audit-commentary trigger appears
+// anywhere in the remaining text (not just immediately after the dash) —
+// catches lead-ins like "— NOTE: Coedès does not mention Sunda..." where the
+// trigger phrase is a few words in, not right after the dash. Checking from
+// the right and returning on the first hit naturally prefers the smallest
+// possible cut, so a legitimate earlier dash (e.g. "Title — Publisher") is
+// left alone as long as the LAST segment is the one carrying commentary.
+const stripAuditCommentary = (rawText) => {
+  const text = rawText.replace(AUDIT_PREFIX_RE, '');
+  const dashRe = /\s+—\s+/g;
+  const positions = [];
+  let m;
+  while ((m = dashRe.exec(text))) positions.push(m.index);
+  for (let i = positions.length - 1; i >= 0; i--) {
+    if (AUDIT_COMMENTARY_TRIGGER_RE.test(text.slice(positions[i]))) {
+      return text.slice(0, positions[i]).trim();
+    }
+  }
+  return text.trim();
 };
 
 // Beyond audit-process commentary, most citations also carry a legitimate,
@@ -163,6 +184,44 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
     return language === 'id' ? stripCitationAnnotation(clean) : clean;
   };
   const locRegion = (name) => (language === 'id' && REGION_NAME_ID[name]) ? REGION_NAME_ID[name] : name;
+  const UNDOCUMENTED = loc('Undocumented', 'Belum terdokumentasi');
+  // For a value whose only backing citation is flagged UNVERIFIED, show the
+  // honest placeholder instead of the specific-sounding claim — showing e.g.
+  // a precise population figure or named export with no real source behind
+  // it is more misleading than admitting the gap.
+  const statValueOrPlaceholder = (statKey, displayValue) =>
+    isUnverifiedCitation(territoryData?.statCitations?.[statKey]) ? UNDOCUMENTED : displayValue;
+  // Whole shared *CitationRefs list is unverified (used both standalone for
+  // summary/historicalContext, and as a fallback below for fields that point
+  // to it via an empty/missing index array — an "umbrella" citation covering
+  // a whole section, e.g. one UNVERIFIED note explicitly covering language +
+  // script + architecture + literature together with no per-field index).
+  const allRefsUnverified = (refsArray) => !!refsArray && refsArray.length > 0 && refsArray.every(isUnverifiedCitation);
+  // Same idea for list items (economy/culture) whose citation is looked up
+  // indirectly via an index array into a shared *CitationRefs list. If this
+  // item has no index of its own (citationsArray missing/empty at idx) but
+  // the shared list exists and is entirely unverified, it's still covered by
+  // that umbrella note — treat it as unverified too rather than leaving it
+  // alone just because it wasn't individually indexed.
+  const indexedValueOrPlaceholder = (displayValue, refsArray, citationsArray, idx) => {
+    const specificIdx = citationsArray?.[idx];
+    if (specificIdx === undefined) {
+      return allRefsUnverified(refsArray) ? UNDOCUMENTED : displayValue;
+    }
+    return isUnverifiedCitation(refsArray?.[specificIdx]) ? UNDOCUMENTED : displayValue;
+  };
+  // Culture fields (language/script/architecture) are a single value that can
+  // carry MULTIPLE citation indices (e.g. architectureCitations: [1,2,3]) —
+  // only placeholder it if every one of its citations is unverified; if at
+  // least one is real, the value is still at least partly grounded. Same
+  // umbrella fallback as above when the field's own index array is empty.
+  const multiCitedValueOrPlaceholder = (displayValue, refsArray, citationIndices) => {
+    if (!citationIndices || citationIndices.length === 0) {
+      return allRefsUnverified(refsArray) ? UNDOCUMENTED : displayValue;
+    }
+    const allUnverified = citationIndices.every(ci => isUnverifiedCitation(refsArray?.[ci]));
+    return allUnverified ? UNDOCUMENTED : displayValue;
+  };
   const [activeTab, setActiveTab] = useState('overview');
   const [territoryData, setTerritoryData] = useState(null);
   const [wikiOpen, setWikiOpen] = useState(false);
@@ -200,6 +259,20 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
     setSourcesOpen(true);
     setTimeout(() => {
       document.getElementById(`rel-ref-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  };
+
+  const scrollToSummaryRef = (i) => {
+    setSourcesOpen(true);
+    setTimeout(() => {
+      document.getElementById(`sum-ref-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  };
+
+  const scrollToHistCtxRef = (i) => {
+    setSourcesOpen(true);
+    setTimeout(() => {
+      document.getElementById(`histctx-ref-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 60);
   };
 
@@ -452,7 +525,42 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                     {activeTab === 'overview' && (
                       <div className="tab-overview">
                         <div className="v3-section">
-                          <p className="summary-text">{loc(territoryData.summary, territoryData.summaryId)}</p>
+                          <p className="summary-text">
+                            {allRefsUnverified(territoryData.summaryCitationRefs)
+                              ? UNDOCUMENTED
+                              : loc(territoryData.summary, territoryData.summaryId)}
+                            {!allRefsUnverified(territoryData.summaryCitationRefs) && territoryData.summaryCitationRefs?.map((ref, i) => (
+                              <a key={i} className="source-context-ref" href={`#sum-ref-${i}`} onClick={(e) => { e.preventDefault(); scrollToSummaryRef(i); }}>[{i + 1}]</a>
+                            ))}
+                          </p>
+                          {!allRefsUnverified(territoryData.summaryCitationRefs) && territoryData.summaryCitationRefs?.length > 0 && (
+                            <div className="sources-accordion">
+                              <button
+                                className={`sources-accordion-toggle ${sourcesOpen ? 'open' : ''}`}
+                                onClick={() => setSourcesOpen(prev => !prev)}
+                              >
+                                <span>📚 {loc('References', 'Referensi')} ({territoryData.summaryCitationRefs.length})</span>
+                                <span className="sources-chevron">{sourcesOpen ? '▴' : '▾'}</span>
+                              </button>
+                              {sourcesOpen && (
+                                <div className="sources-list">
+                                  {territoryData.summaryCitationRefs.map((ref, i) => (
+                                    <div key={i} id={`sum-ref-${i}`} className="source-ref-item">
+                                      <span className="source-ref-number">[{i + 1}]</span>
+                                      <div className="source-ref-body">
+                                        <span className="source-citation">{publicCitationText(ref)}</span>
+                                        {ref.url && (
+                                          <a href={ref.url} target="_blank" rel="noopener noreferrer" className="source-link">
+                                            {loc('View Document →', 'Lihat Dokumen →')}
+                                          </a>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
 
                         <div className="v3-stats-grid">
@@ -461,7 +569,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">🏛️</span>
                               <span className="stat-label">{t.capital}</span>
                               <span className="stat-value">
-                                {loc(territoryData.capital, territoryData.capitalId)}
+                                {statValueOrPlaceholder('capital', loc(territoryData.capital, territoryData.capitalId))}
                                 {overviewCitations.statRefs.capital !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.capital}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.capital); }}>[{overviewCitations.statRefs.capital + 1}]</a>
                                 )}
@@ -473,9 +581,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">👥</span>
                               <span className="stat-label">{t.population}</span>
                               <span className="stat-value">
-                                {isUnverifiedCitation(territoryData.statCitations?.population)
-                                  ? loc('Not documented in sources', 'Tidak terdokumentasi dalam sumber')
-                                  : loc(territoryData.population, territoryData.populationId)}
+                                {statValueOrPlaceholder('population', loc(territoryData.population, territoryData.populationId))}
                                 {overviewCitations.statRefs.population !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.population}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.population); }}>[{overviewCitations.statRefs.population + 1}]</a>
                                 )}
@@ -487,7 +593,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">⛪</span>
                               <span className="stat-label">{t.religion}</span>
                               <span className="stat-value">
-                                {loc(territoryData.religion, RELIGION_ID[territoryData.religion])}
+                                {statValueOrPlaceholder('religion', loc(territoryData.religion, RELIGION_ID[territoryData.religion]))}
                                 {overviewCitations.statRefs.religion !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.religion}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.religion); }}>[{overviewCitations.statRefs.religion + 1}]</a>
                                 )}
@@ -499,7 +605,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <span className="stat-icon" aria-hidden="true">👑</span>
                               <span className="stat-label">{t.government}</span>
                               <span className="stat-value">
-                                {loc(territoryData.government, GOVERNMENT_ID[territoryData.government])}
+                                {statValueOrPlaceholder('government', loc(territoryData.government, GOVERNMENT_ID[territoryData.government]))}
                                 {overviewCitations.statRefs.government !== undefined && (
                                   <a className="source-context-ref" href={`#ov-ref-${overviewCitations.statRefs.government}`} onClick={(e) => { e.preventDefault(); scrollToOvRef(overviewCitations.statRefs.government); }}>[{overviewCitations.statRefs.government + 1}]</a>
                                 )}
@@ -568,9 +674,48 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                             {t.historicalContext}
                           </h3>
                           <div className="history-text">
-                            {(loc(territoryData.historicalContext, territoryData.historicalContextId) || '').split('\n\n').map((paragraph, idx) => (
-                              <p key={idx}>{paragraph}</p>
-                            ))}
+                            {(() => {
+                              if (allRefsUnverified(territoryData.historicalContextCitationRefs)) {
+                                return <p>{UNDOCUMENTED}</p>;
+                              }
+                              const paragraphs = (loc(territoryData.historicalContext, territoryData.historicalContextId) || '').split('\n\n');
+                              return paragraphs.map((paragraph, idx) => (
+                                <p key={idx}>
+                                  {paragraph}
+                                  {idx === paragraphs.length - 1 && territoryData.historicalContextCitationRefs?.map((ref, i) => (
+                                    <a key={i} className="source-context-ref" href={`#histctx-ref-${i}`} onClick={(e) => { e.preventDefault(); scrollToHistCtxRef(i); }}>[{i + 1}]</a>
+                                  ))}
+                                </p>
+                              ));
+                            })()}
+                            {!allRefsUnverified(territoryData.historicalContextCitationRefs) && territoryData.historicalContextCitationRefs?.length > 0 && (
+                              <div className="sources-accordion">
+                                <button
+                                  className={`sources-accordion-toggle ${sourcesOpen ? 'open' : ''}`}
+                                  onClick={() => setSourcesOpen(prev => !prev)}
+                                >
+                                  <span>📚 {loc('References', 'Referensi')} ({territoryData.historicalContextCitationRefs.length})</span>
+                                  <span className="sources-chevron">{sourcesOpen ? '▴' : '▾'}</span>
+                                </button>
+                                {sourcesOpen && (
+                                  <div className="sources-list">
+                                    {territoryData.historicalContextCitationRefs.map((ref, i) => (
+                                      <div key={i} id={`histctx-ref-${i}`} className="source-ref-item">
+                                        <span className="source-ref-number">[{i + 1}]</span>
+                                        <div className="source-ref-body">
+                                          <span className="source-citation">{publicCitationText(ref)}</span>
+                                          {ref.url && (
+                                            <a href={ref.url} target="_blank" rel="noopener noreferrer" className="source-link">
+                                              {loc('View Document →', 'Lihat Dokumen →')}
+                                            </a>
+                                          )}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )}
                             {periodCitations.map((chunk, i) =>
                               chunk.text && chunk.text.trim() !== '' ? (
                                 <p key={`src-${i}`} className="source-context-text">
@@ -656,7 +801,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   <div key={idx} className="industry-card">
                                     <span className="industry-icon">🏭</span>
                                     <span className="industry-name">
-                                      {industry}
+                                      {indexedValueOrPlaceholder(industry, economy.economyCitationRefs, economy.primaryCitations, idx)}
                                       {economy.economyCitationRefs && economy.primaryCitations?.[idx] !== undefined && (
                                         <a className="source-context-ref" href={`#econ-ref-${economy.primaryCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToEconRef(economy.primaryCitations[idx]); }}>[{economy.primaryCitations[idx] + 1}]</a>
                                       )}
@@ -674,7 +819,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                               <div className="exports-grid">
                                 {displayExports.map((item, idx) => (
                                   <div key={idx} className="export-tag">
-                                    {item}
+                                    {indexedValueOrPlaceholder(item, economy.economyCitationRefs, economy.exportsCitations, idx)}
                                     {economy.economyCitationRefs && economy.exportsCitations?.[idx] !== undefined && (
                                       <a className="source-context-ref" href={`#econ-ref-${economy.exportsCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToEconRef(economy.exportsCitations[idx]); }}>[{economy.exportsCitations[idx] + 1}]</a>
                                     )}
@@ -693,7 +838,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   <div key={idx} className="partner-card">
                                     <span className="partner-flag">🏴</span>
                                     <span className="partner-name">
-                                      {partner}
+                                      {indexedValueOrPlaceholder(partner, economy.economyCitationRefs, economy.partnersCitations, idx)}
                                       {economy.economyCitationRefs && economy.partnersCitations?.[idx] !== undefined && (
                                         <a className="source-context-ref" href={`#econ-ref-${economy.partnersCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToEconRef(economy.partnersCitations[idx]); }}>[{economy.partnersCitations[idx] + 1}]</a>
                                       )}
@@ -747,7 +892,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                 <span className="culture-label">{t.language}</span>
                               </div>
                               <span className="culture-value">
-                                {loc(territoryData.culture.language, territoryData.culture.languageId)}
+                                {multiCitedValueOrPlaceholder(loc(territoryData.culture.language, territoryData.culture.languageId), territoryData.culture.cultureCitationRefs, territoryData.culture.languageCitations)}
                                 {territoryData.culture.cultureCitationRefs && territoryData.culture.languageCitations?.map((ci, i) => (
                                   <a key={i} className="source-context-ref" href={`#cult-ref-${ci}`} onClick={(e) => { e.preventDefault(); scrollToCultureRef(ci); }}>[{ci + 1}]</a>
                                 ))}
@@ -760,7 +905,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                 <span className="culture-label">{t.script}</span>
                               </div>
                               <span className="culture-value">
-                                {loc(territoryData.culture.script, territoryData.culture.scriptId)}
+                                {multiCitedValueOrPlaceholder(loc(territoryData.culture.script, territoryData.culture.scriptId), territoryData.culture.cultureCitationRefs, territoryData.culture.scriptCitations)}
                                 {territoryData.culture.cultureCitationRefs && territoryData.culture.scriptCitations?.map((ci, i) => (
                                   <a key={i} className="source-context-ref" href={`#cult-ref-${ci}`} onClick={(e) => { e.preventDefault(); scrollToCultureRef(ci); }}>[{ci + 1}]</a>
                                 ))}
@@ -773,7 +918,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                 <span className="culture-label">{t.architecture}</span>
                               </div>
                               <span className="culture-value">
-                                {loc(territoryData.culture.architecture, territoryData.culture.architectureId)}
+                                {multiCitedValueOrPlaceholder(loc(territoryData.culture.architecture, territoryData.culture.architectureId), territoryData.culture.cultureCitationRefs, territoryData.culture.architectureCitations)}
                                 {territoryData.culture.cultureCitationRefs && territoryData.culture.architectureCitations?.map((ci, i) => (
                                   <a key={i} className="source-context-ref" href={`#cult-ref-${ci}`} onClick={(e) => { e.preventDefault(); scrollToCultureRef(ci); }}>[{ci + 1}]</a>
                                 ))}
@@ -793,7 +938,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                     return (
                                       <span key={idx}>
                                         {idx > 0 && ', '}
-                                        {display}
+                                        {indexedValueOrPlaceholder(display, territoryData.culture.cultureCitationRefs, territoryData.culture.literatureCitations, idx)}
                                         {territoryData.culture.cultureCitationRefs && ci !== undefined && (
                                           <a className="source-context-ref" href={`#cult-ref-${ci}`} onClick={(e) => { e.preventDefault(); scrollToCultureRef(ci); }}>[{ci + 1}]</a>
                                         )}
@@ -848,7 +993,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                           <div className="territory-tags">
                             {territoryData.territories.map((territory, idx) => (
                               <span key={idx} className="territory-tag owned">
-                                {locRegion(territory)}
+                                {indexedValueOrPlaceholder(locRegion(territory), territoryData.relationsCitationRefs, territoryData.territoriesCitations, idx)}
                                 {territoryData.relationsCitationRefs && territoryData.territoriesCitations?.[idx] !== undefined && (
                                   <a className="source-context-ref" href={`#rel-ref-${territoryData.territoriesCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToRelationsRef(territoryData.territoriesCitations[idx]); }}>[{territoryData.territoriesCitations[idx] + 1}]</a>
                                 )}
@@ -866,7 +1011,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                             <div className="territory-tags">
                               {territoryData.vassals.map((vassal, idx) => (
                                 <span key={idx} className="territory-tag vassal">
-                                  {locRegion(vassal)}
+                                  {indexedValueOrPlaceholder(locRegion(vassal), territoryData.relationsCitationRefs, territoryData.vassalsCitations, idx)}
                                   {territoryData.relationsCitationRefs && territoryData.vassalsCitations?.[idx] !== undefined && (
                                     <a className="source-context-ref" href={`#rel-ref-${territoryData.vassalsCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToRelationsRef(territoryData.vassalsCitations[idx]); }}>[{territoryData.vassalsCitations[idx] + 1}]</a>
                                   )}
@@ -885,7 +1030,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                             <div className="territory-tags">
                               {territoryData.rivals.map((rival, idx) => (
                                 <span key={idx} className="territory-tag rival">
-                                  {locRegion(rival)}
+                                  {indexedValueOrPlaceholder(locRegion(rival), territoryData.relationsCitationRefs, territoryData.rivalsCitations, idx)}
                                   {territoryData.relationsCitationRefs && territoryData.rivalsCitations?.[idx] !== undefined && (
                                     <a className="source-context-ref" href={`#rel-ref-${territoryData.rivalsCitations[idx]}`} onClick={(e) => { e.preventDefault(); scrollToRelationsRef(territoryData.rivalsCitations[idx]); }}>[{territoryData.rivalsCitations[idx] + 1}]</a>
                                   )}
@@ -910,7 +1055,7 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
                                   )}
                                 </span>
                                 <span className={`relation-status ${status.toLowerCase().replaceAll(' ', '-')}`}>
-                                  {status}
+                                  {indexedValueOrPlaceholder(status, territoryData.relationsCitationRefs, territoryData.relationsCitations, idx)}
                                 </span>
                               </div>
                             ))}
