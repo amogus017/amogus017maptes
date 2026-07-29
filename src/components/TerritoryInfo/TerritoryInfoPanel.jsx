@@ -374,18 +374,20 @@ const TerritoryInfoPanel = ({ territoryId, currentYear, isOpen, onClose, startYe
               {/* Out-of-range banner */}
               {isOutOfRange && (
                 <div className="v3-outofrange-banner">
-                  <span aria-hidden="true">{currentYear > endYear ? (territoryData.renamedTo ? '🔄' : '⚔️') : '📜'}</span>
+                  <span aria-hidden="true">{currentYear > endYear ? (territoryData.transitionNote || territoryData.renamedTo ? '🔄' : '⚔️') : '📜'}</span>
                   <span>
                     {currentYear > endYear
-                      ? (territoryData.renamedTo
-                          ? loc(
-                              `${territoryData.name} was renamed ${loc(territoryData.renamedTo, territoryData.renamedToId)} in ${endYear} CE — showing last recorded state`,
-                              `${territoryData.name} berganti nama menjadi ${loc(territoryData.renamedTo, territoryData.renamedToId)} pada ${endYear} M — menampilkan catatan terakhir`
-                            )
-                          : loc(
-                              `${territoryData.name} fell in ${endYear} CE — showing last recorded state`,
-                              `${territoryData.name} runtuh pada ${endYear} M — menampilkan catatan terakhir`
-                            ))
+                      ? (territoryData.transitionNote
+                          ? loc(territoryData.transitionNote, territoryData.transitionNoteId)
+                          : territoryData.renamedTo
+                            ? loc(
+                                `${territoryData.name} was renamed ${loc(territoryData.renamedTo, territoryData.renamedToId)} in ${endYear} CE — showing last recorded state`,
+                                `${territoryData.name} berganti nama menjadi ${loc(territoryData.renamedTo, territoryData.renamedToId)} pada ${endYear} M — menampilkan catatan terakhir`
+                              )
+                            : loc(
+                                `${territoryData.name} fell in ${endYear} CE — showing last recorded state`,
+                                `${territoryData.name} runtuh pada ${endYear} M — menampilkan catatan terakhir`
+                              ))
                       : loc(
                           `${territoryData.name} was founded in ${startYear} CE — showing earliest known state`,
                           `${territoryData.name} didirikan pada ${startYear} M — menampilkan catatan awal`

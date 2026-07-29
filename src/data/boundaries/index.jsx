@@ -62,7 +62,7 @@ export const EMPIRES = {
     name: 'Mataram Kuno',
     color: '#9B59B6',
     startYear: 732,
-    endYear: 927,
+    endYear: 928,
     geojson: null,
     featureName: 'mataram',
   },
@@ -131,7 +131,6 @@ export const EMPIRES = {
     endYear: 1135,
     geojson: null,
     featureName: 'panjalu',
-    minor: true,
   },
   janggala: {
     id: 'janggala',
