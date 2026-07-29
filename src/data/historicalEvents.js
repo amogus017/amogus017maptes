@@ -150,18 +150,4 @@ export const historicalEvents = [
     wikiSlug: 'Battle_of_Paregreg',
     idWikiSlug: 'Perang_Paregreg',
   },
-  {
-    id: 'fall-of-pajajaran-1579',
-    year: 1579, startYear: 1575, endYear: 1585,
-    type: 'collapse',
-    icon: '🔥',
-    title: 'Fall of Pajajaran',
-    titleId: 'Kejatuhan Pajajaran',
-    description: 'Banten and Cirebon forces capture Pakuan Pajajaran — last Hindu kingdom of Java destroyed.',
-    descriptionId: 'Pasukan Banten dan Cirebon merebut Pakuan Pajajaran — kerajaan Hindu terakhir di Jawa dihancurkan.',
-    location: [-6.6, 106.8],
-    kingdoms: ['pajajaran'],
-    wikiSlug: 'Sunda_Kingdom',
-    idWikiSlug: 'Kerajaan_Sunda',
-  },
 ];
